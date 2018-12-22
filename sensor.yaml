@@ -9,15 +9,18 @@
 - platform: apcupsd
   resources:
     - bcharge
+    - timeleft
     - linev
     - loadpct
     - nominv
     - nompower
     - numxfers
-    - outputv
+    - lastxfer
     - status
-    - timeleft
     - tonbatt
+    - cumonbatt
+    - battv
+    - nombattv
 
 # Weather Alerts
 - platform: rest
