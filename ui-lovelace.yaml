@@ -194,217 +194,316 @@ views:
           - sensor.ups_nominal_output_power
           - sensor.ups_transfer_count
 
+      - type: horizontal-stack
+        title: Nest Protects
+        cards:
+        - type: custom:swipe-card
+          parameters:
+            spaceBetween: 10
+            scrollbar:
+              hide: false
+              draggable: true
+              snapOnRelease: true
+            keyboard:
+              enabled: true
+            effect: coverflow
+          cards:
+          - type: glance
+            title: Living Rm
+            entities:
+              - entity: sensor.living_room_nest_protect_battery_health
+                name: Battery
+              - entity: sensor.living_room_nest_protect_co_status
+                name: CO
+              - entity: sensor.living_room_nest_protect_color_status
+                name: Color
+              - entity: sensor.living_room_nest_protect_smoke_status
+                name: Smoke
+
+          - type: glance
+            title: Den
+            entities:
+              - entity: sensor.den_nest_protect_battery_health
+                name: Battery
+              - entity: sensor.den_nest_protect_co_status
+                name: CO
+              - entity: sensor.den_nest_protect_color_status
+                name: Color
+              - entity: sensor.den_nest_protect_smoke_status
+                name: Smoke
+
+          - type: glance
+            title: Hallway
+            entities:
+              - entity: sensor.hallway_nest_protect_battery_health
+                name: Battery
+              - entity: sensor.hallway_nest_protect_co_status
+                name: CO
+              - entity: sensor.hallway_nest_protect_color_status
+                name: Color
+              - entity: sensor.hallway_nest_protect_smoke_status
+                name: Smoke
+
+          - type: glance
+            title: Master
+            entities:
+              - entity: sensor.master_bedroom_nest_protect_battery_health
+                name: Battery
+              - entity: sensor.master_bedroom_nest_protect_co_status
+                name: CO
+              - entity: sensor.master_bedroom_nest_protect_color_status
+                name: Color
+              - entity: sensor.master_bedroom_nest_protect_smoke_status
+                name: Smoke
+
+          - type: glance
+            title: Kitchen
+            entities:
+              - entity: sensor.kitchen_nest_protect_battery_health
+                name: Battery
+              - entity: sensor.kitchen_nest_protect_co_status
+                name: CO
+              - entity: sensor.kitchen_nest_protect_color_status
+                name: Color
+              - entity: sensor.kitchen_nest_protect_smoke_status
+                name: Smoke
+
+          - type: glance
+            title: Front Bed
+            entities:
+              - entity: sensor.bedroom_1_nest_protect_battery_health
+                name: Battery
+              - entity: sensor.bedroom_1_nest_protect_co_status
+                name: CO
+              - entity: sensor.bedroom_1_nest_protect_color_status
+                name: Color
+              - entity: sensor.bedroom_1_nest_protect_smoke_status
+                name: Smoke
+
+          - type: glance
+            title: Back Bed
+            entities:
+              - entity: sensor.bedroom_2_nest_protect_battery_health
+                name: Battery
+              - entity: sensor.bedroom_2_nest_protect_co_status
+                name: CO
+              - entity: sensor.bedroom_2_nest_protect_color_status
+                name: Color
+              - entity: sensor.bedroom_2_nest_protect_smoke_status
+                name: Smoke
+
   - title: Lock
     icon: mdi:lock-smart
     id: doorlock
     cards:
-      - type: horizontal-stack
-        cards:
-        - type: custom:swipe-card
-          parameters:
-            spaceBetween: 15
-            centeredSlides: true
-            slidesPerView: 'auto'
-            pagination:
-              type: 'progressbar'
-            navigation:
-            keyboard:
-              enabled: true
-              onlyInViewport: true
-            effect: coverflow
+    - type: horizontal-stack
+      cards:
+      - type: custom:swipe-card
+        parameters:
+          effect: coverflow
+          spaceBetween: 15
+          scrollbar:
+            hide: false
+            draggable: true
             snapOnRelease: true
-          cards:
-            - type: entities
-              title: Entry Code 1
-              entities:
-                - input_text.door_keypad_1_name
-                - input_text.door_keypad_1_code
-                - input_select.door_keypad_1_access_schedule
-                - input_datetime.door_keypad_1_date_start
-                - input_datetime.door_keypad_1_date_end
-                - input_boolean.door_keypad_1_front_switch
-                - script.door_keypad_1_delete
+          pagination:
+            type: 'progressbar'
+          navigation:
+          keyboard:
+            enabled: true
+            onlyInViewport: true
+        cards:
+          - type: entities
+            title: Entry Code 1
+            entities:
+              - input_text.door_keypad_1_name
+              - input_text.door_keypad_1_code
+              - input_select.door_keypad_1_access_schedule
+              - input_datetime.door_keypad_1_date_start
+              - input_datetime.door_keypad_1_date_end
+              - input_boolean.door_keypad_1_front_switch
+              - script.door_keypad_1_delete
 
-            - type: entities
-              title: Entry Code 2
-              entities:
-                - input_text.door_keypad_2_name
-                - input_text.door_keypad_2_code
-                - input_select.door_keypad_2_access_schedule
-                - input_datetime.door_keypad_2_date_start
-                - input_datetime.door_keypad_2_date_end
-                - input_boolean.door_keypad_2_front_switch
-                - script.door_keypad_2_delete
+          - type: entities
+            title: Entry Code 2
+            entities:
+              - input_text.door_keypad_2_name
+              - input_text.door_keypad_2_code
+              - input_select.door_keypad_2_access_schedule
+              - input_datetime.door_keypad_2_date_start
+              - input_datetime.door_keypad_2_date_end
+              - input_boolean.door_keypad_2_front_switch
+              - script.door_keypad_2_delete
 
-            - type: entities
-              title: Entry Code 3
-              entities:
-                - input_text.door_keypad_3_name
-                - input_text.door_keypad_3_code
-                - input_select.door_keypad_3_access_schedule
-                - input_datetime.door_keypad_3_date_start
-                - input_datetime.door_keypad_3_date_end
-                - input_boolean.door_keypad_3_front_switch
-                - script.door_keypad_3_delete
+          - type: entities
+            title: Entry Code 3
+            entities:
+              - input_text.door_keypad_3_name
+              - input_text.door_keypad_3_code
+              - input_select.door_keypad_3_access_schedule
+              - input_datetime.door_keypad_3_date_start
+              - input_datetime.door_keypad_3_date_end
+              - input_boolean.door_keypad_3_front_switch
+              - script.door_keypad_3_delete
 
-            - type: entities
-              title: Entry Code 4
-              entities:
-                - input_text.door_keypad_4_name
-                - input_text.door_keypad_4_code
-                - input_select.door_keypad_4_access_schedule
-                - input_datetime.door_keypad_4_date_start
-                - input_datetime.door_keypad_4_date_end
-                - input_boolean.door_keypad_4_front_switch
-                - script.door_keypad_4_delete
+          - type: entities
+            title: Entry Code 4
+            entities:
+              - input_text.door_keypad_4_name
+              - input_text.door_keypad_4_code
+              - input_select.door_keypad_4_access_schedule
+              - input_datetime.door_keypad_4_date_start
+              - input_datetime.door_keypad_4_date_end
+              - input_boolean.door_keypad_4_front_switch
+              - script.door_keypad_4_delete
 
-            - type: entities
-              title: Entry Code 5
-              entities:
-                - input_text.door_keypad_5_name
-                - input_text.door_keypad_5_code
-                - input_select.door_keypad_5_access_schedule
-                - input_datetime.door_keypad_5_date_start
-                - input_datetime.door_keypad_5_date_end
-                - input_boolean.door_keypad_5_front_switch
-                - script.door_keypad_5_delete
+          - type: entities
+            title: Entry Code 5
+            entities:
+              - input_text.door_keypad_5_name
+              - input_text.door_keypad_5_code
+              - input_select.door_keypad_5_access_schedule
+              - input_datetime.door_keypad_5_date_start
+              - input_datetime.door_keypad_5_date_end
+              - input_boolean.door_keypad_5_front_switch
+              - script.door_keypad_5_delete
 
-            - type: entities
-              title: Entry Code 6
-              entities:
-                - input_text.door_keypad_6_name
-                - input_text.door_keypad_6_code
-                - input_select.door_keypad_6_access_schedule
-                - input_datetime.door_keypad_6_date_start
-                - input_datetime.door_keypad_6_date_end
-                - input_boolean.door_keypad_6_front_switch
-                - script.door_keypad_6_delete
+          - type: entities
+            title: Entry Code 6
+            entities:
+              - input_text.door_keypad_6_name
+              - input_text.door_keypad_6_code
+              - input_select.door_keypad_6_access_schedule
+              - input_datetime.door_keypad_6_date_start
+              - input_datetime.door_keypad_6_date_end
+              - input_boolean.door_keypad_6_front_switch
+              - script.door_keypad_6_delete
 
-            - type: entities
-              title: Entry Code 7
-              entities:
-                - input_text.door_keypad_7_name
-                - input_text.door_keypad_7_code
-                - input_select.door_keypad_7_access_schedule
-                - input_datetime.door_keypad_7_date_start
-                - input_datetime.door_keypad_7_date_end
-                - input_boolean.door_keypad_7_front_switch
-                - script.door_keypad_7_delete
+          - type: entities
+            title: Entry Code 7
+            entities:
+              - input_text.door_keypad_7_name
+              - input_text.door_keypad_7_code
+              - input_select.door_keypad_7_access_schedule
+              - input_datetime.door_keypad_7_date_start
+              - input_datetime.door_keypad_7_date_end
+              - input_boolean.door_keypad_7_front_switch
+              - script.door_keypad_7_delete
 
-            - type: entities
-              title: Entry Code 8
-              entities:
-                - input_text.door_keypad_8_name
-                - input_text.door_keypad_8_code
-                - input_select.door_keypad_8_access_schedule
-                - input_datetime.door_keypad_8_date_start
-                - input_datetime.door_keypad_8_date_end
-                - input_boolean.door_keypad_8_front_switch
-                - script.door_keypad_8_delete
+          - type: entities
+            title: Entry Code 8
+            entities:
+              - input_text.door_keypad_8_name
+              - input_text.door_keypad_8_code
+              - input_select.door_keypad_8_access_schedule
+              - input_datetime.door_keypad_8_date_start
+              - input_datetime.door_keypad_8_date_end
+              - input_boolean.door_keypad_8_front_switch
+              - script.door_keypad_8_delete
 
-            - type: entities
-              title: Entry Code 9
-              entities:
-                - input_text.door_keypad_9_name
-                - input_text.door_keypad_9_code
-                - input_select.door_keypad_9_access_schedule
-                - input_datetime.door_keypad_9_date_start
-                - input_datetime.door_keypad_9_date_end
-                - input_boolean.door_keypad_9_front_switch
-                - script.door_keypad_9_delete
+          - type: entities
+            title: Entry Code 9
+            entities:
+              - input_text.door_keypad_9_name
+              - input_text.door_keypad_9_code
+              - input_select.door_keypad_9_access_schedule
+              - input_datetime.door_keypad_9_date_start
+              - input_datetime.door_keypad_9_date_end
+              - input_boolean.door_keypad_9_front_switch
+              - script.door_keypad_9_delete
 
-            - type: entities
-              title: Entry Code 10
-              entities:
-                - input_text.door_keypad_10_name
-                - input_text.door_keypad_10_code
-                - input_select.door_keypad_10_access_schedule
-                - input_datetime.door_keypad_10_date_start
-                - input_datetime.door_keypad_10_date_end
-                - input_boolean.door_keypad_10_front_switch
-                - script.door_keypad_10_delete
+          - type: entities
+            title: Entry Code 10
+            entities:
+              - input_text.door_keypad_10_name
+              - input_text.door_keypad_10_code
+              - input_select.door_keypad_10_access_schedule
+              - input_datetime.door_keypad_10_date_start
+              - input_datetime.door_keypad_10_date_end
+              - input_boolean.door_keypad_10_front_switch
+              - script.door_keypad_10_delete
 
-            - type: entities
-              title: Entry Code 11
-              entities:
-                - input_text.door_keypad_11_name
-                - input_text.door_keypad_11_code
-                - input_select.door_keypad_11_access_schedule
-                - input_datetime.door_keypad_11_date_start
-                - input_datetime.door_keypad_11_date_end
-                - input_boolean.door_keypad_11_front_switch
-                - script.door_keypad_11_delete
+          - type: entities
+            title: Entry Code 11
+            entities:
+              - input_text.door_keypad_11_name
+              - input_text.door_keypad_11_code
+              - input_select.door_keypad_11_access_schedule
+              - input_datetime.door_keypad_11_date_start
+              - input_datetime.door_keypad_11_date_end
+              - input_boolean.door_keypad_11_front_switch
+              - script.door_keypad_11_delete
 
-            - type: entities
-              title: Entry Code 12
-              entities:
-                - input_text.door_keypad_12_name
-                - input_text.door_keypad_12_code
-                - input_select.door_keypad_12_access_schedule
-                - input_datetime.door_keypad_12_date_start
-                - input_datetime.door_keypad_12_date_end
-                - input_boolean.door_keypad_12_front_switch
-                - script.door_keypad_12_delete
+          - type: entities
+            title: Entry Code 12
+            entities:
+              - input_text.door_keypad_12_name
+              - input_text.door_keypad_12_code
+              - input_select.door_keypad_12_access_schedule
+              - input_datetime.door_keypad_12_date_start
+              - input_datetime.door_keypad_12_date_end
+              - input_boolean.door_keypad_12_front_switch
+              - script.door_keypad_12_delete
 
-            - type: entities
-              title: Entry Code 13
-              entities:
-                - input_text.door_keypad_13_name
-                - input_text.door_keypad_13_code
-                - input_select.door_keypad_13_access_schedule
-                - input_datetime.door_keypad_13_date_start
-                - input_datetime.door_keypad_13_date_end
-                - input_boolean.door_keypad_13_front_switch
-                - script.door_keypad_13_delete
+          - type: entities
+            title: Entry Code 13
+            entities:
+              - input_text.door_keypad_13_name
+              - input_text.door_keypad_13_code
+              - input_select.door_keypad_13_access_schedule
+              - input_datetime.door_keypad_13_date_start
+              - input_datetime.door_keypad_13_date_end
+              - input_boolean.door_keypad_13_front_switch
+              - script.door_keypad_13_delete
 
-            - type: entities
-              title: Entry Code 14
-              entities:
-                - input_text.door_keypad_14_name
-                - input_text.door_keypad_14_code
-                - input_select.door_keypad_14_access_schedule
-                - input_datetime.door_keypad_14_date_start
-                - input_datetime.door_keypad_14_date_end
-                - input_boolean.door_keypad_14_front_switch
-                - script.door_keypad_14_delete
+          - type: entities
+            title: Entry Code 14
+            entities:
+              - input_text.door_keypad_14_name
+              - input_text.door_keypad_14_code
+              - input_select.door_keypad_14_access_schedule
+              - input_datetime.door_keypad_14_date_start
+              - input_datetime.door_keypad_14_date_end
+              - input_boolean.door_keypad_14_front_switch
+              - script.door_keypad_14_delete
 
-            - type: entities
-              title: Entry Code 15
-              entities:
-                - input_text.door_keypad_15_name
-                - input_text.door_keypad_15_code
-                - input_select.door_keypad_15_access_schedule
-                - input_datetime.door_keypad_15_date_start
-                - input_datetime.door_keypad_15_date_end
-                - input_boolean.door_keypad_15_front_switch
-                - script.door_keypad_15_delete
+          - type: entities
+            title: Entry Code 15
+            entities:
+              - input_text.door_keypad_15_name
+              - input_text.door_keypad_15_code
+              - input_select.door_keypad_15_access_schedule
+              - input_datetime.door_keypad_15_date_start
+              - input_datetime.door_keypad_15_date_end
+              - input_boolean.door_keypad_15_front_switch
+              - script.door_keypad_15_delete
 
-            - type: entities
-              title: One Time Use Code 1
-              entities:
-                - input_select.door_keypad_16_access_schedule
-                - input_text.door_keypad_16_name
-                - input_text.door_keypad_16_code
-                - input_boolean.door_keypad_16_front_switch
-                - script.door_keypad_16_delete
+          - type: entities
+            title: One Time Use Code 1
+            entities:
+              - input_select.door_keypad_16_access_schedule
+              - input_text.door_keypad_16_name
+              - input_text.door_keypad_16_code
+              - input_boolean.door_keypad_16_front_switch
+              - script.door_keypad_16_delete
 
-            - type: entities
-              title: One Time Use Code 2
-              entities:
-                - input_select.door_keypad_17_access_schedule
-                - input_text.door_keypad_17_name
-                - input_text.door_keypad_17_code
-                - input_boolean.door_keypad_17_front_switch
-                - script.door_keypad_17_delete
+          - type: entities
+            title: One Time Use Code 2
+            entities:
+              - input_select.door_keypad_17_access_schedule
+              - input_text.door_keypad_17_name
+              - input_text.door_keypad_17_code
+              - input_boolean.door_keypad_17_front_switch
+              - script.door_keypad_17_delete
 
-            - type: entities
-              title: One Time Use Code 3
-              entities:
-                - input_select.door_keypad_18_access_schedule
-                - input_text.door_keypad_18_name
-                - input_text.door_keypad_18_code
-                - input_boolean.door_keypad_18_front_switch
-                - script.door_keypad_18_delete
+          - type: entities
+            title: One Time Use Code 3
+            entities:
+              - input_select.door_keypad_18_access_schedule
+              - input_text.door_keypad_18_name
+              - input_text.door_keypad_18_code
+              - input_boolean.door_keypad_18_front_switch
+              - script.door_keypad_18_delete
 
   - title: Environment
     panel: true
@@ -414,11 +513,6 @@ views:
         cards:
           - type: weather-forecast
             entity: weather.openweathermap
-
-          - type: entities
-            entities:
-              - sensor.nws_alert_count
-              - sensor.nws_alert_event
 
           - type: horizontal-stack
             cards:
@@ -438,89 +532,7 @@ views:
                 title: Indoor Humidity
                 entity: sensor.living_room_thermostat_humidity
 
-          - type: horizontal-stack
-            title: Nest Protects
-            cards:
-            - type: glance
-              title: Living Rm
-              entities:
-                - entity: sensor.living_room_nest_protect_battery_health
-                  name: Battery
-                - entity: sensor.living_room_nest_protect_co_status
-                  name: CO
-                - entity: sensor.living_room_nest_protect_color_status
-                  name: Color
-                - entity: sensor.living_room_nest_protect_smoke_status
-                  name: Smoke
-
-            - type: glance
-              title: Den
-              entities:
-                - entity: sensor.den_nest_protect_battery_health
-                  name: Battery
-                - entity: sensor.den_nest_protect_co_status
-                  name: CO
-                - entity: sensor.den_nest_protect_color_status
-                  name: Color
-                - entity: sensor.den_nest_protect_smoke_status
-                  name: Smoke
-
-            - type: glance
-              title: Hallway
-              entities:
-                - entity: sensor.hallway_nest_protect_battery_health
-                  name: Battery
-                - entity: sensor.hallway_nest_protect_co_status
-                  name: CO
-                - entity: sensor.hallway_nest_protect_color_status
-                  name: Color
-                - entity: sensor.hallway_nest_protect_smoke_status
-                  name: Smoke
-
-            - type: glance
-              title: Master
-              entities:
-                - entity: sensor.master_bedroom_nest_protect_battery_health
-                  name: Battery
-                - entity: sensor.master_bedroom_nest_protect_co_status
-                  name: CO
-                - entity: sensor.master_bedroom_nest_protect_color_status
-                  name: Color
-                - entity: sensor.master_bedroom_nest_protect_smoke_status
-                  name: Smoke
-
-            - type: glance
-              title: Kitchen
-              entities:
-                - entity: sensor.kitchen_nest_protect_battery_health
-                  name: Battery
-                - entity: sensor.kitchen_nest_protect_co_status
-                  name: CO
-                - entity: sensor.kitchen_nest_protect_color_status
-                  name: Color
-                - entity: sensor.kitchen_nest_protect_smoke_status
-                  name: Smoke
-
-            - type: glance
-              title: Front Bed
-              entities:
-                - entity: sensor.bedroom_1_nest_protect_battery_health
-                  name: Battery
-                - entity: sensor.bedroom_1_nest_protect_co_status
-                  name: CO
-                - entity: sensor.bedroom_1_nest_protect_color_status
-                  name: Color
-                - entity: sensor.bedroom_1_nest_protect_smoke_status
-                  name: Smoke
-
-            - type: glance
-              title: Back Bed
-              entities:
-                - entity: sensor.bedroom_2_nest_protect_battery_health
-                  name: Battery
-                - entity: sensor.bedroom_2_nest_protect_co_status
-                  name: CO
-                - entity: sensor.bedroom_2_nest_protect_color_status
-                  name: Color
-                - entity: sensor.bedroom_2_nest_protect_smoke_status
-                  name: Smoke
+              - type: entities
+                entities:
+                  - sensor.nws_alert_count
+                  - sensor.nws_alert_event
