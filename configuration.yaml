@@ -75,6 +75,11 @@ http:
   #   - 127.0.0.1
   #   - 192.168.2.0/24
 
+hue:
+  bridges:
+    - host: 192.168.2.204
+      allow_unreachable: true
+
 input_boolean:
   alarm_triggered:
     name: Home Alarm is triggered
