@@ -146,6 +146,8 @@ views:
         title: Lights
         show_header_toggle: true
         entities:
+          - switch.den_lamp
+          - switch.light_dining_room
           - light.hue_color_lamp_1
           - light.hue_color_lamp_1_2
           - light.hue_color_lamp_1_3
@@ -164,8 +166,6 @@ views:
         title: Switches
         show_header_toggle: true
         entities:
-          - switch.den_lamp
-          - switch.light_dining_room
           - switch.overhead_garage_door
 
       - type: entities
