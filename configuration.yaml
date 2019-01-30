@@ -113,6 +113,9 @@ media_player:
     password: !secret amazon_pass
     url: "amazon.com"
   - platform: roku
+  - platform: volumio
+    host: 192.168.2.175
+    port: 3000
 
 # MQTT
 mqtt:
