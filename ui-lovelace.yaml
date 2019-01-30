@@ -32,7 +32,7 @@ views:
         entity: sensor.harmony_hub
 
       - type: media-control
-        entity: media_player.volumio_volumiolocal
+        entity: media_player.volumio
 
       - type: vertical-stack
         title: Den
@@ -139,6 +139,7 @@ views:
           - automation.alarm_warning
           - automation.automation_9
           - automation.front_lights__sunrise
+          - automation.porch_lights_off_night
           - automation.front_lights__sunset
           - automation.ssl_expiry_notification
 
@@ -199,14 +200,22 @@ views:
         cards:
         - type: custom:swipe-card
           parameters:
-            spaceBetween: 10
-            scrollbar:
-              hide: false
-              draggable: true
-              snapOnRelease: true
+            effect: coverflow
+            grabCursor: true
+            centeredSlides: true
+            slidesPerView: 'auto'
+            coverflowEffect:
+              rotate: 50
+              stretch: 0
+              depth: 100
+              modifier: 1
+              slideShadows: true
+            pagination:
+              type: 'bullets'
+            navigation:
             keyboard:
               enabled: true
-            effect: coverflow
+              onlyInViewport: true
           cards:
           - type: glance
             title: Living Rm
@@ -299,15 +308,20 @@ views:
     - type: horizontal-stack
       cards:
       - type: custom:swipe-card
+        card_width: '230px'
         parameters:
-          effect: coverflow
-          spaceBetween: 15
-          scrollbar:
-            hide: false
-            draggable: true
-            snapOnRelease: true
+          effect: 'coverflow'
+          grabCursor: true
+          centeredSlides: true
+          slidesPerView: true
+          coverflowEffect:
+            rotate: 50
+            stretch: 0
+            depth: 100
+            modifier: 1
+            slideShadows: true
           pagination:
-            type: 'progressbar'
+            type: 'bullets'
           navigation:
           keyboard:
             enabled: true
