@@ -2,88 +2,32 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: Nope
-  longitude: Nope
+  latitude: !secret latitude
+  longitude: !secret longitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 0
+  elevation: !secret elevation
   # metric for Metric, imperial for Imperial
   unit_system: imperial
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: America/New_York
+  time_zone: !secret time_zone
   # Customization file
   customize: !include customize.yaml
-  # auth_providers:
-  #   - type: homeassistant
-  #   - type: trusted_networks
   packages: !include_dir_named packages
 
-  # Show links to resources in log and frontend
-# introduction:
-
-alarm_control_panel: !include alarm.yaml
-automation: !include automations.yaml
-binary_sensor: !include binary_sensor.yaml
-group: !include groups.yaml
-panel_custom: !include panel_custom.yaml
-script: !include scripts.yaml
-sensor: !include sensor.yaml
-
-# UPS Battery Backup monitor
 apcupsd:
   host: 127.0.0.1
   port: 3551
 
-# Cloud
-cloud:
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
 
-# Enables configuration UI
-config:
+device_tracker:
 
-# Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-
-# Discover some devices automatically
-discovery:
-
-emulated_roku:
-  host_ip: 192.168.2.50
-  listen_ports: 8060
-
-eufy:
-  devices:
-    - address: 192.168.2.94
-      access_token: XXX
-      type: T1202
-      name: Washing_Machine
-
-ffmpeg:
-
-# Enables the frontend
-frontend:
-  javascript_version: auto
-
-# Enables support for tracking state changes over time
-history:
-
-# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 http:
-  ssl_certificate: /etc/letsencrypt/live/XXXXXX/fullchain.pem
-  ssl_key: /etc/letsencrypt/live/XXXXXX/privkey.pem
-  base_url: https://XXXXXX
-  # api_password: !secret home_assistant_key
-  # trusted_networks:
-  #   - 127.0.0.1
-  #   - 192.168.2.0/24
-
-hue:
-  bridges:
-    - host: 192.168.2.204
-      allow_unreachable: true
-
-input_boolean:
-  alarm_triggered:
-    name: Home Alarm is triggered
-    icon: mdi:exclamation
+  base_url: http://hass.colemanonline.net
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.2.100
 
 input_select:
   destination:
@@ -94,34 +38,8 @@ input_select:
       - Nicholas
       - Johnathon
 
-# View all events in a logbook
-logbook:
-
-logger:
-  default: info
-  logs:
-    homeassistant.components.nest: debug
-    homeassistant.components.sensor.nest: debug
-    nest: debug
-
-# Enables a map showing the location of tracked devices
-map:
-
-media_player:
-  - platform: alexa
-    email: !secret amazon_email
-    password: !secret amazon_pass
-    url: "amazon.com"
-  - platform: roku
-  - platform: volumio
-    host: 192.168.2.175
-    port: 3000
-
 # MQTT
 mqtt:
-  broker: 127.0.0.1
-  port: 1883
-  client_id: home-assistant-matt
 
 # Nest
 nest:
@@ -132,27 +50,20 @@ notify:
   # Pushbullet notifications
   - name: pushbullet
     platform: pushbullet
-    api_key: XXXXXX
+    api_key: o.HyKdUqIgnaoC598rkdLWji73ee25DDUL
 
   # HANotify (used for Ariela)
   - name: android
     platform: fcm-android
 
-recorder:
+remote:
+  - platform: harmony
+    name: Living Room
+    host: 192.168.2.5
 
-rest_command:
-  cloudcam_on:
-    url: XXXXXX
-  cloudcam_off:
-    url: XXXXXX
-
-# Ring
 ring:
   username: !secret ring_client_id
   password: !secret ring_client_password
-
-# Track the sun
-sun:
 
 switch:
   - platform: mqtt
@@ -162,110 +73,132 @@ switch:
     payload_on: 1
     payload_off: 1
 
+  - platform: mqtt
+    name: "Arm Alarm Home"
+    command_topic: "home/alarm/set"
+    state_topic: "home/alarm"
+    payload_on: "ARM_HOME"
+    payload_off: "DISARM"
+    state_on: "armed_home"
+    state_off: "disarmed"
+
+  - platform: mqtt
+    name: "Arm Alarm Away"
+    command_topic: "home/alarm/set"
+    state_topic: "home/alarm"
+    payload_on: "ARM_AWAY"
+    payload_off: "DISARM"
+    state_on: "armed_away"
+    state_off: "disarmed"
+
   - platform: template
     switches:
       hulu:
-        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Hulu') }}"
+        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Hulu') }}"
         turn_on:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'Hulu'
         turn_off:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'PowerOff'
 
       netflix:
-        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Netflix') }}"
+        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Netflix') }}"
         turn_on:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'Netflix'
         turn_off:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'PowerOff'
 
       plex:
-        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Plex') }}"
+        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Plex') }}"
         turn_on:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'Plex'
         turn_off:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'PowerOff'
 
       music:
-        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Music') }}"
+        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Music') }}"
         turn_on:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'Music'
         turn_off:
           service: remote.turn_on
           data:
-            entity_id: remote.harmony_hub
+            entity_id: remote.living_room
             activity: 'PowerOff'
 
       hulu_den:
-        value_template: "{{ is_state_attr('media_player.den', 'source', 'Hulu') }}"
+        value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Hulu') }}"
         turn_on:
           service: media_player.select_source
           data:
-            entity_id: media_player.den
+            entity_id: media_player.den_roku
             source: 'Hulu'
         turn_off:
-          service: media_player.turn_off
+          service: remote.send_command
           data:
-            entity_id: media_player.den
+            entity_id: remote.den_roku
+            command: power
 
       netflix_den:
-        value_template: "{{ is_state_attr('media_player.den', 'source', 'Netflix') }}"
+        value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Netflix') }}"
         turn_on:
           service: media_player.select_source
           data:
-            entity_id: media_player.den
+            entity_id: media_player.den_roku
             activity: 'Netflix'
         turn_off:
-          service: media_player.turn_off
+          service: remote.send_command
           data:
-            entity_id: media_player.den
+            entity_id: remote.den_roku
+            command: power
 
       plex_den:
-        value_template: "{{ is_state_attr('media_player.den', 'source', 'Plex') }}"
+        value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Plex') }}"
         turn_on:
           service: media_player.select_source
           data:
-            entity_id: media_player.den
+            entity_id: media_player.den_roku
             activity: 'Plex'
         turn_off:
-          service: media_player.turn_off
+          service: remote.send_command
           data:
-            entity_id: media_player.den
+            entity_id: remote.den_roku
+            command: power
 
 # Text to speech
-tts:
-  - platform: google
-
-updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  # include_used_components: true
+#tts:
+#  - platform: google
 
 weather:
-  - platform: openweathermap
-    api_key: XXXXXX
+  platform: openweathermap
+  api_key: !secret openweathermap-api_key
 
-# ZWave
-zwave:
-  usb_path: /dev/zwave
-  network_key: XXXXXX
-  autoheal: true
+wemo:
+  discovery: true
+
+alarm_control_panel: !include alarm.yaml
+automation: !include automations.yaml
+binary_sensor: !include binary_sensor.yaml
+group: !include groups.yaml
+panel_custom: !include panel_custom.yaml
+script: !include scripts.yaml
+sensor: !include sensor.yaml

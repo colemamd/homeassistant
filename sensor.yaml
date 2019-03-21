@@ -1,10 +1,3 @@
-# SSL cert expiration check
-- platform: command_line
-  name: SSL cert expiry
-  unit_of_measurement: days
-  scan_interval: 10800
-  command: "ssl-cert-check -b -c /etc/letsencrypt/live/xxxxx/cert.pem | awk '{print $NF}'"
-
 # UPS sensor
 - platform: apcupsd
   resources:
@@ -22,71 +15,37 @@
     - battv
     - nombattv
 
-# Weather Alerts
-- platform: rest
-  resource: https://api.weather.gov/alerts/active/count
-  name: NWS Alert Count
-  value_template: >
-    {% if value_json.zones.XXXXXX is defined %}
-      {{ value_json.zones.XXXXXX }}
-    {% else %}
-      0
-    {% endif %}
-  #json_attributes:
-  #  - event
-  #  - description
-  #  - instructions
-  #  - expires
-  headers:
-    User-Agent: Homeassistant
-    Accept: application/ld+json
-  scan_interval: 60
-
-- platform: rest
-  resource: https://api.weather.gov/alerts/active?zone=XXXXXX
-  name: NWS Alert Event
-  value_template: >
-    {% if value_json.features[0] is defined %}
-      {{ value_json['features'][0]['properties'].event }}
-    {% else %}
-      None
-    {% endif %}
-  json_attributes:
-    - features
-  headers:
-    User-Agent: Homeassistant
-    Accept: application/geo+json
-  scan_interval: 60
 - platform: template
   sensors:
   #Waze travel time
     dest_address:
       value_template: >-
         {%- if is_state("input_select.destination", "Home") -%}
-          XXXXXX
+          !secret home_address
         {%- elif is_state("input_select.destination", "Work") -%}
-          XXXXXX
+          !secret work_address
         {%- elif is_state("input_select.destination", "Nicholas") -%}
-          XXXXXX
+          !secret nick_address
         {%- elif is_state("input_select.destination", "Johnathon") -%}
-          XXXXXX
+          !secret john_address
         {%- else -%}
           Unknown
         {%- endif %}
 
     harmony_hub:
-      value_template: '{{ states.remote.harmony_hub.attributes.current_activity }}'
+      value_template: '{{ states.remote.living_room.attributes.current_activity }}'
       friendly_name: Harmony
 
     den_media:
-      value_template: '{{ states.media_player.den.attributes.source }}'
+      value_template: '{{ states.media_player.den_roku.attributes.source }}'
       friendly_name: 'Den TV Source'
 
 - platform: waze_travel_time
   name: "Me to destination"
-  origin: XXXXXX
+  origin: device_tracker.matt_phone
   destination: sensor.dest_address
   region: 'US'
+
 - platform: time_date
   display_options:
     - 'time'
@@ -94,7 +53,7 @@
     - 'date_time'
 
 - platform: openweathermap
-  api_key: XXXXXX
+  api_key: !secret openweathermap-api_key
   monitored_conditions:
     - weather
   forecast: true
