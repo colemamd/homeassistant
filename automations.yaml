@@ -1,127 +1,6 @@
-- alias: SSL expiry notification
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.ssl_cert_expiry
-    below: 21
-  action:
-    service: notify.notifications
-    data:
-      message: Warning - Home Assistant SSL certificate expires in 21 days and has
-        not been automatically renewed
-  id: 665fe22a9cf24d8c81ce5e6b69992bd3
-- id: alarm_armed_away
-  alias: '[Alarm] Away Mode Armed'
-  trigger:
-  - entity_id: alarm_control_panel.house
-    platform: state
-    to: armed_away
-  action:
-  - data:
-      message: Home Alarm armed in Away Mode
-      target: device/OnePlus
-    service: notify.pushbullet
-  - data:
-      entity_id: media_player.matthews_echo
-      message: The alarm has been armed in Away Mode. Goodbye.
-    service: media_player.matthews_echo
-  - data:
-      entity_id: lock.schlage_be469_touchscreen_deadbolt_locked_4
-    service: lock.lock
-  - alias: ''
-    data:
-      away mode: 'on'
-    service: climate.set_away_mode
-  - data:
-      message: Home alarm is armed in away mode.
-    service: notify.android
-- id: alarm_armed_home
-  alias: '[Alarm] Home Mode Armed'
-  trigger:
-  - entity_id: alarm_control_panel.house
-    platform: state
-    to: armed_home
-  action:
-  - data:
-      message: Home Alarm armed in Home Mode
-      target: device/OnePlus
-    service: notify.pushbullet
-  - data:
-      entity_id: media_player.matthews_echo
-      message: The alarm has been armed in Home Mode. Goodnight
-    service: media_player.alexa_tts
-  - data:
-      entity_id: lock.schlage_be469_touchscreen_deadbold_locked_4
-    service: lock.lock
-  - data:
-      message: Home alarm is armed in Home mode.
-    service: notify.android
-- id: alarm_arming_away
-  alias: '[Alarm] Away Mode Arming'
-  trigger:
-  - entity_id: alarm_control_panel.house
-    platform: state
-    to: pending
-  action:
-  - data:
-      entity_id: media_player.matthews_echo
-      message: Home Alarm activating, verify all doors and windows are shut
-    service: media_player.alexa_tts
-- id: alarm_disarmed
-  alias: '[Alarm] Disarmed'
-  trigger:
-  - entity_id: alarm_control_panel.house
-    platform: state
-    to: disarmed
-  action:
-  - data:
-      entity_id: media_player.matthews_echo
-      message: The house alarm has been deactivated.
-    service: media_player.alexa_tts
-  - data:
-      entity_id: lock.schlage_be469_touchscreen_deadbold_locked_4
-    service: lock.unlock
-  - data:
-      message: Home alarm has been disarmed.
-    service: notify.android
-- id: alarm_triggered
-  alias: '[Alarm] triggered'
-  trigger:
-  - entity_id: alarm_control_panel.house
-    platform: state
-    to: triggered
-  action:
-  - data:
-      message: HOUSE ALARM HAS BEEN TRIGGERED!!!
-      target: email/matthew.d.coleman@gmail.com
-    service: notify.pushbullet
-  - data:
-      message:
-      - text: The house alarm has been triggered!!
-      target:
-      - id: UgzvLhYijhFxDWudRb94AaABAagBqYHkCA
-    service: hangouts.send_message
-  - condition: state
-    entity_id: input_boolean.alarm_triggered
-    state: 'on'
-- id: alarm_warning
-  alias: '[Alarm] Warning'
-  trigger:
-  - platform: state
-    entity_id: alarm_control_panel.house
-    to: warning
-  action:
-  - service: notify.pushbullet
-    data:
-      message: ALARM Warning {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
-        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
-        }}
-      target: email/matthew.d.coleman@gmail.com
-  - service: media_player.alexa_tts
-    data:
-      entity_id: media_player.matthews_echo
-      message: Warning, the home alarm has been tripped. Please deactivate immediately
 - id: '1540780737178'
   alias: Front Lights @ Sunset
+  initial_state: true
   trigger:
   - event: sunset
     offset: -01:00:00
@@ -132,18 +11,160 @@
       entity_id: group.front_lights
     service: light.turn_on
 - id: '1540781674303'
-  alias: Front Lights @ Sunrise
+  alias: Front Lawn Light @ Sunrise
   trigger:
   - event: sunrise
-    offset: -04:00:00
+    offset: -05:00:00
     platform: sun
   condition: []
   action:
   - data:
-      entity_id: group.front_lights
+      entity_id: light.hue_color_lamp_1
     service: light.turn_off
-- id: '1540992872173'
-  alias: ''
-  trigger: []
+  initial_state: true
+- id: '1547425470922'
+  alias: Porch Lights Off @ Night
+  trigger:
+  - at: 00:00:30
+    platform: time
   condition: []
-  action: []
+  action:
+  - data:
+      entity_id: group.porch_lights
+    service: light.turn_off
+  initial_state: true
+- id: alarm_armed_away
+  alias: '[Alarm] Away Mode Armed'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: armed_away
+  action:
+  - data:
+      message: Alarm Away Mode Armed
+      target:
+      - email/xxxx@gmail.com
+      - device/OP6
+    service: notify.pushbullet
+  - data:
+      data:
+        type: tts
+      message: Home Alarm is activated in Away Mode.
+      target:
+      - Echo office
+    service: notify.alexa_media
+  initial_state: true
+- id: alarm_armed_home
+  alias: '[Alarm] Home Mode Armed'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: armed_home
+  action:
+  - data:
+      message: Alarm Home Mode Armed
+      target:
+      - email/xxxx@gmail.com
+      - device/OP6
+    service: notify.pushbullet
+  - data:
+      data:
+        type: tts
+      message: The house alarm has been switched on in home mode. Goodnight
+      target:
+      - Echo office
+    service: notify.alexa_media
+  initial_state: true
+- id: alarm_arming_away
+  alias: '[Alarm] Away Mode Arming'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: pending
+  action:
+  - data:
+      data:
+        type: tts
+      message: Home alarm is activating in Away Mode. Ensure all doors and windows
+        are shut
+      target:
+      - Echo office
+    service: notify.alexa_media
+  initial_state: true
+- id: alarm_disarmed
+  alias: '[Alarm] Disarmed'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: disarmed
+  action:
+  - data:
+      message: Alarm Disabled
+      target:
+      - email/xxxx@gmail.com
+      - device/OP6
+    service: notify.pushbullet
+  - data:
+      data:
+        type: tts
+      message: The house alarm has been Deactivated
+      target:
+      - Echo office
+      - Living Room Echo
+    service: notify.alexa_media
+  - alias: ''
+    data:
+      entity_id: switch.arduino_gw_0_52
+    service: switch.turn_off
+  initial_state: true
+- id: alarm_triggered
+  alias: '[Alarm] Triggered'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: triggered
+  action:
+  - data:
+      data:
+        type: tts
+      message: Warning! The home alarm has been triggered! {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}
+      target:
+      - Echo office
+      - Living Room Echo
+    service: notify.alexa_media
+  - data:
+      message: ALARM TRIGGERED!!! {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
+        }}
+      target:
+      - device/OP6
+    service: notify.pushbullet
+  - data:
+      entity_id: switch.arduino_gw_0_52
+    service: switch.turn_on
+  initial_state: true
+- id: alarm_warning
+  alias: '[Alarm] Warning'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: warning
+  action:
+  - data:
+      message: ALARM Warning {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
+        }}
+      target:
+      - email/xxxx@gmail.com
+      - device/OP6
+    service: notify.pushbullet
+  - data:
+      data:
+        type: tts
+      message: The house alarm has been tripped. Please deactivate immediately
+      target:
+      - Echo office
+      - Living Room Echo
+    service: notify.alexa_media
+  initial_state: true

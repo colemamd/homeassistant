@@ -1,0 +1,920 @@
+{
+    "data": {
+        "config": {
+            "resources": [
+                {
+                    "type": "module",
+                    "url": "/local/custom-lovelace/swipe-card/swipe-card.js"
+                }
+            ],
+            "title": "My Smart Home",
+            "views": [
+                {
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.date"
+                                },
+                                {
+                                    "entity": "sensor.date_time"
+                                },
+                                {
+                                    "entity": "sensor.time"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Date & Time",
+                            "type": "entities"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "binary_sensor.living_room_nest_protect_online",
+                                                    "name": "Online"
+                                                },
+                                                {
+                                                    "entity": "sensor.living_room_nest_protect_battery_health",
+                                                    "name": "Battery"
+                                                },
+                                                {
+                                                    "entity": "sensor.living_room_nest_protect_co_status",
+                                                    "name": "CO"
+                                                },
+                                                {
+                                                    "entity": "sensor.living_room_nest_protect_color_status",
+                                                    "name": "Color"
+                                                },
+                                                {
+                                                    "entity": "sensor.living_room_nest_protect_smoke_status",
+                                                    "name": "Smoke"
+                                                }
+                                            ],
+                                            "title": "Living Rm",
+                                            "type": "glance"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "binary_sensor.den_nest_protect_online",
+                                                    "name": "Online"
+                                                },
+                                                {
+                                                    "entity": "sensor.den_nest_protect_battery_health",
+                                                    "name": "Battery"
+                                                },
+                                                {
+                                                    "entity": "sensor.den_nest_protect_co_status",
+                                                    "name": "CO"
+                                                },
+                                                {
+                                                    "entity": "sensor.den_nest_protect_color_status",
+                                                    "name": "Color"
+                                                },
+                                                {
+                                                    "entity": "sensor.den_nest_protect_smoke_status",
+                                                    "name": "Smoke"
+                                                }
+                                            ],
+                                            "title": "Den",
+                                            "type": "glance"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "binary_sensor.hallway_nest_protect_online",
+                                                    "name": "Online"
+                                                },
+                                                {
+                                                    "entity": "sensor.hallway_nest_protect_battery_health",
+                                                    "name": "Battery"
+                                                },
+                                                {
+                                                    "entity": "sensor.hallway_nest_protect_co_status",
+                                                    "name": "CO"
+                                                },
+                                                {
+                                                    "entity": "sensor.hallway_nest_protect_color_status",
+                                                    "name": "Color"
+                                                },
+                                                {
+                                                    "entity": "sensor.hallway_nest_protect_smoke_status",
+                                                    "name": "Smoke"
+                                                }
+                                            ],
+                                            "title": "Hallway",
+                                            "type": "glance"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "binary_sensor.master_bedroom_nest_protect_online",
+                                                    "name": "Online"
+                                                },
+                                                {
+                                                    "entity": "sensor.master_bedroom_nest_protect_battery_health",
+                                                    "name": "Battery"
+                                                },
+                                                {
+                                                    "entity": "sensor.master_bedroom_nest_protect_co_status",
+                                                    "name": "CO"
+                                                },
+                                                {
+                                                    "entity": "sensor.master_bedroom_nest_protect_color_status",
+                                                    "name": "Color"
+                                                },
+                                                {
+                                                    "entity": "sensor.master_bedroom_nest_protect_smoke_status",
+                                                    "name": "Smoke"
+                                                }
+                                            ],
+                                            "title": "Master",
+                                            "type": "glance"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "binary_sensor.kitchen_nest_protect_online",
+                                                    "name": "Online"
+                                                },
+                                                {
+                                                    "entity": "sensor.kitchen_nest_protect_battery_health",
+                                                    "name": "Battery"
+                                                },
+                                                {
+                                                    "entity": "sensor.kitchen_nest_protect_co_status",
+                                                    "name": "CO"
+                                                },
+                                                {
+                                                    "entity": "sensor.kitchen_nest_protect_color_status",
+                                                    "name": "Color"
+                                                },
+                                                {
+                                                    "entity": "sensor.kitchen_nest_protect_smoke_status",
+                                                    "name": "Smoke"
+                                                }
+                                            ],
+                                            "title": "Kitchen",
+                                            "type": "glance"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "binary_sensor.bedroom_1_nest_protect_online",
+                                                    "name": "Online"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_1_nest_protect_battery_health",
+                                                    "name": "Battery"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_1_nest_protect_co_status",
+                                                    "name": "CO"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_1_nest_protect_color_status",
+                                                    "name": "Color"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_1_nest_protect_smoke_status",
+                                                    "name": "Smoke"
+                                                }
+                                            ],
+                                            "title": "Front Bed",
+                                            "type": "glance"
+                                        },
+                                        {
+                                            "entities": [
+                                                {
+                                                    "entity": "binary_sensor.bedroom_2_nest_protect_online",
+                                                    "name": "Online"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_2_nest_protect_battery_health",
+                                                    "name": "Battery"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_2_nest_protect_co_status",
+                                                    "name": "CO"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_2_nest_protect_color_status",
+                                                    "name": "Color"
+                                                },
+                                                {
+                                                    "entity": "sensor.bedroom_2_nest_protect_smoke_status",
+                                                    "name": "Smoke"
+                                                }
+                                            ],
+                                            "title": "Back Bed",
+                                            "type": "glance"
+                                        }
+                                    ],
+                                    "parameters": {
+                                        "centeredSlides": true,
+                                        "coverflowEffect": {
+                                            "depth": 100,
+                                            "modifier": 1,
+                                            "rotate": 50,
+                                            "slideShadows": true,
+                                            "stretch": 0
+                                        },
+                                        "effect": "coverflow",
+                                        "grabCursor": true,
+                                        "keyboard": {
+                                            "enabled": true,
+                                            "onlyInViewport": true
+                                        },
+                                        "navigation": null,
+                                        "pagination": {
+                                            "type": "bullets"
+                                        },
+                                        "slidesPerView": "auto"
+                                    },
+                                    "type": "custom:swipe-card"
+                                }
+                            ],
+                            "title": "Nest Protects",
+                            "type": "horizontal-stack"
+                        },
+                        {
+                            "entities": [
+                                "sensor.ups_status",
+                                "sensor.ups_time_left",
+                                "sensor.ups_time_on_battery",
+                                "sensor.ups_total_time_on_battery",
+                                "sensor.ups_battery",
+                                "sensor.ups_battery_voltage",
+                                "sensor.ups_battery_nominal_voltage",
+                                "sensor.ups_last_transfer",
+                                "sensor.ups_load",
+                                "sensor.ups_input_voltage",
+                                "sensor.ups_nominal_input_voltage",
+                                "sensor.ups_nominal_output_power",
+                                "sensor.ups_transfer_count"
+                            ],
+                            "title": "Main UPS",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                "lock.lock_front_door_lock",
+                                "sensor.front_door_report",
+                                "sensor.frontdoor_code"
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Front Door Info",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                "input_select.lock_zwave_option_3_front",
+                                "input_select.lock_zwave_option_4_front",
+                                "input_select.lock_zwave_option_5_front",
+                                "input_select.lock_zwave_option_7_front",
+                                "input_select.lock_zwave_option_8_front",
+                                "input_select.lock_zwave_option_9_front",
+                                "input_select.lock_zwave_option_10_front",
+                                "input_select.lock_zwave_option_11_front",
+                                "input_select.lock_zwave_option_15_front",
+                                "input_select.lock_zwave_option_16_front"
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Front Door Config Options",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "automation.front_lawn_light_sunrise"
+                                },
+                                {
+                                    "entity": "automation.porch_lights_off_night"
+                                },
+                                {
+                                    "entity": "automation.front_lights_sunset"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Automations",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                "input_select.destination",
+                                "sensor.dest_address",
+                                "sensor.home_eta",
+                                "sensor.me_to_destination"
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Waze",
+                            "type": "entities"
+                        }
+                    ],
+                    "id": "home",
+                    "title": "Home"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.den_light"
+                                },
+                                {
+                                    "entity": "switch.den_fan"
+                                },
+                                {
+                                    "entity": "switch.den_lamp"
+                                }
+                            ],
+                            "title": "Den",
+                            "type": "entities"
+                        }
+                    ],
+                    "panel": true,
+                    "title": "Den"
+                },
+                {
+                    "badges": [
+                        "binary_sensor.living_room_nest_protect_online",
+                        "sensor.living_room_nest_protect_color_status",
+                        "sensor.living_room_nest_protect_battery_health",
+                        "sensor.living_room_nest_protect_smoke_status",
+                        "sensor.living_room_nest_protect_co_status"
+                    ],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "light.television_light"
+                                }
+                            ],
+                            "title": "Lights",
+                            "type": "entities"
+                        }
+                    ],
+                    "panel": true,
+                    "title": "Living Room"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.dining_room_light"
+                                }
+                            ],
+                            "title": "Lights",
+                            "type": "entities"
+                        }
+                    ],
+                    "panel": true,
+                    "title": "Kitchen"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "group.front_lights"
+                                },
+                                {
+                                    "entity": "group.porch_lights"
+                                },
+                                {
+                                    "entity": "light.front_lawn"
+                                },
+                                {
+                                    "entity": "switch.overhead_garage_door"
+                                }
+                            ],
+                            "title": "Outside",
+                            "type": "entities"
+                        }
+                    ],
+                    "panel": true,
+                    "title": "Outside"
+                },
+                {
+                    "cards": [
+                        {
+                            "entities": [
+                                "switch.hulu",
+                                "switch.netflix",
+                                "switch.plex",
+                                "switch.music"
+                            ],
+                            "entity": "sensor.harmony_hub",
+                            "id": "living_room",
+                            "state_image": {
+                                "Hulu": "/local/images/hulu_logo.gif",
+                                "Music": "/local/images/music-graph.gif",
+                                "Netflix": "/local/images/netflix.png",
+                                "Plex": "/local/images/plex.png",
+                                "PowerOff": "/local/images/off.jpg"
+                            },
+                            "title": "Living Room",
+                            "type": "picture-glance"
+                        },
+                        {
+                            "entity": "media_player.volumio_volumio_local",
+                            "type": "media-control"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "entities": [
+                                        "switch.hulu_den",
+                                        "switch.netflix_den",
+                                        "switch.plex_den"
+                                    ],
+                                    "entity": "sensor.den_media",
+                                    "id": "den_media",
+                                    "state_image": {
+                                        "Davinci Channel": "/local/images/off.jpg",
+                                        "Hulu": "/local/images/hulu_logo.gif",
+                                        "Netflix": "/local/images/netflix.png",
+                                        "Plex": "/local/images/plex.png"
+                                    },
+                                    "title": "Den",
+                                    "type": "picture-glance"
+                                },
+                                {
+                                    "entities": [
+                                        "media_player.matthews_echo",
+                                        "media_player.echo__office",
+                                        "media_player.matthews_echo_show"
+                                    ],
+                                    "type": "entities"
+                                }
+                            ],
+                            "title": "Den",
+                            "type": "vertical-stack"
+                        },
+                        {
+                            "cards": [
+                                {
+                                    "entity": "media_player.bedroom",
+                                    "type": "media-control"
+                                }
+                            ],
+                            "title": "Other",
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "icon": "mdi:television-box",
+                    "id": "Media",
+                    "title": "Media",
+                    "type": "horizontal-stack"
+                },
+                {
+                    "cards": [
+                        {
+                            "entity": "alarm_control_panel.house",
+                            "type": "alarm-panel"
+                        },
+                        {
+                            "entities": [
+                                "lock.lock_front_door_lock"
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Lock",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                "binary_sensor.arduino_gw_0_22",
+                                "binary_sensor.arduino_gw_0_23",
+                                "binary_sensor.arduino_gw_0_24",
+                                "binary_sensor.arduino_gw_0_25",
+                                "binary_sensor.arduino_gw_0_26",
+                                "binary_sensor.arduino_gw_0_27",
+                                "binary_sensor.arduino_gw_0_28",
+                                "binary_sensor.arduino_gw_0_29",
+                                "binary_sensor.arduino_gw_0_30",
+                                "binary_sensor.arduino_gw_0_31",
+                                "binary_sensor.arduino_gw_0_32",
+                                "binary_sensor.arduino_gw_0_33",
+                                "binary_sensor.arduino_gw_0_34",
+                                "binary_sensor.arduino_gw_0_35",
+                                "binary_sensor.overhead_garage_door_status",
+                                "binary_sensor.arduino_gw_0_36",
+                                "binary_sensor.arduino_gw_0_37",
+                                "binary_sensor.arduino_gw_0_38",
+                                "binary_sensor.ring_front_door_ding",
+                                "binary_sensor.ring_front_door_motion"
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Security Sensors",
+                            "type": "glance"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "automation.alarm_away_mode_armed"
+                                },
+                                {
+                                    "entity": "automation.alarm_away_mode_arming"
+                                },
+                                {
+                                    "entity": "automation.alarm_disarmed"
+                                },
+                                {
+                                    "entity": "automation.alarm_home_mode_armed"
+                                },
+                                {
+                                    "entity": "automation.alarm_triggered"
+                                },
+                                {
+                                    "entity": "automation.alarm_warning"
+                                }
+                            ],
+                            "show_header_toggle": true,
+                            "title": "Home Alarm Automations",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "switch.arduino_gw_0_52"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Alarm Siren",
+                            "type": "entities"
+                        }
+                    ],
+                    "icon": "mdi:security",
+                    "id": "security",
+                    "title": "Security"
+                },
+                {
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "cards": [
+                                        {
+                                            "content": "## Door Lock Info\nThe first few cards show the door reports\n\n## Code Management\nThe next cards are for user code slot management\nCodes 1-10 are for Family Members\nCodes 11-15 are for Workers\nCodes 16-18 are one time use slots\n\n##  The last few cards are for Z-Wave options\n"
+                                        }
+                                    ],
+                                    "type": "markdown"
+                                },
+                                {
+                                    "entities": [
+                                        "lock.lock_front_door_lock",
+                                        "sensor.front_door_report",
+                                        "sensor.frontdoor_code"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Front Door Info",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_1_name",
+                                        "input_text.door_keypad_1_code",
+                                        "input_select.door_keypad_1_access_schedule",
+                                        "input_datetime.door_keypad_1_date_start",
+                                        "input_datetime.door_keypad_1_date_end",
+                                        "input_boolean.door_keypad_1_front_switch",
+                                        "script.door_keypad_1_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 1",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_2_code",
+                                        "input_select.door_keypad_2_access_schedule",
+                                        "input_datetime.door_keypad_2_date_start",
+                                        "input_datetime.door_keypad_2_date_end",
+                                        "input_boolean.door_keypad_2_front_switch",
+                                        "input_text.door_keypad_2_name",
+                                        "script.door_keypad_2_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 2",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_3_name",
+                                        "input_text.door_keypad_3_code",
+                                        "input_select.door_keypad_3_access_schedule",
+                                        "input_datetime.door_keypad_3_date_start",
+                                        "input_datetime.door_keypad_3_date_end",
+                                        "input_boolean.door_keypad_3_front_switch",
+                                        "script.door_keypad_3_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 3",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_4_name",
+                                        "input_text.door_keypad_4_code",
+                                        "input_select.door_keypad_4_access_schedule",
+                                        "input_datetime.door_keypad_4_date_start",
+                                        "input_datetime.door_keypad_4_date_end",
+                                        "input_boolean.door_keypad_4_front_switch",
+                                        "script.door_keypad_4_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 4",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_5_name",
+                                        "input_text.door_keypad_5_code",
+                                        "input_select.door_keypad_5_access_schedule",
+                                        "input_datetime.door_keypad_5_date_start",
+                                        "input_datetime.door_keypad_5_date_end",
+                                        "input_boolean.door_keypad_5_front_switch",
+                                        "script.door_keypad_5_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 5",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_6_name",
+                                        "input_text.door_keypad_6_code",
+                                        "input_select.door_keypad_6_access_schedule",
+                                        "input_datetime.door_keypad_6_date_start",
+                                        "input_datetime.door_keypad_6_date_end",
+                                        "input_boolean.door_keypad_6_front_switch",
+                                        "script.door_keypad_6_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 6",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_7_name",
+                                        "input_text.door_keypad_7_code",
+                                        "input_select.door_keypad_7_access_schedule",
+                                        "input_datetime.door_keypad_7_date_start",
+                                        "input_datetime.door_keypad_7_date_end",
+                                        "input_boolean.door_keypad_7_front_switch",
+                                        "script.door_keypad_7_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 7",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_8_code",
+                                        "input_select.door_keypad_8_access_schedule",
+                                        "input_datetime.door_keypad_8_date_start",
+                                        "input_datetime.door_keypad_8_date_end",
+                                        "input_text.door_keypad_8_name",
+                                        "input_boolean.door_keypad_8_front_switch",
+                                        "script.door_keypad_8_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 8",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_9_name",
+                                        "input_text.door_keypad_9_code",
+                                        "input_select.door_keypad_9_access_schedule",
+                                        "input_datetime.door_keypad_9_date_start",
+                                        "input_datetime.door_keypad_9_date_end",
+                                        "input_boolean.door_keypad_9_front_switch",
+                                        "script.door_keypad_9_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 9",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_10_name",
+                                        "input_text.door_keypad_10_code",
+                                        "input_select.door_keypad_10_access_schedule",
+                                        "input_datetime.door_keypad_10_date_start",
+                                        "input_datetime.door_keypad_10_date_end",
+                                        "input_boolean.door_keypad_10_front_switch",
+                                        "script.door_keypad_10_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 10",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_11_name",
+                                        "input_text.door_keypad_11_code",
+                                        "input_select.door_keypad_11_access_schedule",
+                                        "input_datetime.door_keypad_11_date_start",
+                                        "input_datetime.door_keypad_11_date_end",
+                                        "input_boolean.door_keypad_11_front_switch",
+                                        "script.door_keypad_11_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 11",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_12_name",
+                                        "input_text.door_keypad_12_code",
+                                        "input_select.door_keypad_12_access_schedule",
+                                        "input_datetime.door_keypad_12_date_start",
+                                        "input_datetime.door_keypad_12_date_end",
+                                        "input_boolean.door_keypad_12_front_switch",
+                                        "script.door_keypad_12_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 12",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_13_name",
+                                        "input_text.door_keypad_13_code",
+                                        "input_select.door_keypad_13_access_schedule",
+                                        "input_datetime.door_keypad_13_date_start",
+                                        "input_datetime.door_keypad_13_date_end",
+                                        "input_boolean.door_keypad_13_front_switch",
+                                        "script.door_keypad_13_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 13",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_14_name",
+                                        "input_text.door_keypad_14_code",
+                                        "input_select.door_keypad_14_access_schedule",
+                                        "input_datetime.door_keypad_14_date_start",
+                                        "input_datetime.door_keypad_14_date_end",
+                                        "input_boolean.door_keypad_14_front_switch",
+                                        "script.door_keypad_14_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 14",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_text.door_keypad_15_name",
+                                        "input_text.door_keypad_15_code",
+                                        "input_select.door_keypad_15_access_schedule",
+                                        "input_datetime.door_keypad_15_date_start",
+                                        "input_datetime.door_keypad_15_date_end",
+                                        "input_boolean.door_keypad_15_front_switch",
+                                        "script.door_keypad_15_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "Entry Code 15",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_select.door_keypad_16_access_schedule",
+                                        "input_text.door_keypad_16_name",
+                                        "input_text.door_keypad_16_code",
+                                        "input_boolean.door_keypad_16_front_switch",
+                                        "script.door_keypad_16_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "One Time Use Code 1",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_select.door_keypad_17_access_schedule",
+                                        "input_text.door_keypad_17_name",
+                                        "input_text.door_keypad_17_code",
+                                        "input_boolean.door_keypad_17_front_switch",
+                                        "script.door_keypad_17_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "One Time Use Code 2",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_select.door_keypad_18_access_schedule",
+                                        "input_text.door_keypad_18_name",
+                                        "input_text.door_keypad_18_code",
+                                        "input_boolean.door_keypad_18_front_switch",
+                                        "script.door_keypad_18_delete"
+                                    ],
+                                    "show_header_toggle": false,
+                                    "title": "One Time Use Code 3",
+                                    "type": "entities"
+                                },
+                                {
+                                    "entities": [
+                                        "input_select.lock_zwave_option_3_front",
+                                        "input_select.lock_zwave_option_4_front",
+                                        "input_select.lock_zwave_option_5_front",
+                                        "input_select.lock_zwave_option_7_front",
+                                        "input_select.lock_zwave_option_8_front",
+                                        "input_select.lock_zwave_option_9_front",
+                                        "input_select.lock_zwave_option_10_front",
+                                        "input_select.lock_zwave_option_11_front",
+                                        "input_select.lock_zwave_option_15_front",
+                                        "input_select.lock_zwave_option_16_front"
+                                    ],
+                                    "parameters": {
+                                        "centeredSlides": true,
+                                        "coverflowEffect": {
+                                            "depth": 100,
+                                            "modifier": 1,
+                                            "rotate": 50,
+                                            "slideShadows": true,
+                                            "stretch": 0
+                                        },
+                                        "effect": "coverflow",
+                                        "grabCursor": true,
+                                        "keyboard": {
+                                            "enabled": true,
+                                            "onlyInViewport": true
+                                        },
+                                        "navigation": null,
+                                        "pagination": {
+                                            "type": "bullets"
+                                        },
+                                        "slidesPerView": "auto"
+                                    },
+                                    "type": "custom:swipe-card"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "icon": "mdi:lock-smart",
+                    "id": "doorlock",
+                    "title": "Lock"
+                },
+                {
+                    "cards": [
+                        {
+                            "cards": [
+                                {
+                                    "entity": "weather.openweathermap",
+                                    "type": "weather-forecast"
+                                },
+                                {
+                                    "cards": [
+                                        {
+                                            "entity": "climate.living_room",
+                                            "title": "Nest thermostat",
+                                            "type": "thermostat"
+                                        },
+                                        {
+                                            "cards": [
+                                                {
+                                                    "entities": [
+                                                        "binary_sensor.home_away"
+                                                    ],
+                                                    "icon": "mdi:home-circle",
+                                                    "title": "Away mode",
+                                                    "type": "entities"
+                                                },
+                                                {
+                                                    "entity": "sensor.living_room_thermostat_humidity",
+                                                    "title": "Indoor Humidity",
+                                                    "type": "gauge"
+                                                }
+                                            ],
+                                            "type": "vertical-stack"
+                                        }
+                                    ],
+                                    "type": "horizontal-stack"
+                                }
+                            ],
+                            "type": "vertical-stack"
+                        }
+                    ],
+                    "id": "environment",
+                    "panel": true,
+                    "title": "Environment"
+                }
+            ]
+        }
+    },
+    "key": "lovelace",
+    "version": 1
+}

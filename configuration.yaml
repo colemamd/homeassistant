@@ -14,9 +14,23 @@ homeassistant:
   customize: !include customize.yaml
   packages: !include_dir_named packages
 
+alexa_media:
+  accounts:
+    - email: !secret amazon-user
+      password: !secret amazon-pass
+      url: amazon.com
+      include_devices:
+        - "Echo office"
+        - "Echo Show"
+        - "Living Room Echo"
+
 apcupsd:
   host: 127.0.0.1
   port: 3551
+
+# custom_updater:
+#   component_urls:
+#     - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
@@ -24,7 +38,7 @@ default_config:
 device_tracker:
 
 http:
-  base_url: http://hass.colemanonline.net
+  base_url: http://xxxx
   use_x_forwarded_for: true
   trusted_proxies:
     - 192.168.2.100
@@ -38,8 +52,13 @@ input_select:
       - Nicholas
       - Johnathon
 
+media_player:
+  - platform: plex
+
 # MQTT
 mqtt:
+  broker: 127.0.0.1
+  port: 1888
 
 # Nest
 nest:
@@ -50,11 +69,14 @@ notify:
   # Pushbullet notifications
   - name: pushbullet
     platform: pushbullet
-    api_key: o.HyKdUqIgnaoC598rkdLWji73ee25DDUL
+    api_key: xxxxxx
 
   # HANotify (used for Ariela)
   - name: android
     platform: fcm-android
+
+  - platform: alexa_media
+    name: alexa_media
 
 remote:
   - platform: harmony
@@ -199,6 +221,7 @@ alarm_control_panel: !include alarm.yaml
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
 group: !include groups.yaml
+mysensors: !include mysensors_config.yaml
 panel_custom: !include panel_custom.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml
