@@ -15,23 +15,71 @@
     - battv
     - nombattv
 
+- platform: glances
+  version: 3
+  name: "HASS"
+  resources:
+    - disk_use_percent
+    - disk_free
+    - memory_use_percent
+    - memory_free
+    - swap_use_percent
+    - swap_free
+    - processor_load
+    - process_running
+    - process_total
+    - process_thread
+    - cpu_use_percent
+    - docker_active
+    - docker_cpu_use
+    - docker_memory_use
+
+- platform: glances
+  version: 3
+  name: "torrent-pi"
+  resources:
+    - disk_use_percent
+    - disk_free
+    - memory_use_percent
+    - memory_free
+    - swap_use_percent
+    - swap_free
+    - processor_load
+    - process_running
+    - process_total
+    - process_thread
+    - cpu_use_percent
+
+- platform: glances
+  version: 3
+  name: "pihole"
+  resources:
+    - disk_use_percent
+    - disk_free
+    - memory_use_percent
+    - memory_free
+    - swap_use_percent
+    - swap_free
+    - processor_load
+    - process_running
+    - process_total
+    - process_thread
+    - cpu_use_percent
+
+- platform: mqtt
+  name: "Washing Machine Power"
+  state_topic: "tele/sonoff/SENSOR"
+  value_template: '{{ value_json["ENERGY"]["Power"] }}'
+  unit_of_measurement: "W"
+
+- platform: mqtt
+  name: "Washing Machine Current"
+  state_topic: "tele/sonoff/SENSOR"
+  value_template: '{{ value_json["ENERGY"]["Current"] }}'
+  unit_of_measurement: "A"
+
 - platform: template
   sensors:
-  #Waze travel time
-    dest_address:
-      value_template: >-
-        {%- if is_state("input_select.destination", "Home") -%}
-          !secret home_address
-        {%- elif is_state("input_select.destination", "Work") -%}
-          !secret work_address
-        {%- elif is_state("input_select.destination", "Nicholas") -%}
-          !secret nick_address
-        {%- elif is_state("input_select.destination", "Johnathon") -%}
-          !secret john_address
-        {%- else -%}
-          Unknown
-        {%- endif %}
-
     harmony_hub:
       value_template: '{{ states.remote.living_room.attributes.current_activity }}'
       friendly_name: Harmony
@@ -40,11 +88,22 @@
       value_template: '{{ states.media_player.den_roku.attributes.source }}'
       friendly_name: 'Den TV Source'
 
-- platform: waze_travel_time
-  name: "Me to destination"
-  origin: device_tracker.matt_phone
-  destination: sensor.dest_address
-  region: 'US'
+    bedroom_media:
+      value_template: '{{ states.media_player.bedroom_roku.attributes.source }}'
+      friendly_name: 'Bedroom TV Source'
+
+- platform: uptime
+  name: HASS uptime
+  unit_of_measurement: hours
+
+- platform: version
+  name: Current Version
+  source: local
+
+- platform: version
+  name: Version Available
+  source: docker
+  image: raspberrypi3
 
 - platform: time_date
   display_options:

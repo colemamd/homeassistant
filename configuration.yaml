@@ -28,20 +28,48 @@ apcupsd:
   host: 127.0.0.1
   port: 3551
 
-# custom_updater:
-#   component_urls:
-#     - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
+breaking_changes:
 
-# Configure a default setup of Home Assistant (frontend, api, etc)
+#custom_updater:
+#  card_urls:
+#    - https://raw.githubusercontent.com/bramkragten/custom-ui/master/updater.json
+#  component_urls:
+#    - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
+
+camera:
+  - platform: ffmpeg
+    input: 192.168.2.41
+  - platform: ffmpeg
+    input: 192.168.2.42
+  - platform: ffmpeg
+    input: 192.168.2.43
+
 default_config:
 
 device_tracker:
 
-http:
-  base_url: http://xxxx
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 192.168.2.100
+frontend:
+  themes: !include themes/slate.yaml
+
+hacs:
+  token: af4bb5c6c285d66a245092594a25b25f3a99ef06
+  sidepanel_title: HACS
+  python_script: true
+  theme: true
+  options:
+    experimental: true
+
+#http:
+#  base_url: http://hass.colemanonline.net:8123
+#  use_x_forwarded_for: true
+#  trusted_proxies:
+#    - 192.168.2.100
+
+hue:
+  bridges:
+    - host: 192.168.2.204
+
+influxdb:
 
 input_select:
   destination:
@@ -51,9 +79,35 @@ input_select:
       - Work
       - Nicholas
       - Johnathon
+  roku_source:
+    name: roku_source
+    options:
+      - Netflix
+      - Hulu
+      - Plex
+      - YouTube
+      - Fox Sports
+      - Pluto TV
+      - The Roku Channel
+      - Tubi
+  sleep_timer:
+    name: Sleep Timer
+    options:
+      - 0
+      - 30
+      - 60
+      - 90
+      - 120
 
-media_player:
-  - platform: plex
+logger:
+  default: info
+  logs:
+    hacs: debug
+
+lovelace:
+  mode: yaml
+
+mobile_app:
 
 # MQTT
 mqtt:
@@ -69,142 +123,32 @@ notify:
   # Pushbullet notifications
   - name: pushbullet
     platform: pushbullet
-    api_key: xxxxxx
+    api_key: o.HyKdUqIgnaoC598rkdLWji73ee25DDUL
 
-  # HANotify (used for Ariela)
-  - name: android
-    platform: fcm-android
+pi_hole:
+  host: '192.168.2.254'
 
-  - platform: alexa_media
-    name: alexa_media
+plex:
+  token: LWzyHYspyX9Z8E71s9es
+
+recorder:
+  purge_keep_days: 14
 
 remote:
   - platform: harmony
     name: Living Room
-    host: 192.168.2.5
+    host: 192.168.2.45
 
 ring:
   username: !secret ring_client_id
   password: !secret ring_client_password
 
-switch:
-  - platform: mqtt
-    name: "Overhead Garage Door"
-    state_topic: "/Garage/Ovhd_Garage_Status/Ovhd_Garage_Status"
-    command_topic: "/Garage/gpio/12"
-    payload_on: 1
-    payload_off: 1
+roku:
+  - host: 192.168.2.8
+  - host: 192.168.2.10
+  - host: 192.168.2.11
 
-  - platform: mqtt
-    name: "Arm Alarm Home"
-    command_topic: "home/alarm/set"
-    state_topic: "home/alarm"
-    payload_on: "ARM_HOME"
-    payload_off: "DISARM"
-    state_on: "armed_home"
-    state_off: "disarmed"
-
-  - platform: mqtt
-    name: "Arm Alarm Away"
-    command_topic: "home/alarm/set"
-    state_topic: "home/alarm"
-    payload_on: "ARM_AWAY"
-    payload_off: "DISARM"
-    state_on: "armed_away"
-    state_off: "disarmed"
-
-  - platform: template
-    switches:
-      hulu:
-        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Hulu') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'Hulu'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'PowerOff'
-
-      netflix:
-        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Netflix') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'Netflix'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'PowerOff'
-
-      plex:
-        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Plex') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'Plex'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'PowerOff'
-
-      music:
-        value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Music') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'Music'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.living_room
-            activity: 'PowerOff'
-
-      hulu_den:
-        value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Hulu') }}"
-        turn_on:
-          service: media_player.select_source
-          data:
-            entity_id: media_player.den_roku
-            source: 'Hulu'
-        turn_off:
-          service: remote.send_command
-          data:
-            entity_id: remote.den_roku
-            command: power
-
-      netflix_den:
-        value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Netflix') }}"
-        turn_on:
-          service: media_player.select_source
-          data:
-            entity_id: media_player.den_roku
-            activity: 'Netflix'
-        turn_off:
-          service: remote.send_command
-          data:
-            entity_id: remote.den_roku
-            command: power
-
-      plex_den:
-        value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Plex') }}"
-        turn_on:
-          service: media_player.select_source
-          data:
-            entity_id: media_player.den_roku
-            activity: 'Plex'
-        turn_off:
-          service: remote.send_command
-          data:
-            entity_id: remote.den_roku
-            command: power
+switch: !include switch.yaml
 
 # Text to speech
 #tts:
@@ -217,11 +161,16 @@ weather:
 wemo:
   discovery: true
 
-alarm_control_panel: !include alarm.yaml
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: "0x48, 0xE7, 0x5A, 0x4F, 0x14, 0x30, 0x60, 0x0D, 0x08, 0x07, 0x53, 0xAD, 0xF1, 0xFF, 0x01, 0xFF"
+  autoheal: true
+
+alarm_control_panel: !include resources/bwalarm/bwalarm.yaml
 automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
 group: !include groups.yaml
 mysensors: !include mysensors_config.yaml
-panel_custom: !include panel_custom.yaml
+#panel_custom: !include panel_custom.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml

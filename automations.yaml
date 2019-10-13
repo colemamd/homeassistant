@@ -14,12 +14,11 @@
   alias: Front Lawn Light @ Sunrise
   trigger:
   - event: sunrise
-    offset: -05:00:00
     platform: sun
   condition: []
   action:
   - data:
-      entity_id: light.hue_color_lamp_1
+      entity_id: light.front_lawn
     service: light.turn_off
   initial_state: true
 - id: '1547425470922'
@@ -43,8 +42,7 @@
   - data:
       message: Alarm Away Mode Armed
       target:
-      - email/xxxx@gmail.com
-      - device/OP6
+      - email/matthew.d.coleman@gmail.com
     service: notify.pushbullet
   - data:
       data:
@@ -52,6 +50,7 @@
       message: Home Alarm is activated in Away Mode.
       target:
       - Echo office
+      - Living Room Echo
     service: notify.alexa_media
   initial_state: true
 - id: alarm_armed_home
@@ -64,16 +63,22 @@
   - data:
       message: Alarm Home Mode Armed
       target:
-      - email/xxxx@gmail.com
-      - device/OP6
+      - email/matthew.d.coleman@gmail.com
     service: notify.pushbullet
   - data:
       data:
         type: tts
-      message: The house alarm has been switched on in home mode. Goodnight
+      message: The house alarm has been armed in home mode. Goodnight
       target:
       - Echo office
+      - Living Room Echo
     service: notify.alexa_media
+  - data:
+      entity_id: lock.lock_front_door_lock
+    service: lock.lock
+  - data:
+      message: Home Alarm is armed in Home mode.
+    service: notify.mobile_app_matt_phone
   initial_state: true
 - id: alarm_arming_away
   alias: '[Alarm] Away Mode Arming'
@@ -86,9 +91,10 @@
       data:
         type: tts
       message: Home alarm is activating in Away Mode. Ensure all doors and windows
-        are shut
+        are shut. Goodbye.
       target:
       - Echo office
+      - Living Room Echo
     service: notify.alexa_media
   initial_state: true
 - id: alarm_disarmed
@@ -101,21 +107,22 @@
   - data:
       message: Alarm Disabled
       target:
-      - email/xxxx@gmail.com
-      - device/OP6
+      - email/matthew.d.coleman@gmail.com
     service: notify.pushbullet
   - data:
       data:
         type: tts
       message: The house alarm has been Deactivated
       target:
-      - Echo office
       - Living Room Echo
     service: notify.alexa_media
   - alias: ''
     data:
       entity_id: switch.arduino_gw_0_52
     service: switch.turn_off
+  - data:
+      message: Home Alarm has been deactivated.
+    service: notify.mobile_app_matt_phone
   initial_state: true
 - id: alarm_triggered
   alias: '[Alarm] Triggered'
@@ -126,23 +133,32 @@
   action:
   - data:
       data:
-        type: tts
-      message: Warning! The home alarm has been triggered! {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
-        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}
+        method: all
+        type: all
+      message: Warning! The home alarm has been triggered by {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}.
+        The authorities have been notified. Leave immediately!
       target:
       - Echo office
       - Living Room Echo
+      title: Home Alarm TRIGGERED by {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}.
     service: notify.alexa_media
   - data:
       message: ALARM TRIGGERED!!! {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
         states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
-        }}
+        }} has been tripped.
       target:
-      - device/OP6
+      - email/matthew.d.coleman@gmail.com
     service: notify.pushbullet
   - data:
       entity_id: switch.arduino_gw_0_52
     service: switch.turn_on
+  - data:
+      action: Disarm
+      message: Home Alarm TRIGGERED by {{states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}.
+      title: Disarm
+    service: notify.mobile_app_matt_phone
   initial_state: true
 - id: alarm_warning
   alias: '[Alarm] Warning'
@@ -154,17 +170,99 @@
   - data:
       message: ALARM Warning {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
         states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
-        }}
+        }} has been tripped.
       target:
-      - email/xxxx@gmail.com
-      - device/OP6
+      - email/matthew.d.coleman@gmail.com
     service: notify.pushbullet
   - data:
       data:
-        type: tts
-      message: The house alarm has been tripped. Please deactivate immediately
+        method: all
+        type: tts, announce
+      message: The house alarm has been activated. {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
+        }} has been tripped. Please deactivate immediately.
       target:
-      - Echo office
       - Living Room Echo
+      title: Home Alarm WARNING
     service: notify.alexa_media
   initial_state: true
+- id: '1556842770224'
+  alias: Front Door Unlock Upon Arriving Home
+  trigger:
+  - entity_id: binary_sensor.ring_front_door_motion
+    platform: state
+    to: '"on"'
+  condition:
+  - condition: zone
+    entity_id: device_tracker.matt_phone
+    zone: zone.home
+  action:
+  - data:
+      armed_state: disarmed
+    service: alarm_control_panel.alarm_disarm
+- id: '1557103120900'
+  alias: Den Light On on Motion
+  trigger:
+  - entity_id: binary_sensor.arduino_gw_0_34
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.den_light
+    service: switch.turn_on
+- id: '1557103744211'
+  alias: Den Light Off After No Motion
+  trigger:
+  - entity_id: binary_sensor.arduino_gw_0_34
+    for: 00:05:00
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.den_light
+    service: switch.turn_off
+- id: '1557803629521'
+  alias: Notify Upon Unlock
+  trigger:
+  - entity_id: lock.lock_front_door_lock
+    platform: state
+    to: unlocked
+  condition: []
+  action:
+  - delay: 00:00:05
+  - alias: ''
+    data:
+      data:
+        type: tts
+      message: Welcome Home {{ states('sensor.frontdoor_code') }}
+      target: Living Room Echo
+    service: notify.alexa_media
+  - data:
+      message: 'Front Door unlocked by {{ states(''sensor.frontdoor_code'') }} '
+    service: notify.mobile_app_matt_phone
+- id: '1562246257621'
+  alias: HACS Persistent Notification
+  trigger:
+  - above: '0'
+    entity_id: sensor.hacs
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      message: Update available!
+      title: HACS
+    service: persistent_notification.create
+- id: '1562248478361'
+  alias: HA Update Available
+  trigger:
+  - platform: template
+    value_template: '{{ states(''state.version_available'') > states(''state.version_current'')
+      }}'
+  condition: []
+  action:
+  - data:
+      message: HA Version {{ state.version_available }} Available!
+      title: HASS
+    service: persistent_notification.create
