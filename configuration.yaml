@@ -52,18 +52,12 @@ frontend:
   themes: !include themes/slate.yaml
 
 hacs:
-  token: af4bb5c6c285d66a245092594a25b25f3a99ef06
+  token: xxxxxxxx
   sidepanel_title: HACS
   python_script: true
   theme: true
   options:
     experimental: true
-
-#http:
-#  base_url: http://hass.colemanonline.net:8123
-#  use_x_forwarded_for: true
-#  trusted_proxies:
-#    - 192.168.2.100
 
 hue:
   bridges:
@@ -123,13 +117,13 @@ notify:
   # Pushbullet notifications
   - name: pushbullet
     platform: pushbullet
-    api_key: o.HyKdUqIgnaoC598rkdLWji73ee25DDUL
+    api_key: xxxxxxxx
 
 pi_hole:
   host: '192.168.2.254'
 
 plex:
-  token: LWzyHYspyX9Z8E71s9es
+  token: xxxxxxxx
 
 recorder:
   purge_keep_days: 14
@@ -150,10 +144,6 @@ roku:
 
 switch: !include switch.yaml
 
-# Text to speech
-#tts:
-#  - platform: google
-
 weather:
   platform: openweathermap
   api_key: !secret openweathermap-api_key
@@ -163,7 +153,7 @@ wemo:
 
 zwave:
   usb_path: /dev/ttyACM0
-  network_key: "0x48, 0xE7, 0x5A, 0x4F, 0x14, 0x30, 0x60, 0x0D, 0x08, 0x07, 0x53, 0xAD, 0xF1, 0xFF, 0x01, 0xFF"
+  network_key: xxxxxxxx
   autoheal: true
 
 alarm_control_panel: !include resources/bwalarm/bwalarm.yaml
