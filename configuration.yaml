@@ -30,12 +30,6 @@ apcupsd:
 
 breaking_changes:
 
-#custom_updater:
-#  card_urls:
-#    - https://raw.githubusercontent.com/bramkragten/custom-ui/master/updater.json
-#  component_urls:
-#    - https://raw.githubusercontent.com/keatontaylor/alexa_media_player/master/custom_components.json
-
 camera:
   - platform: ffmpeg
     input: 192.168.2.41
