@@ -38,7 +38,11 @@ camera:
   - platform: ffmpeg
     input: 192.168.2.43
 
-default_config:
+cloud:
+
+config:
+
+# default_config:
 
 device_tracker:
 
@@ -52,6 +56,16 @@ hacs:
   theme: true
   options:
     experimental: true
+
+history:
+  exclude:
+    domains:
+      - automation
+      - input_boolean
+      - input_datetime
+      - input_select
+      - input_text
+      - script
 
 hue:
   bridges:
@@ -87,6 +101,16 @@ input_select:
       - 90
       - 120
 
+logbook:
+  exclude:
+    domains:
+      - automation
+      - input_boolean
+      - input_datetime
+      - input_select
+      - input_text
+      - script
+
 logger:
   default: info
   logs:
@@ -113,6 +137,8 @@ notify:
     platform: pushbullet
     api_key: xxxxxxxx
 
+person:
+
 pi_hole:
   host: '192.168.2.254'
 
@@ -136,7 +162,16 @@ roku:
   - host: 192.168.2.10
   - host: 192.168.2.11
 
+ssdp:
+
+sun:
+
 switch: !include switch.yaml
+
+system_health:
+
+updater:
+  reporting: false
 
 weather:
   platform: openweathermap
@@ -144,6 +179,8 @@ weather:
 
 wemo:
   discovery: true
+
+zeroconf:
 
 zwave:
   usb_path: /dev/ttyACM0
