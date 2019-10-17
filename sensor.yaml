@@ -51,7 +51,7 @@
     - cpu_use_percent
 
 - platform: glances
-  version: 3
+  version: 2
   name: "pihole"
   resources:
     - disk_use_percent
