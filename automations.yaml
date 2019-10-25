@@ -266,3 +266,75 @@
       message: HA Version {{ state.version_available }} Available!
       title: HASS
     service: persistent_notification.create
+- id: '1571615535154'
+  alias: Halloween - Front Porch Lights
+  description: ''
+  trigger:
+  - event: sunset
+    offset: -01:00:00
+    platform: sun
+  condition: []
+  action:
+  - data:
+      brightness: 175
+      entity_id: light.front_porch_1
+      rgb_color:
+      - 255
+      - 190
+      - 44
+    service: light.turn_on
+  - data:
+      brightness: 175
+      entity_id: light.front_porch_2
+      rgb_color:
+      - 255
+      - 255
+      - 255
+    service: light.turn_on
+- id: '1571874372030'
+  alias: Living Room Roku SS
+  description: ''
+  trigger:
+  - entity_id: input_select.roku_source
+    platform: state
+  condition:
+    condition: state
+    entity_id: sensor.harmony_hub
+    state: Living Room Watch Roku
+  action:
+  - service: media_player.select_source
+    data_template:
+      entity_id: media_player.living_room_roku_2
+      source: "{% if is_state(\"input_select.roku_source\", \"Netflix\") %}\n  12\n\
+        {%-elif is_state(\"input_select.roku_source\", \"Hulu\") %}\n  2285\n{%-elif\
+        \ is_state(\"input_select.roku_source\", \"Plex\") %}\n  13535\n{%-elif is_state(\"\
+        input_select.roku_source\", \"Pluto TV\") %}\n  74519\n{%-elif is_state(\"\
+        input_select.roku_source\", \"YouTube\") %}\n  837\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Prime Video\") %}\n  13\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"History\") %}\n  35059\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"ESPN\") %}\n  34376\n{%-elif is_state(\"input_select.roku_source\", \"\
+        Fox Sports\") %}\n  95307\n{%-elif is_state(\"input_select.roku_source\",\
+        \ \"HGTV Go\") %}\n  75619\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Discovery Go\") %}\n  96041\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Food Network\") %}\n  75617\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"NBC\") %}\n  68669\n{%-elif is_state(\"input_select.roku_source\", \"\
+        The Roku Channel\") %}\n  151908\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Pandora\") %}\n  28\n{%-elif is_state(\"input_select.roku_source\", \"\
+        iHeart Radio\") %}\n  20197\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Weather Channel\") %}\n  273862\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Weather Nation\") %}\n  30547\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Weather Network\") %}\n  84056\n{% else %}\n  none\n{% endif %}\n"
+- id: '1572034382208'
+  alias: Sleep Timer
+  description: ''
+  trigger:
+  - entity_id: input_select.sleep_timer
+    platform: state
+  condition: []
+  action:
+  - delay:
+      minutes: "{{ states('input_select.sleep_timer') }}"
+  - data:
+      activity: PowerOff
+      entity_id: remote.living_room
+    service: remote.turn_on
