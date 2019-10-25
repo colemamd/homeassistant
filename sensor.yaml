@@ -15,56 +15,14 @@
     - battv
     - nombattv
 
-- platform: glances
-  version: 3
-  name: "HASS"
-  resources:
-    - disk_use_percent
-    - disk_free
-    - memory_use_percent
-    - memory_free
-    - swap_use_percent
-    - swap_free
-    - processor_load
-    - process_running
-    - process_total
-    - process_thread
-    - cpu_use_percent
-    - docker_active
-    - docker_cpu_use
-    - docker_memory_use
-
-- platform: glances
-  version: 3
-  name: "torrent-pi"
-  resources:
-    - disk_use_percent
-    - disk_free
-    - memory_use_percent
-    - memory_free
-    - swap_use_percent
-    - swap_free
-    - processor_load
-    - process_running
-    - process_total
-    - process_thread
-    - cpu_use_percent
-
-- platform: glances
-  version: 2
-  name: "pihole"
-  resources:
-    - disk_use_percent
-    - disk_free
-    - memory_use_percent
-    - memory_free
-    - swap_use_percent
-    - swap_free
-    - processor_load
-    - process_running
-    - process_total
-    - process_thread
-    - cpu_use_percent
+- platform: deluge
+  host: 192.168.2.100
+  username: !secret deluge_user
+  password: !secret deluge_pass
+  monitored_variables:
+    - 'current_status'
+    - 'download_speed'
+    - 'upload_speed'
 
 - platform: mqtt
   name: "Washing Machine Power"
@@ -81,15 +39,15 @@
 - platform: template
   sensors:
     harmony_hub:
-      value_template: '{{ states.remote.living_room.attributes.current_activity }}'
+      value_template: "{{ state_attr('remote.living_room', 'current_activity') }}"
       friendly_name: Harmony
 
     den_media:
-      value_template: '{{ states.media_player.den_roku.attributes.source }}'
+      value_template: "{{ state_attr('media_player.den_roku', 'source') }}"
       friendly_name: 'Den TV Source'
 
     bedroom_media:
-      value_template: '{{ states.media_player.bedroom_roku.attributes.source }}'
+      value_template: "{{ state_attr('media_player.bedroom_roku', 'source') }}"
       friendly_name: 'Bedroom TV Source'
 
 - platform: uptime
