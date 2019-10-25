@@ -13,6 +13,11 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   packages: !include_dir_named packages
+  # Allow local network access with no login
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.2.0/24
 
 alexa_media:
   accounts:
