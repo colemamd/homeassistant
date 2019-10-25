@@ -5,6 +5,18 @@ anchors:
     styles:
       card:
         - width: 2px
+  bigspacer: &bigspacer
+    type: 'custom:button-card'
+    color_type: blank-card
+    styles:
+      card:
+        - width: 30px
+  halfspacer: &halfspacer
+    type: 'custom:button-card'
+    color_type: blank-card
+    styles:
+      card:
+        - width: 15px
   activity_button: &activitybutton
     color_type: card
     show_name: false
@@ -20,20 +32,21 @@ anchors:
         - color: '#303741'
     type: 'custom:button-card'
   skip_button: &skipbutton
-    show_label: true
+    show_label: false
+    color_type: blank-card
     styles:
       card:
-        - background: 'rgba(255,255,255,0.45)'
+        # - background: 'rgba(255,255,255,0.45)'
         - width: 60px
         - height: 60px
         - border-radius: 50%
-      icon:
-        - width: 35px
-        - color: '#303741'
-      label:
-        - font-size: 13px
-        - color: '#303741'
-        - padding-bottom: 3px
+      # icon:
+      #   - width: 35px
+      #   - color: '#303741'
+      # label:
+      #   - font-size: 13px
+      #   - color: '#303741'
+      #   - padding-bottom: 3px
     type: 'custom:button-card'
   action_button: &actionbutton
     color_type: card
@@ -54,7 +67,7 @@ anchors:
     color_type: blank-card
     styles:
       card:
-        - width: 45px
+        - width: 75px
   activity_off: &activityoff
     operator: default
     styles:
@@ -76,41 +89,52 @@ cards:
       type: vertical-stack
       cards:
       #Activity buttons
-      # - type: horizontal-stack
-      #   cards:
-      #     - type: 'custom:button-card'
-      #       color_type: blank-card
-      #     - <<: *activitybutton
-      #       icon: 'mdi:power'
-      #       tap_action:
-      #         action: call-service
-      #         service: remote.turn_off
-      #         service_data:
-      #           entity_id: remote.living_room
-      #     - <<: *activitybutton
-      #       icon: 'mdi:television-classic'
-      #       state:
-      #         - value: "Living Room Watch TV"
-      #           <<: *activityon
-      #         - <<: *activityoff
-      #       tap_action:
-      #         action: call-service
-      #         service: remote.turn_on
-      #         service_data:
-      #           entity_id: remote.living_room
-      #           activity: "Living Room Watch TV"
-      #     - <<: *activitybutton
-      #       icon: 'mdi:netflix'
-      #       state:
-      #         - value: "Living Room Netflix"
-      #           <<: *activityon
-      #         - <<: *activityoff
-      #       tap_action:
-      #         action: call-service
-      #         service: remote.turn_on
-      #         service_data:
-      #           entity_id: remote.living_room
-      #           activity: "Living Room Netflix"
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: blank-card
+          - <<: *activitybutton
+            icon: 'mdi:power'
+            label: "Power Off"
+            show_label: false
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.living_room
+                activity: "PowerOff"
+          - <<: *activitybutton
+            icon: 'mdi:television-classic'
+            state:
+              - value: "Living Room Watch TV"
+                color: 'rgb(39,255,7)'
+                <<: *activityon
+              - <<: *activityoff
+            label: "Watch TV"
+            show_label: false
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.living_room
+                activity: "Living Room Watch TV"
+          - <<: *activitybutton
+            icon: 'mdi:alpha-r-box'
+            state:
+              - value: "Living Room Watch Roku"
+                color: 'rgb(39,255,7)'
+                <<: *activityon
+              - <<: *activityoff
+            label: "Watch Roku"
+            show_label: false
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.living_room
+                activity: "Living Room Watch Roku"
+          - type: 'custom:button-card'
+            color_type: blank-card
       #     - <<: *activitybutton
       #       icon: 'mdi:hulu'
       #       state:
@@ -139,59 +163,60 @@ cards:
       #       color_type: blank-card
       # - type: 'custom:gap-card'
       #   height: 10
-      - type: 'custom:radial-menu'
-        icon: mdi:television-box
-        name: 'Living Room TV'
-        default_open: true
-        default_dismiss: false
-        entity: media.living_room_2
-        hold_action:
-          action: call-service
-          service: remote.turn_off
-          service_data:
-            entity_id: remote.living_room
-            activity: 'PowerOff'
-        items:
-          - entity: remote.living_room
-            icon: 'mdi:television-classic'
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.living_room
-                activity: 'Living Room Watch TV'
-          - entity: remote.living_room
-            entity_picture: /local/images/netflix-icon.png
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.living_room
-                activity: 'Living Room Netflix'
-          - entity: remote.living_room
-            entity_picture: /local/images/hulu-icon.jpg
-            tap-action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.living_room
-                activity: 'Living Room Hulu'
-          - entity: remote.living_room
-            entity_picture: /local/images/plex-icon.png
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.living_room
-                activity: 'Living Room Plex'
-          - entity: remote.living_room
-            entity_picture: /local/images/youtube.jpg
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.living_room
-                activity: 'Living Room YouTube'
+      # - type: 'custom:radial-menu'
+      #   icon: mdi:television-box
+      #   name: 'Living Room TV'
+      #   default_open: true
+      #   default_dismiss: false
+      #   entity: media.living_room_2
+      #   tap_action:
+      #     action: call-service
+      #     service: remote.turn_on
+      #     service_data:
+      #       entity_id: remote.living_room
+      #       activity: 'PowerOff'
+      #   items:
+      #     - entity: remote.living_room
+      #       icon: 'mdi:television-classic'
+      #       tap_action:
+      #         action: call-service
+      #         service: remote.turn_on
+      #         service_data:
+      #           entity_id: remote.living_room
+      #           activity: 'Living Room Watch Roku'
+      #     - entity: remote.living_room
+      #       entity_picture: /local/images/netflix.jpg
+      #       tap_action:
+      #         action: call-service
+      #         service: remote.turn_on
+      #         service_data:
+      #           entity_id: remote.living_room
+      #           activity: 'Living Room Netflix'
+      #     - entity: remote.living_room
+      #       entity_picture: /local/images/hulu.jpg
+      #       tap-action:
+      #         action: call-service
+      #         service: remote.turn_on
+      #         service_data:
+      #           entity_id: remote.living_room
+      #           activity: 'Living Room Hulu'
+      #     - entity: remote.living_room
+      #       entity_picture: /local/images/plex.png
+      #       tap_action:
+      #         action: call-service
+      #         service: remote.turn_on
+      #         service_data:
+      #           entity_id: remote.living_room
+      #           activity: 'Living Room Plex'
+      #     - entity: remote.living_room
+      #       entity_picture: /local/images/youtube.png
+      #       tap_action:
+      #         action: call-service
+      #         service: remote.turn_on
+      #         service_data:
+      #           entity_id: remote.living_room
+      #           activity: 'Living Room YouTube'
+
       #Watch TV controls
       - type: conditional
         conditions:
@@ -204,6 +229,8 @@ cards:
                 cards:
                   - type: 'custom:button-card'
                     color_type: blank-card
+                  - <<: *bigspacer
+                  - <<: *halfspacer
                   - <<: *actionbutton
                     icon: 'mdi:layers-outline'
                     label: "Guide"
@@ -248,14 +275,14 @@ cards:
                         device: "Cisco DVR"
                         command: Exit
                   - <<: *blankbutton
-                  - <<: *blankbutton
-                  - <<: *spacer
+                  - <<: *bigspacer
               - type: 'custom:button-card'
                 color_type: blank-card
               - type: horizontal-stack
                 cards:
                   - type: 'custom:button-card'
                     color_type: blank-card
+                  - <<: *bigspacer
                   - <<: *actionbutton
                     icon: 'mdi:replay'
                     tap_action:
@@ -265,7 +292,10 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: Back
-                  - <<: *blankbutton
+                  - <<: *bigspacer
+                  - <<: *halfspacer
+                  - <<: *spacer
+                  - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-up-thick'
                     tap_action:
@@ -275,8 +305,8 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: DirectionUp
-                  - <<: *blankbutton
-                  - <<: *blankbutton
+                  - <<: *skipbutton
+                  - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-up-drop-circle-outline'
                     tap_action:
@@ -286,12 +316,16 @@ cards:
                         entity_id: remote.living_room
                         device: "Yamaha AV Receiver"
                         command: VolumeUp
+                  - <<: *blankbutton
                   - type: 'custom:button-card'
                     color_type: blank-card
               - type: horizontal-stack
                 cards:
                   - type: 'custom:button-card'
                     color_type: blank-card
+                  - <<: *halfspacer
+                  - <<: *spacer
+                  - <<: *blankbutton
                   - <<: *actionbutton
                     icon: 'mdi:arrow-left-thick'
                     tap_action:
@@ -321,7 +355,6 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: DirectionRight
-                  - <<: *blankbutton
                   - <<: *actionbutton
                     icon: 'mdi:arrow-down-drop-circle-outline'
                     tap_action:
@@ -331,13 +364,19 @@ cards:
                         entity_id: remote.living_room
                         device: "Yamaha AV Receiver"
                         command: VolumeDown
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *spacer
                   - type: 'custom:button-card'
                     color_type: blank-card
               - type: horizontal-stack
                 cards:
                   - type: 'custom:button-card'
                     color_type: blank-card
+                  - <<: *skipbutton
                   - <<: *blankbutton
+                  - <<: *spacer
+                  - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-down-thick'
                     tap_action:
@@ -347,7 +386,6 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: DirectionDown
-                  - <<: *blankbutton
                   - <<: *blankbutton
                   - <<: *actionbutton
                     icon: 'mdi:microphone-off'
@@ -414,252 +452,282 @@ cards:
                   - <<: *blankbutton
                   - type: 'custom:button-card'
                     color_type: blank-card
+              - type: entities
+                entities:
+                  - input_select.sleep_timer
       #Netflix controls
       - type: conditional
         conditions:
           - entity: sensor.harmony_hub
-            state: "Living Room Netflix"
+            state: "Living Room Watch Roku"
         card:
-            type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: 'mdi:layers-outline'
-                    label: "Options"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Options*
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:home'
-                    label: "Home"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Home
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:information-outline'
-                    label: "Info"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Info
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:exit-to-app'
-                    label: "Back"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Back
-                  - <<: *blankbutton
-                  - <<: *spacer
-              - type: 'custom:button-card'
-                color_type: blank-card
-              - type: entities
-                entities:
-                  - entity: input_select.roku_source
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-up-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionUp
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-up-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: VolumeUp
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-left-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionLeft
-                  - <<: *actionbutton
-                    show_label: true
-                    show_icon: false
-                    label: 'OK'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: OK
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-right-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionRight
-
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-down-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: VolumeDown
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-down-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionDown
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:microphone-off'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: Mute
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:rewind'
-                    label: "Rewind"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Rewind
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-backward'
-                    label: "Back"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: InstantReplay
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:play'
-                    label: "Play"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Play
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "30s"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Cisco DVR"
-                        command: SkipForward
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:fast-forward'
-                    label: "FF"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Cisco DVR"
-                        command: FastForward
-                  - <<: *blankbutton
-                  - type: 'custom:button-card'
-                    color_type: blank-card
+          type: vertical-stack
+          cards:
+            - type: 'custom:roku-card'
+              entity: media_player.living_room_roku_2
+              remote: remote.living_room_roku
+              tv: "true"
+              apps:
+                - id: Netflix
+                  icon: /local/images/netflix.jpg
+                - id: Hulu
+                  icon: /local/images/hulu.jpg
+                - id: YouTube
+                  icon: /local/images/youtube.png
+                - id: HISTORY
+                  icon: /local/images/history-channel-logo.jpg
+                - id: ESPN
+                  icon: /local/images/espn-logo.jpg
+                - id: Prime Video
+                  icon: /local/images/prime.jpg
+                - id: Pluto TV
+                  icon: /local/images/plutotv.jpg
+            - type: entities
+              entities:
+                - input_select.roku_source
+            - type: entities
+              entities:
+                - input_select.sleep_timer
+            # type: vertical-stack
+            # cards:
+            #   - type: horizontal-stack
+            #     cards:
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #       - <<: *actionbutton
+            #         icon: 'mdi:layers-outline'
+            #         label: "Options"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: Options*
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:home'
+            #         label: "Home"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: Home
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:information-outline'
+            #         label: "Info"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: Info
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:exit-to-app'
+            #         label: "Back"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: Back
+            #       - <<: *blankbutton
+            #       - <<: *spacer
+            #   - type: 'custom:button-card'
+            #     color_type: blank-card
+            #   - type: entities
+            #     entities:
+            #       - entity: input_select.roku_source
+            #   - type: horizontal-stack
+            #     cards:
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #       - <<: *blankbutton
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:arrow-up-thick'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: DirectionUp
+            #       - <<: *blankbutton
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *blankbutton
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:arrow-up-drop-circle-outline'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Yamaha AV Receiver"
+            #             command: VolumeUp
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #   - type: horizontal-stack
+            #     cards:
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:arrow-left-thick'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: DirectionLeft
+            #       - <<: *actionbutton
+            #         show_label: true
+            #         show_icon: false
+            #         label: 'OK'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: OK
+            #       - <<: *actionbutton
+            #         icon: 'mdi:arrow-right-thick'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: DirectionRight
+            #
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *blankbutton
+            #       - <<: *actionbutton
+            #         icon: 'mdi:arrow-down-drop-circle-outline'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Yamaha AV Receiver"
+            #             command: VolumeDown
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #   - type: horizontal-stack
+            #     cards:
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #       - <<: *blankbutton
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:arrow-down-thick'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: DirectionDown
+            #       - <<: *blankbutton
+            #       - <<: *spacer
+            #       - <<: *spacer
+            #       - <<: *blankbutton
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         icon: 'mdi:microphone-off'
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Yamaha AV Receiver"
+            #             command: Mute
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #   - type: horizontal-stack
+            #     cards:
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
+            #       - <<: *actionbutton
+            #         <<: *skipbutton
+            #         icon: 'mdi:rewind'
+            #         label: "Rewind"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: Rewind
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         <<: *skipbutton
+            #         icon: 'mdi:skip-backward'
+            #         label: "Back"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: InstantReplay
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         <<: *skipbutton
+            #         icon: 'mdi:play'
+            #         label: "Play"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Roku Streaming Stick"
+            #             command: Play
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         <<: *skipbutton
+            #         icon: 'mdi:skip-forward'
+            #         label: "30s"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Cisco DVR"
+            #             command: SkipForward
+            #       - <<: *spacer
+            #       - <<: *actionbutton
+            #         <<: *skipbutton
+            #         icon: 'mdi:fast-forward'
+            #         label: "FF"
+            #         tap_action:
+            #           action: call-service
+            #           service: remote.send_command
+            #           service_data:
+            #             entity_id: remote.living_room
+            #             device: "Cisco DVR"
+            #             command: FastForward
+            #       - <<: *blankbutton
+            #       - type: 'custom:button-card'
+            #         color_type: blank-card
       # - type: conditional
       #   conditions:
       #     - entity: sensor.harmony_hub
@@ -676,464 +744,461 @@ cards:
       #           entity_id: remote.living_room
 
       #Hulu controls
-      - type: conditional
-        conditions:
-          - entity: sensor.harmony_hub
-            state: "Living Room Hulu"
-        card:
-            type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: 'mdi:layers-outline'
-                    label: "Options"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Options*
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:home'
-                    label: "Home"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Home
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:information-outline'
-                    label: "Info"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Info
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:exit-to-app'
-                    label: "Exit"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Exit
-                  - <<: *blankbutton
-                  - <<: *blankbutton
-                  - <<: *spacer
-              - type: 'custom:button-card'
-                color_type: blank-card
-              - type: entities
-                entities:
-                  - entity: input_select.roku_source
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-up-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionUp
-                  - <<: *blankbutton
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-up-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: VolumeUp
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-left-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionLeft
-                  - <<: *actionbutton
-                    show_label: true
-                    show_icon: false
-                    label: 'OK'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: OK
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-right-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionRight
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-down-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: VolumeDown
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-down-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionDown
-                  - <<: *blankbutton
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:microphone-off'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: Mute
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:rewind'
-                    label: "Rewind"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Rewind
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-backward'
-                    label: "Back"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: InstantReplay
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:play'
-                    label: "Play"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Play
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "30s"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Cisco DVR"
-                        command: SkipForward
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:fast-forward'
-                    label: "FF"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Cisco DVR"
-                        command: FastForward
-                  - <<: *blankbutton
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-      #Plex controls
-      - type: conditional
-        conditions:
-          - entity: sensor.harmony_hub
-            state: "Living Room Plex"
-        card:
-            type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: 'mdi:layers-outline'
-                    label: "Options"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Options*
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:home'
-                    label: "Home"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Home
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:information-outline'
-                    label: "Info"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Info
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:exit-to-app'
-                    label: "Exit"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Back
-                  - <<: *blankbutton
-                  - <<: *blankbutton
-                  - <<: *spacer
-              - type: 'custom:button-card'
-                color_type: blank-card
-              - type: entities
-                entities:
-                  - entity: input_select.roku_source
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-up-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionUp
-                  - <<: *blankbutton
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-up-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: VolumeUp
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-left-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionLeft
-                  - <<: *actionbutton
-                    show_label: true
-                    show_icon: false
-                    label: 'OK'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: OK
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-right-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionRight
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-down-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: VolumeDown
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-down-thick'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: DirectionDown
-                  - <<: *blankbutton
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:microphone-off'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Yamaha AV Receiver"
-                        command: Mute
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:rewind'
-                    label: "Rewind"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Rewind
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-backward'
-                    label: "Back"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: InstantReplay
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:play'
-                    label: "Play"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Roku Streaming Stick"
-                        command: Play
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "30s"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Cisco DVR"
-                        command: SkipForward
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:fast-forward'
-                    label: "FF"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.living_room
-                        device: "Cisco DVR"
-                        command: FastForward
-                  - <<: *blankbutton
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-      - type: entities
-        entities:
-          - input_select.sleep_timer
+      # - type: conditional
+      #   conditions:
+      #     - entity: sensor.harmony_hub
+      #       state: "Living Room Hulu"
+      #   card:
+      #       type: vertical-stack
+      #       cards:
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *actionbutton
+      #               icon: 'mdi:layers-outline'
+      #               label: "Options"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Options*
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               icon: 'mdi:home'
+      #               label: "Home"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Home
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               icon: 'mdi:information-outline'
+      #               label: "Info"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Info
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               icon: 'mdi:exit-to-app'
+      #               label: "Exit"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Exit
+      #             - <<: *blankbutton
+      #             - <<: *blankbutton
+      #             - <<: *spacer
+      #         - type: 'custom:button-card'
+      #           color_type: blank-card
+      #         - type: entities
+      #           entities:
+      #             - entity: input_select.roku_source
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-up-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionUp
+      #             - <<: *blankbutton
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-up-drop-circle-outline'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Yamaha AV Receiver"
+      #                   command: VolumeUp
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-left-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionLeft
+      #             - <<: *actionbutton
+      #               show_label: true
+      #               show_icon: false
+      #               label: 'OK'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: OK
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-right-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionRight
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-down-drop-circle-outline'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Yamaha AV Receiver"
+      #                   command: VolumeDown
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-down-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionDown
+      #             - <<: *blankbutton
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:microphone-off'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Yamaha AV Receiver"
+      #                   command: Mute
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:rewind'
+      #               label: "Rewind"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Rewind
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:skip-backward'
+      #               label: "Back"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: InstantReplay
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:play'
+      #               label: "Play"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Play
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:skip-forward'
+      #               label: "30s"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Cisco DVR"
+      #                   command: SkipForward
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:fast-forward'
+      #               label: "FF"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Cisco DVR"
+      #                   command: FastForward
+      #             - <<: *blankbutton
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      # #Plex controls
+      # - type: conditional
+      #   conditions:
+      #     - entity: sensor.harmony_hub
+      #       state: "Living Room Plex"
+      #   card:
+      #       type: vertical-stack
+      #       cards:
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *actionbutton
+      #               icon: 'mdi:layers-outline'
+      #               label: "Options"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Options*
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               icon: 'mdi:home'
+      #               label: "Home"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Home
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               icon: 'mdi:information-outline'
+      #               label: "Info"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Info
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               icon: 'mdi:exit-to-app'
+      #               label: "Exit"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Back
+      #             - <<: *blankbutton
+      #             - <<: *blankbutton
+      #             - <<: *spacer
+      #         - type: 'custom:button-card'
+      #           color_type: blank-card
+      #         - type: entities
+      #           entities:
+      #             - entity: input_select.roku_source
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-up-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionUp
+      #             - <<: *blankbutton
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-up-drop-circle-outline'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Yamaha AV Receiver"
+      #                   command: VolumeUp
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-left-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionLeft
+      #             - <<: *actionbutton
+      #               show_label: true
+      #               show_icon: false
+      #               label: 'OK'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: OK
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-right-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionRight
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-down-drop-circle-outline'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Yamaha AV Receiver"
+      #                   command: VolumeDown
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:arrow-down-thick'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: DirectionDown
+      #             - <<: *blankbutton
+      #             - <<: *blankbutton
+      #             - <<: *actionbutton
+      #               icon: 'mdi:microphone-off'
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Yamaha AV Receiver"
+      #                   command: Mute
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #         - type: horizontal-stack
+      #           cards:
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:rewind'
+      #               label: "Rewind"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Rewind
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:skip-backward'
+      #               label: "Back"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: InstantReplay
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:play'
+      #               label: "Play"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Roku Streaming Stick"
+      #                   command: Play
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:skip-forward'
+      #               label: "30s"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Cisco DVR"
+      #                   command: SkipForward
+      #             - <<: *spacer
+      #             - <<: *actionbutton
+      #               <<: *skipbutton
+      #               icon: 'mdi:fast-forward'
+      #               label: "FF"
+      #               tap_action:
+      #                 action: call-service
+      #                 service: remote.send_command
+      #                 service_data:
+      #                   entity_id: remote.living_room
+      #                   device: "Cisco DVR"
+      #                   command: FastForward
+      #             - <<: *blankbutton
+      #             - type: 'custom:button-card'
+      #               color_type: blank-card
 
 icon: 'mdi:remote'
 title: Remote
