@@ -93,10 +93,22 @@ input_select:
       - Hulu
       - Plex
       - YouTube
+      - History
+      - Prime Video
+      - ESPN
       - Fox Sports
       - Pluto TV
+      - HGTV Go
+      - Discovery Go
+      - Food Network
+      - NBC
       - The Roku Channel
-      - Tubi
+      - Pandora
+      - iHeart Radio
+      - Weather Channel
+      - Weather Nation
+      - Weather Network
+
   sleep_timer:
     name: Sleep Timer
     options:
@@ -105,6 +117,10 @@ input_select:
       - 60
       - 90
       - 120
+
+input_text:
+  roku_source:
+    name: roku source
 
 logbook:
   exclude:
