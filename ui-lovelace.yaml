@@ -1,664 +1,340 @@
-resources:
-  - type: module
-    url: /local/community/button-card/button-card.js
-  - type: module
-    url: /local/community/button-entity-row/button-entity-row.js
-  - type: module
-    url: /local/community/compact-custom-header/compact-custom-header.js
-  - type: js
-    url: /local/community/gauge-card/gauge-card.js
-  - type: js
-    url: /local/community/lovelace-card-loader/card-loader.js
-  - type: module
-    url: /local/community/lovelace-card-mod/card-mod.js
-  - type: js
-    url: /local/community/lovelace-card-tools/card-tools.js
-  - type: js
-    url: /local/community/lovelace-gap-card/gap-card.js
-  - type: module
-    url: /local/community/lovelace-google-keep-card/google-keep-card.js
-  - type: module
-    url: /local/community/radial-menu/radial-menu.js
-  - type: module
-    url: /local/community/roku-card/roku-card.js
-  - type: module
-    url: /local/community/surveillance-card/surveillance-card.js
-  - type: module
-    url: /local/community/swipe-card/swipe-card.js
-
-
-title: My Home Automation
-views:
-  - badges: []
-    cards:
-      - entity: alarm_control_panel.house
-        type: alarm-panel
-      - entities:
-          - entity: switch.arduino_gw_0_52
-        show_header_toggle: false
-        title: Alarm Siren
-        type: entities
-      - entities:
-          - lock.lock_front_door_lock
-        show_header_toggle: false
-        title: Lock
-        type: entities
-      - columns: 4
-        entities:
-          - binary_sensor.arduino_gw_0_22
-          - binary_sensor.arduino_gw_0_23
-          - binary_sensor.arduino_gw_0_24
-          - binary_sensor.arduino_gw_0_25
-          - binary_sensor.arduino_gw_0_26
-          - binary_sensor.arduino_gw_0_27
-          - binary_sensor.arduino_gw_0_28
-          - binary_sensor.arduino_gw_0_29
-          - binary_sensor.arduino_gw_0_30
-          - binary_sensor.arduino_gw_0_31
-          - binary_sensor.arduino_gw_0_32
-          - binary_sensor.arduino_gw_0_33
-          - binary_sensor.arduino_gw_0_34
-          - binary_sensor.arduino_gw_0_35
-          - binary_sensor.overhead_garage_door_status
-          - binary_sensor.arduino_gw_0_36
-          - binary_sensor.arduino_gw_0_37
-          - binary_sensor.arduino_gw_0_38
-          - binary_sensor.ring_front_door_ding
-          - binary_sensor.ring_front_door_motion
-        show_icon: true
-        show_name: true
-        show_state: true
-        title: Security Sensors
-        type: glance
-      - entities:
-          - entity: automation.alarm_away_mode_armed
-          - entity: automation.alarm_away_mode_arming
-          - entity: automation.alarm_disarmed
-          - entity: automation.alarm_home_mode_armed
-          - entity: automation.alarm_triggered
-          - entity: automation.alarm_warning
-        title: Alarm Automations
-        type: entities
-      - default_zoom: 16
-        entities:
-          - entity: device_tracker.matt_phone_2
-        type: map
-        service: camera.play_stream
-        image: /local/images/camera-outdoor.jpg
-        service_data:
-          entity_id: camera.ffmpeg
-        type: picture
-    icon: 'mdi:security'
-    id: security
-    path: security
-    title: Security
-  - cards:
-      - entities:
-          - switch.tv
-          - switch.hulu
-          - switch.netflix
-          - switch.plex
-        entity: sensor.harmony_hub
-        id: living_room
-        state_image:
-          Living Room Hulu: /local/images/hulu-2.jpg
-          Living Room Music: /local/images/music-graph.gif
-          Living Room Netflix: /local/images/netflix.png
-          Living Room Plex: /local/images/plex.png
-          Living Room Watch TV: /local/images/television-2.jpg
-          PowerOff: /local/images/off.jpg
-        title: Living Room
-        type: picture-glance
-      - entities:
-          - switch.hulu_bedroom
-          - switch.netflix_bedroom
-          - switch.plex_bedroom
-        entity: sensor.bedroom_media
-        state_image:
-          'City Stroll: Movie Magic': /local/images/off.jpg
-          Hulu: /local/images/hulu-2.jpg
-          Netflix: /local/images/netflix.png
-          Plex: /local/images/plex.png
-          Pluto TV - It's Free TV: /local/images/plutotv.jpg
-        title: Bedroom
-        type: picture-glance
-      - cards:
-          - entities:
-              - switch.hulu_den
-              - switch.netflix_den
-              - switch.plex_den
-            entity: sensor.den_media
-            id: den_media
-            state_image:
-              Hulu: /local/images/hulu-2.jpg
-              Netflix: /local/images/netflix.png
-              Plex: /local/images/plex.png
-              Roku: /local/images/off.jpg
-            title: Den
-            type: picture-glance
-        title: Den
-        type: vertical-stack
-      - card:
-          entity: media_player.living_room_roku_2
-          type: media-control
-        conditions:
-          - entity: sensor.harmony_hub
-            state_not: PowerOff
-        type: conditional
-      - card:
-          entity: media_player.den_roku
-          type: media-control
-        conditions:
-          - entity: sensor.den_media
-            state_not: Roku
-        type: conditional
-    icon: 'mdi:television-box'
-    id: Media
-    title: Media
-    type: horizontal-stack
-  - cards:
-      - entities:
-          - entity: lock.lock_front_door_lock
-          - entity: sensor.front_door_report
-          - entity: sensor.frontdoor_code
-          - entity: automation.front_door_unlock_upon_arriving_home
-          - entity: automation.notify_upon_unlock
-        show_header_toggle: false
-        title: Front Door Info
-        type: entities
-      - entities:
-          - entity: sensor.hacs
-          - entity: sensor.potential_breaking_changes
-        show_header_toggle: false
-        title: HACS
-        type: entities
-      - entities:
-          - input_select.lock_zwave_option_3_front
-          - input_select.lock_zwave_option_4_front
-          - input_select.lock_zwave_option_5_front
-          - input_select.lock_zwave_option_7_front
-          - input_select.lock_zwave_option_8_front
-          - input_select.lock_zwave_option_9_front
-          - input_select.lock_zwave_option_10_front
-          - input_select.lock_zwave_option_11_front
-          - input_select.lock_zwave_option_15_front
-          - input_select.lock_zwave_option_16_front
-        show_header_toggle: false
-        title: Front Door Config Options
-        type: entities
-      - cards:
-          - cards:
-              - entities:
-                  - entity: binary_sensor.living_room_nest_protect_online
-                    name: Online
-                  - entity: sensor.living_room_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.living_room_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.living_room_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.living_room_nest_protect_smoke_status
-                    name: Smoke
-                title: Living Rm
-                type: glance
-              - entities:
-                  - entity: binary_sensor.den_nest_protect_online
-                    name: Online
-                  - entity: sensor.den_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.den_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.den_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.den_nest_protect_smoke_status
-                    name: Smoke
-                title: Den
-                type: glance
-              - entities:
-                  - entity: binary_sensor.hallway_nest_protect_online
-                    name: Online
-                  - entity: sensor.hallway_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.hallway_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.hallway_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.hallway_nest_protect_smoke_status
-                    name: Smoke
-                title: Hallway
-                type: glance
-              - entities:
-                  - entity: binary_sensor.master_bedroom_nest_protect_online
-                    name: Online
-                  - entity: sensor.master_bedroom_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.master_bedroom_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.master_bedroom_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.master_bedroom_nest_protect_smoke_status
-                    name: Smoke
-                title: Master
-                type: glance
-              - entities:
-                  - entity: binary_sensor.kitchen_nest_protect_online
-                    name: Online
-                  - entity: sensor.kitchen_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.kitchen_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.kitchen_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.kitchen_nest_protect_smoke_status
-                    name: Smoke
-                title: Kitchen
-                type: glance
-              - entities:
-                  - entity: binary_sensor.bedroom_1_nest_protect_online
-                    name: Online
-                  - entity: sensor.bedroom_1_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.bedroom_1_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.bedroom_1_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.bedroom_1_nest_protect_smoke_status
-                    name: Smoke
-                title: Front Bed
-                type: glance
-              - entities:
-                  - entity: binary_sensor.bedroom_2_nest_protect_online
-                    name: Online
-                  - entity: sensor.bedroom_2_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.bedroom_2_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.bedroom_2_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.bedroom_2_nest_protect_smoke_status
-                    name: Smoke
-                title: Back Bed
-                type: glance
-            parameters:
-              centeredSlides: true
-              coverflowEffect:
-                depth: 100
-                modifier: 1
-                rotate: 50
-                slideShadows: true
-                stretch: 0
-              effect: coverflow
-              grabCursor: true
-              keyboard:
-                enabled: true
-                onlyInViewport: true
-              navigation: null
-              pagination:
-                type: bullets
-              slidesPerView: auto
-            type: 'custom:swipe-card'
-        title: Nest Protects
-        type: horizontal-stack
-    id: home
-    title: Home
-  - badges:
-      - binary_sensor.den_nest_protect_online
-      - sensor.den_nest_protect_battery_health
-      - sensor.den_nest_protect_color_status
-      - sensor.den_nest_protect_smoke_status
-      - sensor.den_nest_protect_co_status
-    cards:
-      - entities:
-          - entity: switch.den_light
-          - entity: switch.den_fan2
-        title: Overhead
-        type: entities
-      - entities:
-          - entity: switch.den_lamp
-        show_header_toggle: false
-        title: Lamp
-        type: entities
-      - entities:
-          - entity: automation.den_light_off_after_no_motion
-          - entity: automation.den_light_on_on_motion
-        title: Den Automations
-        type: entities
-    panel: false
-    path: Den
-    title: Den
-  - badges:
-      - binary_sensor.living_room_nest_protect_online
-      - sensor.living_room_nest_protect_battery_health
-      - sensor.living_room_nest_protect_color_status
-      - sensor.living_room_nest_protect_smoke_status
-      - sensor.living_room_nest_protect_co_status
-    cards:
-      - entities:
-          - entity: light.television_light
-        title: Lights
-        type: entities
-    panel: false
-    path: Living Room
-    title: Living Room
-  - badges:
-      - binary_sensor.kitchen_nest_protect_online
-      - sensor.kitchen_nest_protect_battery_health
-      - sensor.kitchen_nest_protect_color_status
-      - sensor.kitchen_nest_protect_smoke_status
-      - sensor.kitchen_nest_protect_co_status
-    cards:
-      - entities:
-          - entity: switch.dining_room_light
-        title: Lights
-        type: entities
-    panel: false
-    path: Kitchen
-    title: Kitchen
-  - badges: []
-    cards:
-      - entities:
-          - entity: switch.overhead_garage_door
-        show_header_toggle: false
-        type: entities
-      - entities:
-          - entity: light.front_lawn
-          - entity: group.porch_lights
-        title: Lights
-        type: entities
-      - entities:
-          - entity: automation.front_lights_sunset
-          - entity: automation.front_lawn_light_sunrise
-          - entity: automation.porch_lights_off_night
-        title: Automations
-        type: entities
-    panel: false
-    path: Outside
-    title: Outside
-  - cards:
-      - cards:
-          - entity: weather.openweathermap
-            type: weather-forecast
-          - cards:
-              - entity: climate.living_room
-                title: Nest thermostat
-                type: thermostat
-              - cards:
-                  - entities:
-                      - binary_sensor.home_away
-                    icon: 'mdi:home-circle'
-                    title: Away mode
-                    type: entities
-                  - entity: sensor.living_room_thermostat_humidity
-                    title: Indoor Humidity
-                    type: gauge
-                type: vertical-stack
-            type: horizontal-stack
-        type: vertical-stack
-    id: environment
-    panel: false
-    title: Environment
-  - badges: []
-    cards:
-       - entities:
-           - input_text.door_keypad_1_name
-           - input_text.door_keypad_1_code
-           - input_boolean.code_1_notify
-           - input_select.door_keypad_1_access_schedule
-           - input_datetime.door_keypad_1_date_start
-           - input_datetime.door_keypad_1_date_end
-           - input_boolean.door_keypad_1_front_switch
-           - script.door_keypad_1_delete
-         title: Entry Code 1
-         type: entities
-       - entities:
-           - input_text.door_keypad_2_name
-           - input_text.door_keypad_2_code
-           - input_boolean.code_2_notify
-           - input_select.door_keypad_2_access_schedule
-           - input_datetime.door_keypad_2_date_start
-           - input_datetime.door_keypad_2_date_end
-           - input_boolean.door_keypad_2_front_switch
-           - script.door_keypad_2_delete
-         title: Entry Code 2
-         type: entities
-       - entities:
-           - input_text.door_keypad_3_name
-           - input_text.door_keypad_3_code
-           - input_boolean.code_3_notify
-           - input_select.door_keypad_3_access_schedule
-           - input_datetime.door_keypad_3_date_start
-           - input_datetime.door_keypad_3_date_end
-           - input_boolean.door_keypad_3_front_switch
-           - script.door_keypad_3_delete
-         title: Entry Code 3
-         type: entities
-       - entities:
-           - input_text.door_keypad_4_name
-           - input_text.door_keypad_4_code
-           - input_boolean.code_4_notify
-           - input_select.door_keypad_4_access_schedule
-           - input_datetime.door_keypad_4_date_start
-           - input_datetime.door_keypad_4_date_end
-           - input_boolean.door_keypad_4_front_switch
-           - script.door_keypad_4_delete
-         title: Entry Code 4
-         type: entities
-       - entities:
-           - input_text.door_keypad_5_name
-           - input_text.door_keypad_5_code
-           - input_boolean.code_5_notify
-           - input_select.door_keypad_5_access_schedule
-           - input_datetime.door_keypad_5_date_start
-           - input_datetime.door_keypad_5_date_end
-           - input_boolean.door_keypad_5_front_switch
-           - script.door_keypad_5_delete
-         title: Entry Code 5
-         type: entities
-       - entities:
-           - input_text.door_keypad_6_name
-           - input_text.door_keypad_6_code
-           - input_boolean.code_6_notify
-           - input_select.door_keypad_6_access_schedule
-           - input_datetime.door_keypad_6_date_start
-           - input_datetime.door_keypad_6_date_end
-           - input_boolean.door_keypad_6_front_switch
-           - script.door_keypad_6_delete
-         title: Entry Code 6
-         type: entities
-       - entities:
-           - input_text.door_keypad_7_name
-           - input_text.door_keypad_7_code
-           - input_boolean.code_7_notify
-           - input_select.door_keypad_7_access_schedule
-           - input_datetime.door_keypad_7_date_start
-           - input_datetime.door_keypad_7_date_end
-           - input_boolean.door_keypad_7_front_switch
-           - script.door_keypad_7_delete
-         title: Entry Code 7
-         type: entities
-       - entities:
-           - input_text.door_keypad_8_name
-           - input_text.door_keypad_8_code
-           - input_boolean.code_8_notify
-           - input_select.door_keypad_8_access_schedule
-           - input_datetime.door_keypad_8_date_start
-           - input_datetime.door_keypad_8_date_end
-           - input_boolean.door_keypad_8_front_switch
-         title: Entry Code 8
-         type: entities
-       - entities:
-           - input_text.door_keypad_9_name
-           - input_text.door_keypad_9_code
-           - input_boolean.code_9_notify
-           - input_select.door_keypad_9_access_schedule
-           - input_datetime.door_keypad_9_date_start
-           - input_datetime.door_keypad_9_date_end
-           - input_boolean.door_keypad_9_front_switch
-           - script.door_keypad_9_delete
-         title: Entry Code 9
-         type: entities
-       - entities:
-           - input_text.door_keypad_10_name
-           - input_text.door_keypad_10_code
-           - input_boolean.code_10_notify
-           - input_select.door_keypad_10_access_schedule
-           - input_datetime.door_keypad_10_date_start
-           - input_datetime.door_keypad_10_date_end
-           - input_boolean.door_keypad_10_front_switch
-           - script.door_keypad_10_delete
-         title: Entry Code 10
-         type: entities
-       - entities:
-           - input_text.door_keypad_11_name
-           - input_text.door_keypad_11_code
-           - input_boolean.code_11_notify
-           - input_select.door_keypad_11_access_schedule
-           - input_datetime.door_keypad_11_date_start
-           - input_datetime.door_keypad_11_date_end
-           - input_boolean.door_keypad_11_front_switch
-           - script.door_keypad_11_delete
-         title: Entry Code 11
-         type: entities
-       - entities:
-           - input_text.door_keypad_12_name
-           - input_text.door_keypad_12_code
-           - input_boolean.code_12_notify
-           - input_select.door_keypad_12_access_schedule
-           - input_datetime.door_keypad_12_date_start
-           - input_datetime.door_keypad_12_date_end
-           - input_boolean.door_keypad_12_front_switch
-           - script.door_keypad_12_delete
-         title: Entry Code 12
-         type: entities
-       - entities:
-           - input_text.door_keypad_13_name
-           - input_text.door_keypad_13_code
-           - input_boolean.code_13_notify
-           - input_select.door_keypad_13_access_schedule
-           - input_datetime.door_keypad_13_date_start
-           - input_datetime.door_keypad_13_date_end
-           - input_boolean.door_keypad_13_front_switch
-           - script.door_keypad_13_delete
-         title: Entry Code 13
-         type: entities
-       - entities:
-           - input_text.door_keypad_14_name
-           - input_text.door_keypad_14_code
-           - input_boolean.code_14_notify
-           - input_select.door_keypad_14_access_schedule
-           - input_datetime.door_keypad_14_date_start
-           - input_datetime.door_keypad_14_date_end
-           - input_boolean.door_keypad_14_front_switch
-           - script.door_keypad_14_delete
-         title: Entry Code 14
-         type: entities
-       - entities:
-           - input_text.door_keypad_15_name
-           - input_text.door_keypad_15_code
-           - input_boolean.code_15_notify
-           - input_select.door_keypad_15_access_schedule
-           - input_datetime.door_keypad_15_date_start
-           - input_datetime.door_keypad_15_date_end
-           - input_boolean.door_keypad_15_front_switch
-           - script.door_keypad_15_delete
-         title: Entry Code 15
-         type: entities
-       - entities:
-           - input_select.door_keypad_16_access_schedule
-           - input_text.door_keypad_16_name
-           - input_text.door_keypad_16_code
-           - input_boolean.code_16_notify
-           - input_boolean.door_keypad_16_front_switch
-           - script.door_keypad_16_delete
-         title: One Time Use Code 1
-         type: entities
-       - entities:
-           - input_select.door_keypad_17_access_schedule
-           - input_text.door_keypad_17_name
-           - input_text.door_keypad_17_code
-           - input_boolean.code_17_notify
-           - input_boolean.door_keypad_17_front_switch
-           - script.door_keypad_17_delete
-         title: One Time Use Code 2
-         type: entities
-       - entities:
-           - input_select.door_keypad_18_access_schedule
-           - input_text.door_keypad_18_name
-           - input_text.door_keypad_18_code
-           - input_boolean.code_18_notify
-           - input_boolean.door_keypad_18_front_switch
-           - script.door_keypad_18_delete
-         title: One Time Use Code 3
-         type: entities
-
-    icon: 'mdi:lock-smart'
-    path: keypads
-    title: 'Door Lock Information, Codes and Configuration'
-
-  - badges: []
-    cards:
-      - entities:
-          - sensor.hass_cpu_load
-          - sensor.hass_ram_used
-          - sensor.hass_disk_used
-        title: HASS Stats
-        type: history-graph
-      - entities:
-          - sensor.hass_containers_cpu_used
-          - sensor.hass_containers_ram_used
-        title: Docker Stats
-        type: history-graph
-      - entities:
-          - sensor.torrent_pi_cpu_load
-          - sensor.torrent_pi_ram_used
-          - sensor.torrent_pi_disk_used
-        title: torrent-pi Stats
-        type: history-graph
-      - entities:
-          - sensor.pihole_cpu_load
-          - sensor.pihole_ram_used
-          - sensor.pihole_disk_used
-        title: pihole Stats
-        type: history-graph
-      - entities:
-          - entity: sensor.hass_containers_active
-          - entity: sensor.hass_uptime
-          - entity: sensor.current_version
-          - entity: sensor.version_available
-        show_header_toggle: false
-        title: HASS Stats
-        type: entities
-      - entities:
-          - sensor.ups_status
-          - sensor.ups_time_left
-          - sensor.ups_time_on_battery
-          - sensor.ups_total_time_on_battery
-          - sensor.ups_battery
-          - sensor.ups_battery_voltage
-          - sensor.ups_battery_nominal_voltage
-          - sensor.ups_last_transfer
-          - sensor.ups_load
-          - sensor.ups_input_voltage
-          - sensor.ups_nominal_input_voltage
-          - sensor.ups_nominal_output_power
-          - sensor.ups_transfer_count
-        show_header_toggle: false
-        title: Main UPS
-        type: entities
-      - entities:
-          - entity: sensor.pi_hole_ads_blocked_today
-          - entity: sensor.pi_hole_ads_percentage_blocked_today
-          - entity: sensor.pi_hole_dns_queries_cached
-          - entity: sensor.pi_hole_dns_queries_forwarded
-          - entity: sensor.pi_hole_dns_queries_today
-          - entity: sensor.pi_hole_dns_unique_clients
-          - entity: sensor.pi_hole_dns_unique_domains
-          - entity: sensor.pi_hole_seen_clients
-        show_header_toggle: false
-        title: pi_hole stats
-        type: entities
-    icon: 'mdi:monitor'
-    panel: false
-    path: sysmon
-    title: sysmon
-  - !include /config/lovelace/remote.yaml
+- id: '1540780737178'
+  alias: Front Lights @ Sunset
+  initial_state: true
+  trigger:
+  - event: sunset
+    offset: -01:00:00
+    platform: sun
+  condition: []
+  action:
+  - data:
+      entity_id: group.front_lights
+    service: light.turn_on
+- id: '1540781674303'
+  alias: Front Lawn Light @ Sunrise
+  trigger:
+  - event: sunrise
+    platform: sun
+  condition: []
+  action:
+  - data:
+      entity_id: light.front_lawn
+    service: light.turn_off
+  initial_state: true
+- id: '1547425470922'
+  alias: Porch Lights Off @ Night
+  trigger:
+  - at: 00:00:30
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: group.porch_lights
+    service: light.turn_off
+  initial_state: true
+- id: alarm_armed_away
+  alias: '[Alarm] Away Mode Armed'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: armed_away
+  action:
+  - data:
+      message: Alarm Away Mode Armed
+      target:
+      - email/matthew.d.coleman@gmail.com
+    service: notify.pushbullet
+  - data:
+      data:
+        type: tts
+      message: Home Alarm is activated in Away Mode.
+      target:
+      - Echo office
+      - Living Room Echo
+    service: notify.alexa_media
+  initial_state: true
+- id: alarm_armed_home
+  alias: '[Alarm] Home Mode Armed'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: armed_home
+  action:
+  - data:
+      message: Alarm Home Mode Armed
+      target:
+      - email/matthew.d.coleman@gmail.com
+    service: notify.pushbullet
+  - data:
+      data:
+        type: tts
+      message: The house alarm has been armed in home mode. Goodnight
+      target:
+      - Echo office
+      - Living Room Echo
+    service: notify.alexa_media
+  - data:
+      entity_id: lock.lock_front_door_lock
+    service: lock.lock
+  - data:
+      message: Home Alarm is armed in Home mode.
+    service: notify.mobile_app_matt_phone
+  initial_state: true
+- id: alarm_arming_away
+  alias: '[Alarm] Away Mode Arming'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: pending
+  action:
+  - data:
+      data:
+        type: tts
+      message: Home alarm is activating in Away Mode. Ensure all doors and windows
+        are shut. Goodbye.
+      target:
+      - Echo office
+      - Living Room Echo
+    service: notify.alexa_media
+  initial_state: true
+- id: alarm_disarmed
+  alias: '[Alarm] Disarmed'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: disarmed
+  action:
+  - data:
+      message: Alarm Disabled
+      target:
+      - email/matthew.d.coleman@gmail.com
+    service: notify.pushbullet
+  - data:
+      data:
+        type: tts
+      message: The house alarm has been Deactivated
+      target:
+      - Living Room Echo
+    service: notify.alexa_media
+  - alias: ''
+    data:
+      entity_id: switch.arduino_gw_0_52
+    service: switch.turn_off
+  - data:
+      message: Home Alarm has been deactivated.
+    service: notify.mobile_app_matt_phone
+  initial_state: true
+- id: alarm_triggered
+  alias: '[Alarm] Triggered'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: triggered
+  action:
+  - data:
+      data:
+        method: all
+        type: all
+      message: Warning! The home alarm has been triggered by {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}.
+        The authorities have been notified. Leave immediately!
+      target:
+      - Echo office
+      - Living Room Echo
+      title: Home Alarm TRIGGERED by {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}.
+    service: notify.alexa_media
+  - data:
+      message: ALARM TRIGGERED!!! {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
+        }} has been tripped.
+      target:
+      - email/matthew.d.coleman@gmail.com
+    service: notify.pushbullet
+  - data:
+      entity_id: switch.arduino_gw_0_52
+    service: switch.turn_on
+  - data:
+      action: Disarm
+      message: Home Alarm TRIGGERED by {{states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}.
+      title: Disarm
+    service: notify.mobile_app_matt_phone
+  initial_state: true
+- id: alarm_warning
+  alias: '[Alarm] Warning'
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: warning
+  action:
+  - data:
+      message: ALARM Warning {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
+        }} has been tripped.
+      target:
+      - email/matthew.d.coleman@gmail.com
+    service: notify.pushbullet
+  - data:
+      data:
+        method: all
+        type: tts, announce
+      message: The house alarm has been activated. {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
+        }} has been tripped. Please deactivate immediately.
+      target:
+      - Living Room Echo
+      title: Home Alarm WARNING
+    service: notify.alexa_media
+  initial_state: true
+- id: '1556842770224'
+  alias: Front Door Unlock Upon Arriving Home
+  trigger:
+  - entity_id: binary_sensor.ring_front_door_motion
+    platform: state
+    to: '"on"'
+  condition:
+  - condition: zone
+    entity_id: device_tracker.matt_phone
+    zone: zone.home
+  action:
+  - data:
+      armed_state: disarmed
+    service: alarm_control_panel.alarm_disarm
+- id: '1557103120900'
+  alias: Den Light On on Motion
+  trigger:
+  - entity_id: binary_sensor.arduino_gw_0_34
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.den_light
+    service: switch.turn_on
+- id: '1557103744211'
+  alias: Den Light Off After No Motion
+  trigger:
+  - entity_id: binary_sensor.arduino_gw_0_34
+    for: 00:05:00
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.den_light
+    service: switch.turn_off
+- id: '1557803629521'
+  alias: Notify Upon Unlock
+  trigger:
+  - entity_id: lock.lock_front_door_lock
+    platform: state
+    to: unlocked
+  condition: []
+  action:
+  - delay: 00:00:05
+  - alias: ''
+    data:
+      data:
+        type: tts
+      message: Welcome Home {{ states('sensor.frontdoor_code') }}
+      target: Living Room Echo
+    service: notify.alexa_media
+  - data:
+      message: 'Front Door unlocked by {{ states(''sensor.frontdoor_code'') }} '
+    service: notify.mobile_app_matt_phone
+- id: '1562246257621'
+  alias: HACS Persistent Notification
+  trigger:
+  - above: '0'
+    entity_id: sensor.hacs
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      message: Update available!
+      title: HACS
+    service: persistent_notification.create
+- id: '1562248478361'
+  alias: HA Update Available
+  trigger:
+  - platform: template
+    value_template: '{{ states(''state.version_available'') > states(''state.version_current'')
+      }}'
+  condition: []
+  action:
+  - data:
+      message: HA Version {{ state.version_available }} Available!
+      title: HASS
+    service: persistent_notification.create
+- id: '1571615535154'
+  alias: Halloween - Front Porch Lights
+  description: ''
+  trigger:
+  - event: sunset
+    offset: -01:00:00
+    platform: sun
+  condition: []
+  action:
+  - data:
+      brightness: 175
+      entity_id: light.front_porch_1
+      rgb_color:
+      - 255
+      - 190
+      - 44
+    service: light.turn_on
+  - data:
+      brightness: 175
+      entity_id: light.front_porch_2
+      rgb_color:
+      - 255
+      - 255
+      - 255
+    service: light.turn_on
+- id: '1571874372030'
+  alias: Living Room Roku SS
+  description: ''
+  trigger:
+  - entity_id: input_select.roku_source
+    platform: state
+  condition:
+    condition: state
+    entity_id: sensor.harmony_hub
+    state: Living Room Watch Roku
+  action:
+  - service: media_player.select_source
+    data_template:
+      entity_id: media_player.living_room_roku_2
+      source: "{% if is_state(\"input_select.roku_source\", \"Netflix\") %}\n  12\n\
+        {%-elif is_state(\"input_select.roku_source\", \"Hulu\") %}\n  2285\n{%-elif\
+        \ is_state(\"input_select.roku_source\", \"Plex\") %}\n  13535\n{%-elif is_state(\"\
+        input_select.roku_source\", \"Pluto TV\") %}\n  74519\n{%-elif is_state(\"\
+        input_select.roku_source\", \"YouTube\") %}\n  837\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Prime Video\") %}\n  13\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"History\") %}\n  35059\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"ESPN\") %}\n  34376\n{%-elif is_state(\"input_select.roku_source\", \"\
+        Fox Sports\") %}\n  95307\n{%-elif is_state(\"input_select.roku_source\",\
+        \ \"HGTV Go\") %}\n  75619\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Discovery Go\") %}\n  96041\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Food Network\") %}\n  75617\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"NBC\") %}\n  68669\n{%-elif is_state(\"input_select.roku_source\", \"\
+        The Roku Channel\") %}\n  151908\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Pandora\") %}\n  28\n{%-elif is_state(\"input_select.roku_source\", \"\
+        iHeart Radio\") %}\n  20197\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Weather Channel\") %}\n  273862\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Weather Nation\") %}\n  30547\n{%-elif is_state(\"input_select.roku_source\"\
+        , \"Weather Network\") %}\n  84056\n{% else %}\n  none\n{% endif %}\n"
+- id: '1572034382208'
+  alias: Sleep Timer
+  description: ''
+  trigger:
+  - entity_id: input_select.sleep_timer
+    platform: state
+  condition: []
+  action:
+  - delay:
+      minutes: "{{ states('input_select.sleep_timer') }}"
+  - data:
+      activity: PowerOff
+      entity_id: remote.living_room
+    service: remote.turn_on
