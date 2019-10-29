@@ -18,6 +18,7 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 192.168.2.0/24
+    - type: homeassistant
 
 alexa_media:
   accounts:
@@ -46,8 +47,6 @@ camera:
 cloud:
 
 config:
-
-# default_config:
 
 device_tracker:
 
@@ -213,6 +212,5 @@ automation: !include automations.yaml
 binary_sensor: !include binary_sensor.yaml
 group: !include groups.yaml
 mysensors: !include mysensors_config.yaml
-#panel_custom: !include panel_custom.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml
