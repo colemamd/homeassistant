@@ -28,6 +28,17 @@ resources:
 
 
 title: My Home Automation
+cch:
+  exceptions:
+    - conditions:
+        user: Remote
+      config:
+        kiosk_mode: true
+    - conditions:
+        user: Alarm
+      config:
+        kiosk_mode: true
+        
 views:
   - badges: []
     cards:
