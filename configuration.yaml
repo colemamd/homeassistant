@@ -49,13 +49,16 @@ cloud:
 config:
 
 device_tracker:
+  - platform: tile
+    username: !secret tile_email_address
+    password: !secret tile_password
 
 frontend:
   themes: !include themes/slate.yaml
 
 hacs:
   token: xxxxxxxx
-  sidepanel_title: HACS
+  sidepanel_title: Community Store
   python_script: true
   theme: true
   options:
@@ -139,6 +142,8 @@ logger:
 lovelace:
   mode: yaml
 
+map:
+
 mobile_app:
 
 # MQTT
@@ -166,7 +171,7 @@ plex:
   token: xxxxxxxx
 
 recorder:
-  purge_keep_days: 14
+  purge_keep_days: 7
 
 remote:
   - platform: harmony
@@ -185,8 +190,6 @@ roku:
 ssdp:
 
 sun:
-
-switch: !include switch.yaml
 
 system_health:
 
@@ -214,3 +217,4 @@ group: !include groups.yaml
 mysensors: !include mysensors_config.yaml
 script: !include scripts.yaml
 sensor: !include sensor.yaml
+switch: !include switch.yaml
