@@ -146,13 +146,14 @@ cards:
             cards:
               - type: horizontal-stack
                 cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
+                  # - type: 'custom:button-card'
+                  #   color_type: blank-card
                   - <<: *bigspacer
                   - <<: *halfspacer
                   - <<: *actionbutton
                     icon: 'mdi:layers-outline'
                     label: "Guide"
+                    show_label: true
                     tap_action:
                       action: call-service
                       service: remote.send_command
@@ -186,6 +187,7 @@ cards:
                   - <<: *actionbutton
                     icon: 'mdi:exit-to-app'
                     label: "Exit"
+                    show_label: true
                     tap_action:
                       action: call-service
                       service: remote.send_command
@@ -195,25 +197,25 @@ cards:
                         command: Exit
                   - <<: *blankbutton
                   - <<: *bigspacer
-              - type: 'custom:button-card'
-                color_type: blank-card
               - type: horizontal-stack
                 cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *bigspacer
+                  - <<: *spacer
+              - type: horizontal-stack
+                cards:
+                  - <<: *halfspacer
                   - <<: *actionbutton
-                    icon: 'mdi:replay'
+                    icon: 'mdi:information-variant'
+                    label: "Info"
+                    show_label: true
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
-                        command: Back
-                  - <<: *bigspacer
-                  - <<: *halfspacer
+                        command: Info
                   - <<: *spacer
+                  - <<: *blankbutton
                   - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-up-thick'
@@ -224,10 +226,13 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: DirectionUp
-                  - <<: *skipbutton
+                  - <<: *spacer
+                  - <<: *blankbutton
                   - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-up-drop-circle-outline'
+                    label: "Volume"
+                    show_label: false
                     tap_action:
                       action: call-service
                       service: remote.send_command
@@ -235,16 +240,22 @@ cards:
                         entity_id: remote.living_room
                         device: "Yamaha AV Receiver"
                         command: VolumeUp
-                  - <<: *blankbutton
-                  - type: 'custom:button-card'
-                    color_type: blank-card
+                  - <<: *spacer
               - type: horizontal-stack
                 cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
                   - <<: *halfspacer
+                  - <<: *actionbutton
+                    icon: 'mdi:arrow-up-circle-outline'
+                    label: "Page"
+                    show_label: false
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.living_room
+                        device: "Cisco DVR"
+                        command: ChannelUp
                   - <<: *spacer
-                  - <<: *blankbutton
                   - <<: *actionbutton
                     icon: 'mdi:arrow-left-thick'
                     tap_action:
@@ -254,6 +265,7 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: DirectionLeft
+                  - <<: *spacer
                   - <<: *actionbutton
                     show_label: true
                     show_icon: false
@@ -265,6 +277,7 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: Select
+                  - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-right-thick'
                     tap_action:
@@ -274,8 +287,11 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: DirectionRight
+                  - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-down-drop-circle-outline'
+                    label: "Volume"
+                    show_label: true
                     tap_action:
                       action: call-service
                       service: remote.send_command
@@ -284,17 +300,21 @@ cards:
                         device: "Yamaha AV Receiver"
                         command: VolumeDown
                   - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - type: 'custom:button-card'
-                    color_type: blank-card
               - type: horizontal-stack
                 cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *skipbutton
-                  - <<: *blankbutton
+                  - <<: *halfspacer
+                  - <<: *actionbutton
+                    icon: "mdi:arrow-down-circle-outline"
+                    label: "Page"
+                    show_label: true
+                    tap_action:
+                      action: call-service
+                      service_data:
+                        entity_id: remote.living_room
+                        device: "Cisco DVR"
+                        command: ChannelDown
                   - <<: *spacer
+                  - <<: *blankbutton
                   - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:arrow-down-thick'
@@ -305,7 +325,9 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: DirectionDown
+                  - <<: *spacer
                   - <<: *blankbutton
+                  - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:microphone-off'
                     tap_action:
@@ -315,16 +337,25 @@ cards:
                         entity_id: remote.living_room
                         device: "Yamaha AV Receiver"
                         command: Mute
-                  - type: 'custom:button-card'
-                    color_type: blank-card
               - type: horizontal-stack
                 cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
+                  - <<: *halfspacer
                   - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-backward'
-                    label: "7s"
+                    icon: "mdi:skip-backward"
+                    label: Rew
+                    show_label: true
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.living_room
+                        device: "Cisco DVR"
+                        command: Rewind
+                  - <<: *spacer
+                  - <<: *actionbutton
+                    icon: 'mdi:replay'
+                    label: "Replay"
+                    show_label: true
                     tap_action:
                       action: call-service
                       service: remote.send_command
@@ -334,7 +365,6 @@ cards:
                         command: SkipBack
                   - <<: *spacer
                   - <<: *actionbutton
-                    <<: *skipbutton
                     icon: 'mdi:play'
                     label: "Play"
                     tap_action:
@@ -346,9 +376,9 @@ cards:
                         command: Play
                   - <<: *spacer
                   - <<: *actionbutton
-                    <<: *skipbutton
                     icon: 'mdi:skip-forward'
-                    label: "30s"
+                    label: "Skip"
+                    show_label: true
                     tap_action:
                       action: call-service
                       service: remote.send_command
@@ -358,9 +388,9 @@ cards:
                         command: SkipForward
                   - <<: *spacer
                   - <<: *actionbutton
-                    <<: *skipbutton
                     icon: 'mdi:fast-forward'
                     label: "FF"
+                    show_label: true
                     tap_action:
                       action: call-service
                       service: remote.send_command
@@ -368,9 +398,10 @@ cards:
                         entity_id: remote.living_room
                         device: "Cisco DVR"
                         command: FastForward
-                  - <<: *blankbutton
-                  - type: 'custom:button-card'
-                    color_type: blank-card
+                  - <<: *spacer
+              - type: horizontal-stack
+                cards:
+                  - <<: *spacer
               - type: entities
                 entities:
                   - input_select.sleep_timer
@@ -391,23 +422,40 @@ cards:
                   icon: /local/images/netflix.jpg
                 - id: Hulu
                   icon: /local/images/hulu.jpg
+                - id: Plex
+                  icon: /local/images/plex.png
+                - id: Prime Video
+                  icon: /local/images/prime.jpg
                 - id: YouTube
                   icon: /local/images/youtube.png
                 - id: HISTORY
                   icon: /local/images/history-channel-logo.jpg
-                - id: ESPN
-                  icon: /local/images/espn-logo.jpg
-                - id: Prime Video
-                  icon: /local/images/prime.jpg
                 - id: Pluto TV
                   icon: /local/images/plutotv.jpg
+                - id: ESPN
+                  icon: /local/images/espn-logo.jpg
+                - id: Fox Sports
+                  icon: /local/images/fox-sports.jpg
+                - id: NBC Sports
+                  icon: /local/images/nbc-sports.jpg
+                - id: Discovery GO
+                  icon: /local/images/discovery.jpg
+                - id: Food Network
+                  icon: /local/images/food.png
+                - id: HGTV GO
+                  icon: /local/images/hgtv.jpg
             - type: entities
               entities:
                 - input_select.roku_source
             - type: entities
               entities:
                 - input_select.sleep_timer
-            
+
 icon: 'mdi:remote'
+visible:
+  - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - user: "8985f041376e4e3080841c36e29a9e47"
+  - user: "5730b28734fd48a8942d291e3cc0664a"
+
 title: Remote
 path: remote
