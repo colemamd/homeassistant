@@ -1,6 +1,12 @@
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
+  # Allow local network access with no login
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.2.0/24
+    - type: homeassistant
   # Location required to calculate the time the sun rises and sets
   latitude: !secret latitude
   longitude: !secret longitude
@@ -13,12 +19,8 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   packages: !include_dir_named packages
-  # Allow local network access with no login
-  auth_providers:
-    - type: trusted_networks
-      trusted_networks:
-        - 192.168.2.0/24
-    - type: homeassistant
+  whitelist_external_dirs:
+    - /config
 
 alexa_media:
   accounts:
@@ -82,12 +84,6 @@ influxdb:
 
 input_select:
   destination:
-    name: destination
-    options:
-      - Home
-      - Work
-      - Nicholas
-      - Johnathon
   roku_source:
     name: roku_source
     options:
@@ -125,19 +121,9 @@ input_text:
     name: roku source
 
 logbook:
-  exclude:
-    domains:
-      - automation
-      - input_boolean
-      - input_datetime
-      - input_select
-      - input_text
-      - script
 
 logger:
   default: info
-  logs:
-    hacs: debug
 
 lovelace:
   mode: yaml
@@ -172,7 +158,15 @@ plex:
 
 recorder:
   purge_keep_days: 7
-
+  exclude:
+    domains:
+      - automation
+      - input_boolean
+      - input_datetime
+      - input_select
+      - input_text
+      - script
+      - zwave
 remote:
   - platform: harmony
     name: Living Room
