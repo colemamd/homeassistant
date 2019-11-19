@@ -1,31 +1,18 @@
 resources:
   - type: module
-    url: /local/community/button-card/button-card.js
+    url: /community_plugin/button-card/button-card.js
   - type: module
-    url: /local/community/button-entity-row/button-entity-row.js
+    url: /community_plugin/compact-custom-header/compact-custom-header.js
   - type: module
-    url: /local/community/compact-custom-header/compact-custom-header.js
-  - type: js
-    url: /local/community/gauge-card/gauge-card.js
-  - type: js
-    url: /local/community/lovelace-card-loader/card-loader.js
+    url: /community_plugin/lovelace-layout-card/layout-card.js
   - type: module
-    url: /local/community/lovelace-card-mod/card-mod.js
-  - type: js
-    url: /local/community/lovelace-card-tools/card-tools.js
-  - type: js
-    url: /local/community/lovelace-gap-card/gap-card.js
+    url: /community_plugin/lovelace-auto-entities/auto-entities.js
   - type: module
-    url: /local/community/lovelace-google-keep-card/google-keep-card.js
+    url: /community_plugin/roku-card/roku-card.js
   - type: module
-    url: /local/community/radial-menu/radial-menu.js
+    url: /community_plugin/lovelace-card-tools/card-tools.js
   - type: module
-    url: /local/community/roku-card/roku-card.js
-  - type: module
-    url: /local/community/surveillance-card/surveillance-card.js
-  - type: module
-    url: /local/community/swipe-card/swipe-card.js
-
+    url: /community_plugin/lovelace-gap-card/gap-card.js
 
 title: My Home Automation
 cch:
@@ -38,9 +25,12 @@ cch:
         user: Alarm
       config:
         kiosk_mode: true
-        
+
 views:
-  - badges: []
+  - title: Security
+    icon: 'mdi:security'
+    id: security
+    path: security
     cards:
       - entity: alarm_control_panel.house
         type: alarm-panel
@@ -90,84 +80,13 @@ views:
           - entity: automation.alarm_warning
         title: Alarm Automations
         type: entities
-      - default_zoom: 16
-        entities:
-          - entity: device_tracker.matt_phone_2
-        type: map
-        # service: camera.play_stream
-        # image: /local/images/camera-outdoor.jpg
-        # service_data:
-        #   entity_id: camera.ffmpeg
-        # type: picture
-    icon: 'mdi:security'
-    id: security
-    path: security
-    title: Security
-  - cards:
-      - entities:
-          - switch.tv
-          - switch.hulu
-          - switch.netflix
-          - switch.plex
-        entity: sensor.harmony_hub
-        id: living_room
-        state_image:
-          Living Room Hulu: /local/images/hulu-2.jpg
-          Living Room Music: /local/images/music-graph.gif
-          Living Room Netflix: /local/images/netflix.png
-          Living Room Plex: /local/images/plex.png
-          Living Room Watch TV: /local/images/television-2.jpg
-          PowerOff: /local/images/off.jpg
-        title: Living Room
-        type: picture-glance
-      - entities:
-          - switch.hulu_bedroom
-          - switch.netflix_bedroom
-          - switch.plex_bedroom
-        entity: sensor.bedroom_media
-        state_image:
-          'City Stroll: Movie Magic': /local/images/off.jpg
-          Hulu: /local/images/hulu-2.jpg
-          Netflix: /local/images/netflix.png
-          Plex: /local/images/plex.png
-          Pluto TV - It's Free TV: /local/images/plutotv.jpg
-        title: Bedroom
-        type: picture-glance
-      - cards:
-          - entities:
-              - switch.hulu_den
-              - switch.netflix_den
-              - switch.plex_den
-            entity: sensor.den_media
-            id: den_media
-            state_image:
-              Hulu: /local/images/hulu-2.jpg
-              Netflix: /local/images/netflix.png
-              Plex: /local/images/plex.png
-              Roku: /local/images/off.jpg
-            title: Den
-            type: picture-glance
-        title: Den
-        type: vertical-stack
-      - card:
-          entity: media_player.living_room_roku_2
-          type: media-control
-        conditions:
-          - entity: sensor.harmony_hub
-            state_not: PowerOff
-        type: conditional
-      - card:
-          entity: media_player.den_roku
-          type: media-control
-        conditions:
-          - entity: sensor.den_media
-            state_not: Roku
-        type: conditional
-    icon: 'mdi:television-box'
-    id: Media
-    title: Media
-    type: horizontal-stack
-  - cards:
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+      - user: "e33d8e3101754e7ab93bea5140e38118"
+  - title: Home
+    id: home
+    cards:
       - entities:
           - entity: lock.lock_front_door_lock
           - entity: sensor.front_door_report
@@ -183,6 +102,13 @@ views:
         title: HACS
         type: entities
       - entities:
+          - entity: group.protects
+          - entity: automation.nest_protect_emergency
+          - entity: automation.nest_protect_offline_notify
+        title: Nest Protects
+        show_header_toggle: false
+        type: entities
+      - entities:
           - input_select.lock_zwave_option_3_front
           - input_select.lock_zwave_option_4_front
           - input_select.lock_zwave_option_5_front
@@ -196,127 +122,12 @@ views:
         show_header_toggle: false
         title: Front Door Config Options
         type: entities
-      - cards:
-          - cards:
-              - entities:
-                  - entity: binary_sensor.living_room_nest_protect_online
-                    name: Online
-                  - entity: sensor.living_room_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.living_room_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.living_room_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.living_room_nest_protect_smoke_status
-                    name: Smoke
-                title: Living Rm
-                type: glance
-              - entities:
-                  - entity: binary_sensor.den_nest_protect_online
-                    name: Online
-                  - entity: sensor.den_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.den_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.den_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.den_nest_protect_smoke_status
-                    name: Smoke
-                title: Den
-                type: glance
-              - entities:
-                  - entity: binary_sensor.hallway_nest_protect_online
-                    name: Online
-                  - entity: sensor.hallway_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.hallway_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.hallway_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.hallway_nest_protect_smoke_status
-                    name: Smoke
-                title: Hallway
-                type: glance
-              - entities:
-                  - entity: binary_sensor.master_bedroom_nest_protect_online
-                    name: Online
-                  - entity: sensor.master_bedroom_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.master_bedroom_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.master_bedroom_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.master_bedroom_nest_protect_smoke_status
-                    name: Smoke
-                title: Master
-                type: glance
-              - entities:
-                  - entity: binary_sensor.kitchen_nest_protect_online
-                    name: Online
-                  - entity: sensor.kitchen_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.kitchen_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.kitchen_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.kitchen_nest_protect_smoke_status
-                    name: Smoke
-                title: Kitchen
-                type: glance
-              - entities:
-                  - entity: binary_sensor.bedroom_1_nest_protect_online
-                    name: Online
-                  - entity: sensor.bedroom_1_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.bedroom_1_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.bedroom_1_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.bedroom_1_nest_protect_smoke_status
-                    name: Smoke
-                title: Front Bed
-                type: glance
-              - entities:
-                  - entity: binary_sensor.bedroom_2_nest_protect_online
-                    name: Online
-                  - entity: sensor.bedroom_2_nest_protect_battery_health
-                    name: Battery
-                  - entity: sensor.bedroom_2_nest_protect_co_status
-                    name: CO
-                  - entity: sensor.bedroom_2_nest_protect_color_status
-                    name: Color
-                  - entity: sensor.bedroom_2_nest_protect_smoke_status
-                    name: Smoke
-                title: Back Bed
-                type: glance
-            parameters:
-              centeredSlides: true
-              coverflowEffect:
-                depth: 100
-                modifier: 1
-                rotate: 50
-                slideShadows: true
-                stretch: 0
-              effect: coverflow
-              grabCursor: true
-              keyboard:
-                enabled: true
-                onlyInViewport: true
-              navigation: null
-              pagination:
-                type: bullets
-              slidesPerView: auto
-            type: 'custom:swipe-card'
-        title: Nest Protects
-        type: horizontal-stack
-    id: home
-    title: Home
-  - badges:
-      - binary_sensor.den_nest_protect_online
-      - sensor.den_nest_protect_battery_health
-      - sensor.den_nest_protect_color_status
-      - sensor.den_nest_protect_smoke_status
-      - sensor.den_nest_protect_co_status
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - title: Den
+    panel: false
+    path: Den
     cards:
       - entities:
           - entity: switch.den_light
@@ -333,38 +144,34 @@ views:
           - entity: automation.den_light_on_on_motion
         title: Den Automations
         type: entities
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - title: Living Room
     panel: false
-    path: Den
-    title: Den
-  - badges:
-      - binary_sensor.living_room_nest_protect_online
-      - sensor.living_room_nest_protect_battery_health
-      - sensor.living_room_nest_protect_color_status
-      - sensor.living_room_nest_protect_smoke_status
-      - sensor.living_room_nest_protect_co_status
+    path: Living Room
     cards:
       - entities:
           - entity: light.television_light
         title: Lights
         type: entities
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - title: Kitchen
     panel: false
-    path: Living Room
-    title: Living Room
-  - badges:
-      - binary_sensor.kitchen_nest_protect_online
-      - sensor.kitchen_nest_protect_battery_health
-      - sensor.kitchen_nest_protect_color_status
-      - sensor.kitchen_nest_protect_smoke_status
-      - sensor.kitchen_nest_protect_co_status
+    path: Kitchen
     cards:
       - entities:
           - entity: switch.dining_room_light
         title: Lights
         type: entities
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - title: Outside
     panel: false
-    path: Kitchen
-    title: Kitchen
-  - badges: []
+    path: Outside
     cards:
       - entities:
           - entity: switch.overhead_garage_door
@@ -373,6 +180,8 @@ views:
       - entities:
           - entity: light.front_lawn
           - entity: group.porch_lights
+          - entity: light.front_porch_1
+          - entity: light.front_porch_2
         title: Lights
         type: entities
       - entities:
@@ -381,10 +190,13 @@ views:
           - entity: automation.porch_lights_off_night
         title: Automations
         type: entities
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - title: Environment
+    id: environment
     panel: false
-    path: Outside
-    title: Outside
-  - cards:
+    cards:
       - cards:
           - entity: weather.openweathermap
             type: weather-forecast
@@ -404,10 +216,12 @@ views:
                 type: vertical-stack
             type: horizontal-stack
         type: vertical-stack
-    id: environment
-    panel: false
-    title: Environment
-  - badges: []
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - title: 'Door Lock Information, Codes and Configuration'
+    icon: 'mdi:lock-smart'
+    path: keypads
     cards:
        - entities:
            - input_text.door_keypad_1_name
@@ -600,12 +414,13 @@ views:
            - script.door_keypad_18_delete
          title: One Time Use Code 3
          type: entities
-
-    icon: 'mdi:lock-smart'
-    path: keypads
-    title: 'Door Lock Information, Codes and Configuration'
-
-  - badges: []
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+  - title: sysmon
+    icon: 'mdi:monitor'
+    panel: false
+    path: sysmon
     cards:
       - entities:
           - sensor.pihole_cpu_load
@@ -618,6 +433,7 @@ views:
           - entity: sensor.hass_uptime
           - entity: sensor.current_version
           - entity: sensor.version_available
+          - entity: sensor.home_assistant_v2_db
         show_header_toggle: false
         title: HASS Stats
         type: entities
@@ -658,8 +474,22 @@ views:
         show_header_toggle: false
         title: Deluge stats
         type: entities
-    icon: 'mdi:monitor'
-    panel: false
-    path: sysmon
-    title: sysmon
+      - entities:
+          - entity: sensor.ng_enhanced_info
+          - entity: sensor.ng_enhanced_get_lan_config_info
+          - entity: switch.ng_enhanced_run_speed_test
+          - entity: sensor.ng_enhanced_speed_test_result
+          - entity: sensor.ng_enhanced_2g_wifi_info
+          - entity: sensor.ng_enhanced_5g_wifi_info
+          - entity: sensor.ng_enhanced_2g_guest_wifi_info
+          - entity: switch.ng_enhanced_2g_guest_wifi
+          - entity: sensor.ng_enhanced_5g_guest_wifi_info
+          - entity: switch.ng_enhanced_5g_guest_wifi
+          - entity: switch.ng_enhanced_reboot
+        show_header_toggle: false
+        title: Wifi Status & Stats
+        type: entities
+    visible:
+      - user: "8985f041376e4e3080841c36e29a9e47"
+      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
   - !include /config/lovelace/remote.yaml
