@@ -1,0 +1,119 @@
+homeassistant:
+  customize_glob:
+    "sensor.*_co_status":
+      hidden: True
+    "sensor.*_battery_health":
+      hidden: True
+    "sensor.*_color_status":
+      hidden: True
+    "sensor.*_smoke_status":
+      hidden: True
+
+    customize:
+      binary_sensor.bedroom_1_nest_protect_online:
+        friendly_name: Nick's Room Protect
+        icon: mdi-nfc
+      binary_sensor.bedroom_2_nest_protect_online:
+        friendly_name: John's Room Protect
+        icon: mdi-nfc
+      binary_sensor.den_nest_protect_online:
+        friendly_name: Den Protect
+        icon: mdi-nfc
+      binary_sensor.hallway_nest_protect_online:
+        friendly_name: Hall Protect
+        icon: mdi-nfc
+      binary_sensor.kitchen_nest_protect_online:
+        friendly_name: Kitchen Protect
+        icon: mdi-nfc
+      binary_sensor.living_room_nest_protect_online:
+        friendly_name: Living Room Protect
+        icon: mdi-nfc
+      binary_sensor.master_bedroom_nest_protect_online:
+        friendly_name: Master Bedroom Protect
+        icon: mdi-nfc
+
+group:
+  protects:
+    name: Nest Protects
+    entities:
+      - binary_sensor.bedroom_1_nest_protect_online
+      - binary_sensor.bedroom_2_nest_protect_online
+      - binary_sensor.den_nest_protect_online
+      - binary_sensor.hallway_nest_protect_online
+      - binary_sensor.kitchen_nest_protect_online
+      - binary_sensor.living_room_nest_protect_online
+      - binary_sensor.master_bedroom_nest_protect_online
+
+automation:
+  - alias: 'Nest Protect Emergency'
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id:
+        - sensor.bedroom_2_nest_protect_smoke_status
+        - sensor.bedroom_2_nest_protect_co_status
+        - sensor.bedroom_1_nest_protect_smoke_status
+        - sensor.bedroom_1_nest_protect_co_status
+        - sensor.den_nest_protect_smoke_status
+        - sensor.den_nest_protect_co_status
+        - sensor.hallway_nest_protect_smoke_status
+        - sensor.hallway_nest_protect_co_status
+        - sensor.kitchen_nest_protect_smoke_status
+        - sensor.kitchen_nest_protect_co_status
+        - sensor.living_room_nest_protect_smoke_status
+        - sensor.living_room_nest_protect_co_status
+        - sensor.master_bedroom_nest_protect_smoke_status
+        - sensor.master_bedroom_nest_protect_co_status
+      to: 'Emergency'
+
+    action:
+      - service_template: notify.pushbullet
+        data_template:
+          message: An emergency has been detected on {{ trigger.to_state.attributes.friendly_name }}. Investigate IMMEDIATELY.
+          target:
+            - email/matthew.d.coleman@gmail.com
+
+      - service_template: notify.alexa_media
+        data_template:
+          data:
+            type: tts
+          message: An emergency has been detected on {{ trigger.to_state.attributes.friendly_name }}. Investigate IMMEDIATELY.
+          target:
+            - Living Room Echo
+
+      - service_template: notify.mobile_app_matt_phone
+        data_template:
+          message: An emergency has been detected on {{ trigger.to_state.attributes.friendly_name }}. Investigate IMMEDIATELY.
+
+  - alias: 'Nest Protect Offline Notify'
+    hide_entity: true
+    trigger:
+      platform: state
+      entity_id:
+        - binary_sensor.bedroom_2_nest_protect_online
+        - binary_sensor.bedroom_1_nest_protect_online
+        - binary_sensor.den_nest_protect_online
+        - binary_sensor.hallway_nest_protect_online
+        - binary_sensor.kitchen_nest_protect_online
+        - binary_sensor.living_room_nest_protect_online
+        - binary_sensor.master_bedroom_nest_protect_online
+      from: 'on'
+
+    action:
+      - service_template: notify.pushbullet
+        data_template:
+          message: The {{ trigger.to_state.attributes.friendly_name }} is now {{ (trigger.to_state.state)|replace('_', ' ') }}. Please check immediately.
+          target:
+            - email/matthew.d.coleman@gmail.com
+
+      - service_template: notify.alexa_media
+        data_template:
+          message: The {{ trigger.to_state.attributes.friendly_name }} is now {{ (trigger.to_state.state)|replace('_', ' ') }}. Please check immediately.
+          data:
+            type: tts
+          target:
+            - Living Room Echo
+
+      - service_template: notify.mobile_phone_app_matt_phone
+        data_template:
+          message: The {{ trigger.to_state.attributes.friendly_name }} is now {{ (trigger.to_state.state)|replace('_', ' ') }}. Please check immediately.
