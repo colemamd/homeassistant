@@ -24,6 +24,14 @@
     - 'download_speed'
     - 'upload_speed'
 
+- platform: filesize
+  file_paths:
+    - /config/home-assistant_v2.db
+
+- platform: glances
+  name: pi_hole
+  host: 192.168.2.254
+
 - platform: mqtt
   name: "Washing Machine Power"
   state_topic: "tele/sonoff/SENSOR"
@@ -50,6 +58,36 @@
       value_template: "{{ state_attr('media_player.bedroom_roku', 'source') }}"
       friendly_name: 'Bedroom TV Source'
 
+- platform: netgear_enhanced
+  host: 192.168.2.253
+  username: !secret netgear_user
+  password: !secret netgear_password
+  resources:
+    - firmware
+    - check_app_fw
+    - get_device_config_info
+    - traffic_meter
+    - traffic_meter_on
+    - traffic_meter_options
+    - get_lan_config_info
+    - parental_control_on
+    - mac_address
+    - info
+    - supported_features
+    - speed_test_result
+    - qos_enabled
+    - bw_control
+    - 2g_guest_wifi_on
+    - 5g_guest_wifi_on
+    - 2g_wpa_key
+    - 5g_wpa_key
+    - 2g_wifi_info
+    - 5g_wifi_info
+    - get_channel
+    - 2g_guest_wifi_info
+    - 5g_guest_wifi_info
+    - get_smart_conn
+
 - platform: uptime
   name: HASS uptime
   unit_of_measurement: hours
@@ -61,7 +99,7 @@
 - platform: version
   name: Version Available
   source: docker
-  image: raspberrypi3
+  image: default
 
 - platform: time_date
   display_options:
