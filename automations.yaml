@@ -49,7 +49,6 @@
         type: tts
       message: Home Alarm is activated in Away Mode.
       target:
-      - Echo office
       - Living Room Echo
     service: notify.alexa_media
   initial_state: true
@@ -93,7 +92,6 @@
       message: Home alarm is activating in Away Mode. Ensure all doors and windows
         are shut. Goodbye.
       target:
-      - Echo office
       - Living Room Echo
     service: notify.alexa_media
   initial_state: true
@@ -177,7 +175,7 @@
   - data:
       data:
         method: all
-        type: tts, announce
+        type: tts
       message: The house alarm has been activated. {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
         states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
         }} has been tripped. Please deactivate immediately.
@@ -277,19 +275,13 @@
   action:
   - data:
       brightness: 175
+      color_name: orange
       entity_id: light.front_porch_1
-      rgb_color:
-      - 255
-      - 190
-      - 44
     service: light.turn_on
   - data:
       brightness: 175
+      color_name: black
       entity_id: light.front_porch_2
-      rgb_color:
-      - 255
-      - 255
-      - 255
     service: light.turn_on
 - id: '1571874372030'
   alias: Living Room Roku SS
@@ -333,7 +325,7 @@
   condition: []
   action:
   - delay:
-      minutes: "{{ states('input_select.sleep_timer') }}"
+      minutes: '{{ states(''input_select.sleep_timer'') }}'
   - data:
       activity: PowerOff
       entity_id: remote.living_room
