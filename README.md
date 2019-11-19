@@ -4,6 +4,6 @@ This is my [Home Assistant](https://home-assistant.io/) configuration. I am curr
 ## Info
 <div align="center">
   <h4>
-    <img src="https://img.shields.io/github/last-commit/colemamd/homeassistant"> <img src="https://img.shields.io/github/issues-raw/colemamd/homeassistant">
+    <a href="https://github.com/colemamd/homeassistant/commits/master"><img src="https://img.shields.io/github/last-commit/colemamd/homeassistant"> <a href="https://github.com/colemamd/homeassistant/issues"><img src="https://img.shields.io/github/issues-raw/colemamd/homeassistant">
   </h4>
 </div>
