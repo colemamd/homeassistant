@@ -4,7 +4,7 @@ This is my [Home Assistant](https://home-assistant.io/) configuration. I am curr
 <div align="center">
 <h2> Info </h2>
   <h4>
-    <a href="https://github.com/colemamd/homeassistant/commits/master"><img src="https://img.shields.io/github/last-commit/colemamd/homeassistant"> <a href="https://github.com/colemamd/homeassistant/issues"><img src="https://img.shields.io/github/issues-raw/colemamd/homeassistant">
+    <a href="https://github.com/colemamd/homeassistant/commits/master"><img src="https://img.shields.io/github/last-commit/colemamd/homeassistant"> <a href="https://github.com/colemamd/homeassistant/issues"><img src="https://img.shields.io/github/issues-raw/colemamd/homeassistant"></a>
   </h4>
 </div>
 
