@@ -32,18 +32,23 @@ Screenshots for each are under [Dashboards](https://github.com/colemamd/homeassi
 
 #### Remote
 ![screenshots/dashboard-remote-1.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-remote-1.png)
-This is the display with the entertainment center off. These are buttons that activate and Activity on the Harmony Hub. That second row is a WIP, I just added some quick-select buttons for the kids. 
+<div class=caption>This is the display with the entertainment center off. These are buttons that activate and Activity on the Harmony Hub. That second row is a WIP, I just added some quick-select buttons for the kids. </div>
+
 ![screenshots/dashboard-remote-2.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-remote-2.png)
-This is for watching TV from the cable box. This is a custom-built remote using button-cards.
+<div class=caption>This is for watching TV from the cable box. This is a custom-built remote using button-cards. </div>
+
 ![screenshots/dashboard-remote-3.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-remote-3.png)
-This is for watching the Roku. I did have a similar page as the TV, but switched to the Roku Card as that has all the funcionality I needed.
+<div class=caption>This is for watching the Roku. I did have a similar page as the TV, but switched to the Roku Card as that has all the funcionality I needed. </div>
 
 #### Wall Tablet
 ![screenshots/dashboard-wall-tablet-1.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-1.png)
-<div align="center"><h5>Weather Forecast Card</h5></div>
+<div class=caption>Weather Forecast Card</div>
+
 ![screenshots/dashboard-wall-tablet-2-1.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-2-1.png)
-<div align="center"><h5>Swiper Card - This is the first card.</h5></div>
+<div class=caption>Swiper Card - This is the first card.</div>
+
 ![screenshots/dashboard-wall-tablet-2-3.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-2-3.png)
-<div align="center"><h5>Swiper Card - This is the third card.</h5></div>
+<div class=caption>Swiper Card - This is the third card.</div>
+
 ![screenshots/dashboard-wall-tablet-3.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-3.png)
-<div align="center"><h5>Security view</h5></div>
+<div class=caption>Security view</div>
