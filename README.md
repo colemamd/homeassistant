@@ -40,10 +40,10 @@ This is for watching the Roku. I did have a similar page as the TV, but switched
 
 #### Wall Tablet
 ![screenshots/dashboard-wall-tablet-1.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-1.png)
-Weather Forecast Card
+<div align="center"><h5>Weather Forecast Card</h5></div>
 ![screenshots/dashboard-wall-tablet-2-1.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-2-1.png)
-Swiper Card - This is the first card.
-![screenshots/dashboard-wall-tablet-2-2.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-2-2.png)
-Swiper Card - This is the third card. 
+<div align="center"><h5>Swiper Card - This is the first card.</h5></div>
+![screenshots/dashboard-wall-tablet-2-3.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-2-3.png)
+<div align="center"><h5>Swiper Card - This is the third card.</h5></div>
 ![screenshots/dashboard-wall-tablet-3.png](https://github.com/colemamd/homeassistant/blob/master/screenshots/dashboard-wall-tablet-3.png)
-Security view
+<div align="center"><h5>Security view</h5></div>
