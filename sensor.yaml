@@ -1,37 +1,12 @@
-# UPS sensor
-- platform: apcupsd
-  resources:
-    - bcharge
-    - timeleft
-    - linev
-    - loadpct
-    - nominv
-    - nompower
-    - numxfers
-    - lastxfer
-    - status
-    - tonbatt
-    - cumonbatt
-    - battv
-    - nombattv
-
 - platform: deluge
-  host: 192.168.2.100
+  host: 192.168.2.190
   username: !secret deluge_user
   password: !secret deluge_pass
   monitored_variables:
     - 'current_status'
     - 'download_speed'
     - 'upload_speed'
-
-- platform: filesize
-  file_paths:
-    - /config/home-assistant_v2.db
-
-- platform: glances
-  name: pi_hole
-  host: 192.168.2.254
-
+  
 - platform: mqtt
   name: "Washing Machine Power"
   state_topic: "tele/sonoff/SENSOR"
@@ -43,6 +18,41 @@
   state_topic: "tele/sonoff/SENSOR"
   value_template: '{{ value_json["ENERGY"]["Current"] }}'
   unit_of_measurement: "A"
+
+- platform: netdata
+  host: 192.168.2.150
+  name: freenas
+  resources:
+    system_load1:
+      data_group: system.load
+      element: load1
+    system_load5:
+      data_group: system.load
+      element: load5
+    system_load15:
+      data_group: system.load
+      element: load15
+
+- platform: rest
+  name: fullykiosk alarm
+  json_attributes:
+    ['batteryLevel', 'screenBrightness', 'plugged', 'deviceName', 'deviceModel', 
+    'lastAppStart', 'internalStorageFreeSpace', 'internalStorageTotalSpace',
+    'ramFreeMemory', 'ramTotalMemory', 'currentFragment']
+  resource: !secret fullykiosk_alarm_rest_resource
+  value_template: '{{ value_json.isScreenOn }}'
+
+- platform: rest
+  name: fullykiosk remote
+  json_attributes:
+    ['batteryLevel', 'screenBrightness', 'plugged', 'deviceName', 'deviceModel', 
+    'lastAppStart', 'internalStorageFreeSpace', 'internalStorageTotalSpace',
+    'ramFreeMemory', 'ramTotalMemory', 'currentFragment']
+  resource: !secret fullykiosk_remote_rest_resource
+  value_template: '{{ value_json.isScreenOn }}'
+
+- platform: rpi_power
+  text_state: true
 
 - platform: template
   sensors:
@@ -57,36 +67,73 @@
     bedroom_media:
       value_template: "{{ state_attr('media_player.bedroom_roku', 'source') }}"
       friendly_name: 'Bedroom TV Source'
+    
+    fullykiosk_alarm_device_name:
+      friendly_name: Alarm Tablet Model
+      icon_template: 'mdi:tablet'
+      value_template: "{{ state_attr('sensor.fullykiosk_alarm', 'deviceName') }} ({{ state_attr('sensor.fullykiosk_alarm', 'deviceModel') }})"
 
-- platform: netgear_enhanced
-  host: 192.168.2.253
-  username: !secret netgear_user
-  password: !secret netgear_password
-  resources:
-    - firmware
-    - check_app_fw
-    - get_device_config_info
-    - traffic_meter
-    - traffic_meter_on
-    - traffic_meter_options
-    - get_lan_config_info
-    - parental_control_on
-    - mac_address
-    - info
-    - supported_features
-    - speed_test_result
-    - qos_enabled
-    - bw_control
-    - 2g_guest_wifi_on
-    - 5g_guest_wifi_on
-    - 2g_wpa_key
-    - 5g_wpa_key
-    - 2g_wifi_info
-    - 5g_wifi_info
-    - get_channel
-    - 2g_guest_wifi_info
-    - 5g_guest_wifi_info
-    - get_smart_conn
+    fullykiosk_remote_device_name:
+      friendly_name: Remote Tablet Model
+      icon_template: 'mdi:tablet'
+      value_template: "{{ state_attr('sensor.fullykiosk_remote', 'deviceName') }} ({{ state_attr('sensor.fullykiosk_remote', 'deviceModel') }}"
+
+    fullykiosk_alarm_battery_level:
+      friendly_name: Alarm Tablet Battery
+      unit_of_measurement: '%'
+      value_template: "{{ state_attr('sensor.fullykiosk_alarm', 'batteryLevel') }}"
+      icon_template: >-
+        {% set battery_level = state_attr('sensor.fullykiosk_alarm', 'batteryLevel')|int('unknown') %}
+        {% set battery_round = (battery_level|int / 10)|int * 10 %}
+        {% if battery_level == 'unknown' %}
+          mdi:battery-unknown
+        {% else %}
+          {% if battery_round >= 100 %}
+            mdi:battery
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+        {% endif %}
+
+    fullykiosk_alarm_plugged:
+      friendly_name: Alarm Tablet plugged in
+      value_template: >-
+        {% if state_attr('sensor.fullykiosk_alarm', 'plugged') == true %} Yes {% else %} No {% endif %}
+      icon_template: >-
+        {% if state_attr('sensor.fullykiosk_alarm', 'plugged') == true %} mdi:power-plug {% else %} mdi:power-plug-off {% endif %}
+
+    fullykiosk_remote_plugged:
+      friendly_name: Remote Tablet plugged in
+      value_template: >-
+        {% if state_attr('sensor.fullykiosk_remote', 'plugged') == true %} Yes {% else %} No {% endif %}
+      icon_template: >-
+        {% if state_attr('sensor.fullykiosk_remote', 'plugged') == true %} mdi:power-plug {% else %} mdi:power-plug-off {% endif %}
+
+    fullykiosk_alarm_storage_percentage:
+      friendly_name: Alarm Tablet Storage
+      icon_template: 'mdi:sd'
+      unit_of_measurement: '%'
+      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_alarm', 'internalStorageFreeSpace') / state_attr('sensor.fullykiosk_alarm', 'internalStorageTotalSpace') * 100 ) | int }}"
+
+    fullykiosk_remote_storage_percentage:
+      friendly_name: Remote Tablet Storage
+      icon_template: 'mdi:sd'
+      unit_of_measurement: '%'
+      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_remote', 'internalStorageFreeSpace') / state_attr('sensor.fullykiosk_remote', 'internalStorageTotalSpace') * 100 ) | int }}"
+
+    fullykiosk_alarm_memory_percentage:
+      friendly_name: Alarm Tablet Memory
+      icon_template: 'mdi:sd'
+      unit_of_measurement: '%'
+      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_alarm', 'ramFreeMemory') / state_attr('sensor.fullykiosk_alarm', 'ramTotalMemory') * 100 ) | int }}"
+
+    fullykiosk_remote_memory_percentage:
+      friendly_name: Remote Tablet Memory
+      icon_template: 'mdi:sd'
+      unit_of_measurement: '%'
+      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_remote', 'ramFreeMemory') / state_attr('sensor.fullykiosk_remote', 'ramTotalMemory') * 100 ) | int }}"
 
 - platform: uptime
   name: HASS uptime
@@ -107,8 +154,10 @@
     - 'date'
     - 'date_time'
 
-- platform: openweathermap
-  api_key: !secret openweathermap-api_key
-  monitored_conditions:
-    - weather
-  forecast: true
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /
+    - type: memory_use_percent
+    - type: processor_use
+    - type: last_boot      

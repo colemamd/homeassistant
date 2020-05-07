@@ -42,7 +42,7 @@
   - data:
       message: Alarm Away Mode Armed
       target:
-      - email/matthew.d.coleman@gmail.com
+      - email/redacted
     service: notify.pushbullet
   - data:
       data:
@@ -51,6 +51,11 @@
       target:
       - Living Room Echo
     service: notify.alexa_media
+  - data:
+      message: Home Alarm is activated in Away Mode.
+    service: notify.redacted
+  - entity_id: lock.lock_front_door_lock
+    service: lock.lock
   initial_state: true
 - id: alarm_armed_home
   alias: '[Alarm] Home Mode Armed'
@@ -62,12 +67,12 @@
   - data:
       message: Alarm Home Mode Armed
       target:
-      - email/matthew.d.coleman@gmail.com
+      - email/redacted
     service: notify.pushbullet
   - data:
       data:
         type: tts
-      message: The house alarm has been armed in home mode. Goodnight
+      message: The house alarm has been armed in home mode.
       target:
       - Echo office
       - Living Room Echo
@@ -105,7 +110,7 @@
   - data:
       message: Alarm Disabled
       target:
-      - email/matthew.d.coleman@gmail.com
+      - email/redacted
     service: notify.pushbullet
   - data:
       data:
@@ -120,7 +125,7 @@
     service: switch.turn_off
   - data:
       message: Home Alarm has been deactivated.
-    service: notify.mobile_app_matt_phone
+    service: notify.redacted
   initial_state: true
 - id: alarm_triggered
   alias: '[Alarm] Triggered'
@@ -147,16 +152,23 @@
         states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
         }} has been tripped.
       target:
-      - email/matthew.d.coleman@gmail.com
+      - email/redacted
     service: notify.pushbullet
   - data:
       entity_id: switch.arduino_gw_0_52
     service: switch.turn_on
   - data:
-      action: Disarm
       message: Home Alarm TRIGGERED by {{states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name}}.
-      title: Disarm
-    service: notify.mobile_app_matt_phone
+      title: Alarm triggered!
+    service: notify.redacted
+  - entity_id: switch.backyard_state
+    service: switch.turn_on
+  - entity_id: switch.backyard2_state
+    service: switch.turn_on
+  - entity_id: switch.front_porch_state
+    service: switch.turn_on
+  - entity_id: switch.driveway_state
+    service: switch.turn_on
   initial_state: true
 - id: alarm_warning
   alias: '[Alarm] Warning'
@@ -170,7 +182,7 @@
         states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
         }} has been tripped.
       target:
-      - email/matthew.d.coleman@gmail.com
+      - email/redacted
     service: notify.pushbullet
   - data:
       data:
@@ -183,21 +195,29 @@
       - Living Room Echo
       title: Home Alarm WARNING
     service: notify.alexa_media
+  - data:
+      message: Alarm warning! {{ states[states.alarm_control_panel.house.attributes.changed_by.split(".")[0]][
+        states.alarm_control_panel.house.attributes.changed_by.split(".")[1]].name
+        }} has been tripped.
+      title: Warning!
+    service: notify.redacted
   initial_state: true
 - id: '1556842770224'
   alias: Front Door Unlock Upon Arriving Home
   trigger:
   - entity_id: binary_sensor.ring_front_door_motion
     platform: state
-    to: '"on"'
+    to: 'on'
   condition:
   - condition: zone
-    entity_id: device_tracker.matt_phone
+    entity_id: person.matt
     zone: zone.home
   action:
   - data:
       armed_state: disarmed
     service: alarm_control_panel.alarm_disarm
+  - entity_id: lock.schlage_allegion_be469_touchscreen_deadbolt_locked_frontdoor
+    service: lock.unlock
 - id: '1557103120900'
   alias: Den Light On on Motion
   trigger:
@@ -210,58 +230,29 @@
       entity_id: switch.den_light
     service: switch.turn_on
 - id: '1557103744211'
-  alias: Den Light Off After No Motion
+  alias: Den Light Off After No Motion at Night
   trigger:
   - entity_id: binary_sensor.arduino_gw_0_34
     for: 00:05:00
     platform: state
     to: 'off'
-  condition: []
+  condition:
+  - after: '23:00'
+    condition: time
   action:
   - data:
       entity_id: switch.den_light
     service: switch.turn_off
-- id: '1557803629521'
-  alias: Notify Upon Unlock
-  trigger:
-  - entity_id: lock.lock_front_door_lock
-    platform: state
-    to: unlocked
-  condition: []
-  action:
-  - delay: 00:00:05
-  - alias: ''
-    data:
-      data:
-        type: tts
-      message: Welcome Home {{ states('sensor.frontdoor_code') }}
-      target: Living Room Echo
-    service: notify.alexa_media
-  - data:
-      message: 'Front Door unlocked by {{ states(''sensor.frontdoor_code'') }} '
-    service: notify.mobile_app_matt_phone
-- id: '1562246257621'
-  alias: HACS Persistent Notification
-  trigger:
-  - above: '0'
-    entity_id: sensor.hacs
-    platform: numeric_state
-  condition: []
-  action:
-  - data:
-      message: Update available!
-      title: HACS
-    service: persistent_notification.create
 - id: '1562248478361'
   alias: HA Update Available
   trigger:
   - platform: template
-    value_template: '{{ states(''state.version_available'') > states(''state.version_current'')
+    value_template: '{{ states(''sensor.version_available'') > states(''sensor.current_version'')
       }}'
   condition: []
   action:
   - data:
-      message: HA Version {{ state.version_available }} Available!
+      message: HA Version {{ states('sensor.version_available') }} Available!
       title: HASS
     service: persistent_notification.create
 - id: '1571615535154'
@@ -330,3 +321,147 @@
       activity: PowerOff
       entity_id: remote.living_room
     service: remote.turn_on
+- id: hacs_new_repo
+  alias: HACS new repo notification
+  trigger:
+    platform: event
+    event_type: hacs/repository
+    event_data:
+      action: registration
+  condition:
+    condition: template
+    value_template: '{{ trigger.event.data.repository is defined }}'
+  action:
+    service: persistent_notification.create
+    data_template:
+      title: New repository added in HACS
+      message: '{% set repo = trigger.event.data.repository %} {% set id = trigger.event.data.repository_id
+        %} [{{ repo }}](/hacs/repository/{{ id}}) was just added to HACS.'
+- id: hacs_updates
+  alias: HACS updates pending
+  trigger:
+    platform: state
+    entity_id: sensor.hacs
+  condition:
+  - condition: template
+    value_template: '{{ states(trigger.entity_id) != ''unknown''}}'
+  - condition: template
+    value_template: '{{ (states(trigger.entity_id) | float) != 0}}'
+  action:
+    service: persistent_notification.create
+    data_template:
+      title: Updates pending in HACS
+      message: "{% for repo in state_attr(trigger.entity_id, 'repositories') %}\n\
+        \  **{{ repo.display_name }}** _{{ repo[\"installed version\"] }}_ -> _{{\
+        \ repo[\"available version\"]}}_\n{% endfor %}"
+- id: rpi_power
+  alias: Power Supply Problem Notification
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.rpi_power_status
+    value_template: '{{ state.attributes.value }}'
+    above: 0
+    for:
+      minutes: 5
+  condition:
+  action:
+  - service: persistent_notification.create
+    data_template:
+      message: 'HASS Power reported {{ states.sensor.rpi_power_status.state }}. The
+        state had changed from {{ trigger.from_state.state }} '
+      title: HASS Power Supply Issue
+  - service: notify.mobile_app_matt_phone
+    data_template:
+      message: HASS Power reported {{ states.sensor.rpi_power_status.state }}. The
+        state had changed from {{ trigger.from_state.state }}
+      title: HASS Power Supply Issue
+- id: '1577103385700'
+  alias: '[Alarm] Night Mode Armed'
+  description: ''
+  trigger:
+  - entity_id: alarm_control_panel.house
+    platform: state
+    to: armed_night
+  condition: []
+  action:
+  - data:
+      data:
+        type: tts
+      message: Home Alarm is activated in Away Mode.
+      target:
+      - Living Room Echo
+    service: notify.alexa_media
+  - data:
+      Message: Home Alarm has been armed in night mode. Goodnight.
+      title: Night Mode Armed
+    service: notify.redacted
+- id: '1577104366007'
+  alias: Vacation Mode
+  description: ''
+  trigger:
+  - event: sunset
+    offset: -03:00:00
+    platform: sun
+  condition:
+  - condition: state
+    entity_id: device_tracker.oneplus_a6013_2
+    state: not_home
+  - condition: state
+    entity_id: alarm_control_panel.house
+    state: armed_away
+  action:
+  - alias: ''
+    data: {}
+    entity_id: switch.den_light
+    service: switch.turn_on
+- id: '1578883413012'
+  alias: Speedtest update
+  description: ''
+  trigger:
+  - entity_id: sensor.speedtest_upload
+    platform: state
+  condition: []
+  action:
+  - data:
+      message: The current download speed for HASS is {{ states('sensor.speedtest_download')
+        }}, while the current upload speed is {{ states('sensor.speedtest_upload')
+        }}.
+      target: '666061409053966344'
+    service: notify.discord
+- id: '1586561275990'
+  alias: Home Assistant start-up
+  description: ''
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition: []
+  action:
+  - data: {}
+    service: script.1586561224524
+- id: '1586561475101'
+  alias: Home Assistant start-up
+  description: ''
+  trigger:
+  - event: start
+    platform: homeassistant
+  condition: []
+  action:
+  - data: {}
+    service: script.1586561224524
+- id: '1586561569170'
+  alias: zwave loaded start system
+  description: ''
+  trigger:
+  - event_data: {}
+    event_type: zwave.network_ready
+    platform: event
+  - event_data: {}
+    event_type: zwave.network_complete
+    platform: event
+  - event_data: {}
+    event_type: zwave.network_complete_some_dead
+    platform: event
+  condition: []
+  action:
+  - data: {}
+    service: script.1586561168701

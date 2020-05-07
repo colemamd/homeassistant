@@ -1,21 +1,6 @@
-resources:
-  - type: module
-    url: /community_plugin/button-card/button-card.js
-  - type: module
-    url: /community_plugin/compact-custom-header/compact-custom-header.js
-  - type: module
-    url: /community_plugin/lovelace-layout-card/layout-card.js
-  - type: module
-    url: /community_plugin/lovelace-auto-entities/auto-entities.js
-  - type: module
-    url: /community_plugin/roku-card/roku-card.js
-  - type: module
-    url: /community_plugin/lovelace-card-tools/card-tools.js
-  - type: module
-    url: /community_plugin/lovelace-gap-card/gap-card.js
-
 title: My Home Automation
-cch:
+custom_header:
+  compact_mode: true
   exceptions:
     - conditions:
         user: Remote
@@ -28,58 +13,67 @@ cch:
 
 views:
   - title: Security
+    badges: 
+      - entity: input_boolean.frontdoor_lock_notifications
+      - entity: input_boolean.frontdoor_dooraccess_notifications
+      - entity: input_boolean.frontdoor_garageacess_notifications
     icon: 'mdi:security'
     id: security
     path: security
+    type: custom:layout-card
+    layout: vertical
     cards:
-      - entity: alarm_control_panel.house
-        type: alarm-panel
-      - entities:
-          - entity: switch.arduino_gw_0_52
-        show_header_toggle: false
-        title: Alarm Siren
-        type: entities
-      - entities:
-          - lock.lock_front_door_lock
-        show_header_toggle: false
-        title: Lock
-        type: entities
-      - columns: 4
-        entities:
-          - binary_sensor.arduino_gw_0_22
-          - binary_sensor.arduino_gw_0_23
-          - binary_sensor.arduino_gw_0_24
-          - binary_sensor.arduino_gw_0_25
-          - binary_sensor.arduino_gw_0_26
-          - binary_sensor.arduino_gw_0_27
-          - binary_sensor.arduino_gw_0_28
-          - binary_sensor.arduino_gw_0_29
-          - binary_sensor.arduino_gw_0_30
-          - binary_sensor.arduino_gw_0_31
-          - binary_sensor.arduino_gw_0_32
-          - binary_sensor.arduino_gw_0_33
-          - binary_sensor.arduino_gw_0_34
-          - binary_sensor.arduino_gw_0_35
-          - binary_sensor.overhead_garage_door_status
-          - binary_sensor.arduino_gw_0_36
-          - binary_sensor.arduino_gw_0_37
-          - binary_sensor.arduino_gw_0_38
-          - binary_sensor.ring_front_door_ding
-          - binary_sensor.ring_front_door_motion
-        show_icon: true
-        show_name: true
-        show_state: true
-        title: Security Sensors
-        type: glance
-      - entities:
-          - entity: automation.alarm_away_mode_armed
-          - entity: automation.alarm_away_mode_arming
-          - entity: automation.alarm_disarmed
-          - entity: automation.alarm_home_mode_armed
-          - entity: automation.alarm_triggered
-          - entity: automation.alarm_warning
-        title: Alarm Automations
-        type: entities
+      - type: vertical-stack
+        title: Security
+        cards:
+          - type: alarm-panel
+            entity: alarm_control_panel.house
+            title: Alarm
+          - type: entities
+            show_header_toggle: false
+            title: Lock
+            entities:
+              - lock.schlage_allegion_be469_touchscreen_deadbolt_locked_frontdoor
+          - type: entities
+            show_header_toggle: false
+            title: Alarm Siren
+            entities:
+              - entity: switch.arduino_gw_0_52
+          - type: entity-filter
+            state_filter:
+              - operator: "!="
+                value: "off"
+            card:
+              type: glance
+              title: Security Sensors
+            entities:
+              - binary_sensor.arduino_gw_0_22
+              - binary_sensor.arduino_gw_0_23
+              - binary_sensor.arduino_gw_0_24
+              - binary_sensor.arduino_gw_0_25
+              - binary_sensor.arduino_gw_0_26
+              - binary_sensor.arduino_gw_0_27
+              - binary_sensor.arduino_gw_0_28
+              - binary_sensor.arduino_gw_0_29
+              - binary_sensor.arduino_gw_0_30
+              - binary_sensor.arduino_gw_0_31
+              - binary_sensor.arduino_gw_0_32
+              - binary_sensor.arduino_gw_0_33
+              - binary_sensor.arduino_gw_0_34
+              - binary_sensor.arduino_gw_0_35
+              - binary_sensor.overhead_garage_door_status_2
+              - binary_sensor.arduino_gw_0_36
+              - binary_sensor.arduino_gw_0_37
+              - binary_sensor.arduino_gw_0_38
+      - type: horizontal-stack
+        title: CCTV
+        cards:
+          - type: picture-entity
+            entity: camera.front_porch
+            camera_view: live
+          - type: picture-entity
+            entity: camera.driveway
+            camera_view: live
     visible:
       - user: "8985f041376e4e3080841c36e29a9e47"
       - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
@@ -87,62 +81,72 @@ views:
   - title: Home
     id: home
     cards:
-      - entities:
-          - entity: lock.lock_front_door_lock
-          - entity: sensor.front_door_report
-          - entity: automation.front_door_unlock_upon_arriving_home
-          - entity: automation.notify_upon_unlock
-        show_header_toggle: false
-        title: Front Door Info
-        type: entities
-      - entities:
-          - entity: sensor.hacs
-          - entity: sensor.potential_breaking_changes
-        show_header_toggle: false
-        title: HACS
-        type: entities
-      - entities:
-          - entity: group.protects
-          - entity: automation.nest_protect_emergency
-          - entity: automation.nest_protect_offline_notify
-        title: Nest Protects
-        show_header_toggle: false
-        type: entities
-      - entities:
-          - input_select.lock_zwave_option_3_front
-          - input_select.lock_zwave_option_4_front
-          - input_select.lock_zwave_option_5_front
-          - input_select.lock_zwave_option_7_front
-          - input_select.lock_zwave_option_8_front
-          - input_select.lock_zwave_option_9_front
-          - input_select.lock_zwave_option_10_front
-          - input_select.lock_zwave_option_11_front
-          - input_select.lock_zwave_option_15_front
-          - input_select.lock_zwave_option_16_front
-        show_header_toggle: false
-        title: Front Door Config Options
-        type: entities
-    visible:
-      - user: "8985f041376e4e3080841c36e29a9e47"
-      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+    - title: Front Door Info
+      type: entities
+      entities:
+        - entity: lock.schlage_allegion_be469_touchscreen_deadbolt_locked_frontdoor
+        - entity: sensor.front_door_report
+        - entity: automation.front_door_unlock_upon_arriving_home
+      show_header_toggle: false
+    - title: Front Door Config 
+      type: entities
+      entities:
+        - entity: input_select.lock_zwave_option_3_front
+        - entity: input_select.lock_zwave_option_4_front
+        - entity: input_select.lock_zwave_option_5_front
+        - entity: input_select.lock_zwave_option_7_front
+        - entity: input_select.lock_zwave_option_8_front
+        - entity: input_select.lock_zwave_option_9_front
+        - entity: input_select.lock_zwave_option_10_front
+        - entity: input_select.lock_zwave_option_11_front
+        - entity: input_select.lock_zwave_option_15_front
+        - entity: input_select.lock_zwave_option_16_front
+      show_header_toggle: false
+    - title: Nest Protects
+      type: entities
+      entities:
+        - entity: group.protects
+        - entity: automation.nest_protect_emergency
+        - entity: automation.nest_protect_offline_notify
+      show_header_toggle: false
+    - title: HASS
+      type: entities
+      entities:
+        - entity: sensor.hass_uptime
+        - entity: sensor.current_version
+        - entity: sensor.version_available
+      show_header_toggle: false
+    - title: HACS
+      type: entities
+      entities:
+        - entity: sensor.hacs
+        - entity: sensor.potential_breaking_changes
+      show_header_toggle: false
+    - title: Tablets
+      type: entities
+      entities:
+        - entity: switch.fullykiosk_alarm_screen
+        - entity: switch.fullykiosk_remote_screen
+      show_header_toggle: false
+      visible:
+        - user: "8985f041376e4e3080841c36e29a9e47"
+        - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
   - title: Den
     panel: false
     path: Den
+    badges:
+    - entity: automation.den_light_off_after_no_motion_at_night
+    - entity: automation.den_light_on_on_motion
     cards:
       - entities:
           - entity: switch.den_light
-          - entity: switch.den_fan2
+          - entity: switch.den_fan
         title: Overhead
         type: entities
       - entities:
           - entity: switch.den_lamp
         show_header_toggle: false
         title: Lamp
-        type: entities
-      - entities:
-          - entity: automation.den_light_off_after_no_motion
-          - entity: automation.den_light_on_on_motion
-        title: Den Automations
         type: entities
     visible:
       - user: "8985f041376e4e3080841c36e29a9e47"
@@ -174,14 +178,13 @@ views:
     path: Outside
     cards:
       - entities:
-          - entity: switch.overhead_garage_door
+          - entity: switch.garage_door_toggle
+          - entity: binary_sensor.overhead_garage_door_status_2
         show_header_toggle: false
         type: entities
       - entities:
           - entity: light.front_lawn
           - entity: group.porch_lights
-          - entity: light.front_porch_1
-          - entity: light.front_porch_2
         title: Lights
         type: entities
       - entities:
@@ -219,277 +222,389 @@ views:
     visible:
       - user: "8985f041376e4e3080841c36e29a9e47"
       - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
-  - title: 'Door Lock Information, Codes and Configuration'
-    icon: 'mdi:lock-smart'
-    path: keypads
-    cards:
-       - entities:
-           - input_text.door_keypad_1_name
-           - input_text.door_keypad_1_code
-           - input_boolean.code_1_notify
-           - input_select.door_keypad_1_access_schedule
-           - input_datetime.door_keypad_1_date_start
-           - input_datetime.door_keypad_1_date_end
-           - input_boolean.door_keypad_1_front_switch
-           - script.door_keypad_1_delete
-         title: Entry Code 1
-         type: entities
-       - entities:
-           - input_text.door_keypad_2_name
-           - input_text.door_keypad_2_code
-           - input_boolean.code_2_notify
-           - input_select.door_keypad_2_access_schedule
-           - input_datetime.door_keypad_2_date_start
-           - input_datetime.door_keypad_2_date_end
-           - input_boolean.door_keypad_2_front_switch
-           - script.door_keypad_2_delete
-         title: Entry Code 2
-         type: entities
-       - entities:
-           - input_text.door_keypad_3_name
-           - input_text.door_keypad_3_code
-           - input_boolean.code_3_notify
-           - input_select.door_keypad_3_access_schedule
-           - input_datetime.door_keypad_3_date_start
-           - input_datetime.door_keypad_3_date_end
-           - input_boolean.door_keypad_3_front_switch
-           - script.door_keypad_3_delete
-         title: Entry Code 3
-         type: entities
-       - entities:
-           - input_text.door_keypad_4_name
-           - input_text.door_keypad_4_code
-           - input_boolean.code_4_notify
-           - input_select.door_keypad_4_access_schedule
-           - input_datetime.door_keypad_4_date_start
-           - input_datetime.door_keypad_4_date_end
-           - input_boolean.door_keypad_4_front_switch
-           - script.door_keypad_4_delete
-         title: Entry Code 4
-         type: entities
-       - entities:
-           - input_text.door_keypad_5_name
-           - input_text.door_keypad_5_code
-           - input_boolean.code_5_notify
-           - input_select.door_keypad_5_access_schedule
-           - input_datetime.door_keypad_5_date_start
-           - input_datetime.door_keypad_5_date_end
-           - input_boolean.door_keypad_5_front_switch
-           - script.door_keypad_5_delete
-         title: Entry Code 5
-         type: entities
-       - entities:
-           - input_text.door_keypad_6_name
-           - input_text.door_keypad_6_code
-           - input_boolean.code_6_notify
-           - input_select.door_keypad_6_access_schedule
-           - input_datetime.door_keypad_6_date_start
-           - input_datetime.door_keypad_6_date_end
-           - input_boolean.door_keypad_6_front_switch
-           - script.door_keypad_6_delete
-         title: Entry Code 6
-         type: entities
-       - entities:
-           - input_text.door_keypad_7_name
-           - input_text.door_keypad_7_code
-           - input_boolean.code_7_notify
-           - input_select.door_keypad_7_access_schedule
-           - input_datetime.door_keypad_7_date_start
-           - input_datetime.door_keypad_7_date_end
-           - input_boolean.door_keypad_7_front_switch
-           - script.door_keypad_7_delete
-         title: Entry Code 7
-         type: entities
-       - entities:
-           - input_text.door_keypad_8_name
-           - input_text.door_keypad_8_code
-           - input_boolean.code_8_notify
-           - input_select.door_keypad_8_access_schedule
-           - input_datetime.door_keypad_8_date_start
-           - input_datetime.door_keypad_8_date_end
-           - input_boolean.door_keypad_8_front_switch
-         title: Entry Code 8
-         type: entities
-       - entities:
-           - input_text.door_keypad_9_name
-           - input_text.door_keypad_9_code
-           - input_boolean.code_9_notify
-           - input_select.door_keypad_9_access_schedule
-           - input_datetime.door_keypad_9_date_start
-           - input_datetime.door_keypad_9_date_end
-           - input_boolean.door_keypad_9_front_switch
-           - script.door_keypad_9_delete
-         title: Entry Code 9
-         type: entities
-       - entities:
-           - input_text.door_keypad_10_name
-           - input_text.door_keypad_10_code
-           - input_boolean.code_10_notify
-           - input_select.door_keypad_10_access_schedule
-           - input_datetime.door_keypad_10_date_start
-           - input_datetime.door_keypad_10_date_end
-           - input_boolean.door_keypad_10_front_switch
-           - script.door_keypad_10_delete
-         title: Entry Code 10
-         type: entities
-       - entities:
-           - input_text.door_keypad_11_name
-           - input_text.door_keypad_11_code
-           - input_boolean.code_11_notify
-           - input_select.door_keypad_11_access_schedule
-           - input_datetime.door_keypad_11_date_start
-           - input_datetime.door_keypad_11_date_end
-           - input_boolean.door_keypad_11_front_switch
-           - script.door_keypad_11_delete
-         title: Entry Code 11
-         type: entities
-       - entities:
-           - input_text.door_keypad_12_name
-           - input_text.door_keypad_12_code
-           - input_boolean.code_12_notify
-           - input_select.door_keypad_12_access_schedule
-           - input_datetime.door_keypad_12_date_start
-           - input_datetime.door_keypad_12_date_end
-           - input_boolean.door_keypad_12_front_switch
-           - script.door_keypad_12_delete
-         title: Entry Code 12
-         type: entities
-       - entities:
-           - input_text.door_keypad_13_name
-           - input_text.door_keypad_13_code
-           - input_boolean.code_13_notify
-           - input_select.door_keypad_13_access_schedule
-           - input_datetime.door_keypad_13_date_start
-           - input_datetime.door_keypad_13_date_end
-           - input_boolean.door_keypad_13_front_switch
-           - script.door_keypad_13_delete
-         title: Entry Code 13
-         type: entities
-       - entities:
-           - input_text.door_keypad_14_name
-           - input_text.door_keypad_14_code
-           - input_boolean.code_14_notify
-           - input_select.door_keypad_14_access_schedule
-           - input_datetime.door_keypad_14_date_start
-           - input_datetime.door_keypad_14_date_end
-           - input_boolean.door_keypad_14_front_switch
-           - script.door_keypad_14_delete
-         title: Entry Code 14
-         type: entities
-       - entities:
-           - input_text.door_keypad_15_name
-           - input_text.door_keypad_15_code
-           - input_boolean.code_15_notify
-           - input_select.door_keypad_15_access_schedule
-           - input_datetime.door_keypad_15_date_start
-           - input_datetime.door_keypad_15_date_end
-           - input_boolean.door_keypad_15_front_switch
-           - script.door_keypad_15_delete
-         title: Entry Code 15
-         type: entities
-       - entities:
-           - input_select.door_keypad_16_access_schedule
-           - input_text.door_keypad_16_name
-           - input_text.door_keypad_16_code
-           - input_boolean.code_16_notify
-           - input_boolean.door_keypad_16_front_switch
-           - script.door_keypad_16_delete
-         title: One Time Use Code 1
-         type: entities
-       - entities:
-           - input_select.door_keypad_17_access_schedule
-           - input_text.door_keypad_17_name
-           - input_text.door_keypad_17_code
-           - input_boolean.code_17_notify
-           - input_boolean.door_keypad_17_front_switch
-           - script.door_keypad_17_delete
-         title: One Time Use Code 2
-         type: entities
-       - entities:
-           - input_select.door_keypad_18_access_schedule
-           - input_text.door_keypad_18_name
-           - input_text.door_keypad_18_code
-           - input_boolean.code_18_notify
-           - input_boolean.door_keypad_18_front_switch
-           - script.door_keypad_18_delete
-         title: One Time Use Code 3
-         type: entities
-    visible:
-      - user: "8985f041376e4e3080841c36e29a9e47"
-      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
   - title: sysmon
     icon: 'mdi:monitor'
     panel: false
     path: sysmon
     cards:
-      - entities:
-          - sensor.pihole_cpu_load
-          - sensor.pihole_ram_used
-          - sensor.pihole_disk_used
-        title: pihole Stats
-        type: history-graph
-      - entities:
-          - entity: sensor.hass_containers_active
+      - title: HACC
+        type: entities
+        entities:
           - entity: sensor.hass_uptime
           - entity: sensor.current_version
           - entity: sensor.version_available
-          - entity: sensor.home_assistant_v2_db
         show_header_toggle: false
-        title: HASS Stats
+      - title: Main UPS
         type: entities
-      - entities:
-          - sensor.ups_status
-          - sensor.ups_time_left
-          - sensor.ups_time_on_battery
-          - sensor.ups_total_time_on_battery
-          - sensor.ups_battery
-          - sensor.ups_battery_voltage
-          - sensor.ups_battery_nominal_voltage
-          - sensor.ups_last_transfer
-          - sensor.ups_load
-          - sensor.ups_input_voltage
-          - sensor.ups_nominal_input_voltage
-          - sensor.ups_nominal_output_power
-          - sensor.ups_transfer_count
+        entities:
+          - sensor.hacc_ups_status
+          - sensor.hacc_ups_battery_runtime
+          - sensor.hacc_ups_battery_charge
+          - sensor.hacc_ups_battery_voltage
+          - sensor.hacc_ups_nominal_battery_voltage
+          - sensor.hacc_ups_low_battery_setpoint
+          - sensor.hacc_ups_low_battery_runtime
+          - sensor.hacc_ups_load
+          - sensor.hacc_ups_load_shutdown_timer
+          - sensor.hacc_ups_input_voltage
+          - sensor.hacc_ups_nominal_input_voltage
+          - sensor.hacc_ups_input_power_sensitivity
+          - sensor.hacc_ups_high_voltage_transfer
+          - sensor.hacc_ups_low_voltage_transfer
+          - sensor.hacc_ups_nominal_real_power
+          - sensor.hacc_ups_self_test_result
+          - sensor.hacc_ups_beeper_status
+          - sensor.hacc_ups_ups_shutdown_delay
+          - sensor.hacc_ups_warning_battery_setpoint
         show_header_toggle: false
-        title: Main UPS
-        type: entities
-      - entities:
-          - entity: sensor.pi_hole_ads_blocked_today
-          - entity: sensor.pi_hole_ads_percentage_blocked_today
-          - entity: sensor.pi_hole_dns_queries_cached
-          - entity: sensor.pi_hole_dns_queries_forwarded
-          - entity: sensor.pi_hole_dns_queries_today
-          - entity: sensor.pi_hole_dns_unique_clients
-          - entity: sensor.pi_hole_dns_unique_domains
-          - entity: sensor.pi_hole_seen_clients
-        show_header_toggle: false
-        title: pi_hole stats
-        type: entities
-      - entities:
-          - entity: switch.deluge_switch
-          - entity: sensor.deluge_status
-          - entity: sensor.deluge_down_speed
-          - entity: sensor.deluge_up_speed
-        show_header_toggle: false
-        title: Deluge stats
-        type: entities
-      - entities:
-          - entity: sensor.ng_enhanced_info
-          - entity: sensor.ng_enhanced_get_lan_config_info
-          - entity: switch.ng_enhanced_run_speed_test
-          - entity: sensor.ng_enhanced_speed_test_result
-          - entity: sensor.ng_enhanced_2g_wifi_info
-          - entity: sensor.ng_enhanced_5g_wifi_info
-          - entity: sensor.ng_enhanced_2g_guest_wifi_info
-          - entity: switch.ng_enhanced_2g_guest_wifi
-          - entity: sensor.ng_enhanced_5g_guest_wifi_info
-          - entity: switch.ng_enhanced_5g_guest_wifi
-          - entity: switch.ng_enhanced_reboot
-        show_header_toggle: false
-        title: Wifi Status & Stats
-        type: entities
     visible:
       - user: "8985f041376e4e3080841c36e29a9e47"
       - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
-  - !include /config/lovelace/remote.yaml
+  - title: 'frontdoor Codes and Configuration'
+    path: keypad-frontdoor
+    icon: 'mdi:lock-smart'
+    panel: false
+    badges:
+      - input_boolean.frontdoor_lock_notifications
+      - input_boolean.frontdoor_dooraccess_notifications
+      - input_boolean.frontdoor_garageacess_notifications
+      - entity: >-
+          lock.schlage_allegion_be469_touchscreen_deadbolt_locked_frontdoor
+      - entity: >-
+          binary_sensor.arduino_gw_0_30
+      - entity: >-
+          binary_sensor.overhead_garage_door_status
+    cards:
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 1
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_1
+              - entity: input_text.frontdoor_pin_1
+              - entity: input_boolean.enabled_frontdoor_1
+              - entity: input_boolean.notify_frontdoor_1
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_1
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_1
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_1
+                  - entity: input_number.accesscount_frontdoor_1
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_1
+                  - entity: input_datetime.start_date_frontdoor_1
+                  - entity: input_datetime.end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.sun_frontdoor_1
+                  - input_datetime.sun_start_date_frontdoor_1
+                  - input_datetime.sun_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.mon_frontdoor_1
+                  - input_datetime.mon_start_date_frontdoor_1
+                  - input_datetime.mon_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.tue_frontdoor_1
+                  - input_datetime.tue_start_date_frontdoor_1
+                  - input_datetime.tue_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.wed_frontdoor_1
+                  - input_datetime.wed_start_date_frontdoor_1
+                  - input_datetime.wed_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.thu_frontdoor_1
+                  - input_datetime.thu_start_date_frontdoor_1
+                  - input_datetime.thu_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.fri_frontdoor_1
+                  - input_datetime.fri_start_date_frontdoor_1
+                  - input_datetime.fri_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.sat_frontdoor_1
+                  - input_datetime.sat_start_date_frontdoor_1
+                  - input_datetime.sat_end_date_frontdoor_1
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 2
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_2
+              - entity: input_text.frontdoor_pin_2
+              - entity: input_boolean.enabled_frontdoor_2
+              - entity: input_boolean.notify_frontdoor_2
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_2
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_2
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_2
+                  - entity: input_number.accesscount_frontdoor_2
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_2
+                  - entity: input_datetime.start_date_frontdoor_2
+                  - entity: input_datetime.end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.sun_frontdoor_2
+                  - input_datetime.sun_start_date_frontdoor_2
+                  - input_datetime.sun_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.mon_frontdoor_2
+                  - input_datetime.mon_start_date_frontdoor_2
+                  - input_datetime.mon_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.tue_frontdoor_2
+                  - input_datetime.tue_start_date_frontdoor_2
+                  - input_datetime.tue_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.wed_frontdoor_2
+                  - input_datetime.wed_start_date_frontdoor_2
+                  - input_datetime.wed_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.thu_frontdoor_2
+                  - input_datetime.thu_start_date_frontdoor_2
+                  - input_datetime.thu_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.fri_frontdoor_2
+                  - input_datetime.fri_start_date_frontdoor_2
+                  - input_datetime.fri_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.sat_frontdoor_2
+                  - input_datetime.sat_start_date_frontdoor_2
+                  - input_datetime.sat_end_date_frontdoor_2
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 3
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_3
+              - entity: input_text.frontdoor_pin_3
+              - entity: input_boolean.enabled_frontdoor_3
+              - entity: input_boolean.notify_frontdoor_3
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_3
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_3
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_3
+                  - entity: input_number.accesscount_frontdoor_3
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_3
+                  - entity: input_datetime.start_date_frontdoor_3
+                  - entity: input_datetime.end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.sun_frontdoor_3
+                  - input_datetime.sun_start_date_frontdoor_3
+                  - input_datetime.sun_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.mon_frontdoor_3
+                  - input_datetime.mon_start_date_frontdoor_3
+                  - input_datetime.mon_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.tue_frontdoor_3
+                  - input_datetime.tue_start_date_frontdoor_3
+                  - input_datetime.tue_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.wed_frontdoor_3
+                  - input_datetime.wed_start_date_frontdoor_3
+                  - input_datetime.wed_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.thu_frontdoor_3
+                  - input_datetime.thu_start_date_frontdoor_3
+                  - input_datetime.thu_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.fri_frontdoor_3
+                  - input_datetime.fri_start_date_frontdoor_3
+                  - input_datetime.fri_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.sat_frontdoor_3
+                  - input_datetime.sat_start_date_frontdoor_3
+                  - input_datetime.sat_end_date_frontdoor_3
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 4
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_4
+              - entity: input_text.frontdoor_pin_4
+              - entity: input_boolean.enabled_frontdoor_4
+              - entity: input_boolean.notify_frontdoor_4
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_4
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_4
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_4
+                  - entity: input_number.accesscount_frontdoor_4
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_4
+                  - entity: input_datetime.start_date_frontdoor_4
+                  - entity: input_datetime.end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.sun_frontdoor_4
+                  - input_datetime.sun_start_date_frontdoor_4
+                  - input_datetime.sun_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.mon_frontdoor_4
+                  - input_datetime.mon_start_date_frontdoor_4
+                  - input_datetime.mon_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.tue_frontdoor_4
+                  - input_datetime.tue_start_date_frontdoor_4
+                  - input_datetime.tue_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.wed_frontdoor_4
+                  - input_datetime.wed_start_date_frontdoor_4
+                  - input_datetime.wed_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.thu_frontdoor_4
+                  - input_datetime.thu_start_date_frontdoor_4
+                  - input_datetime.thu_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.fri_frontdoor_4
+                  - input_datetime.fri_start_date_frontdoor_4
+                  - input_datetime.fri_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.sat_frontdoor_4
+                  - input_datetime.sat_start_date_frontdoor_4
+                  - input_datetime.sat_end_date_frontdoor_4
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 5
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_5
+              - entity: input_text.frontdoor_pin_5
+              - entity: input_boolean.enabled_frontdoor_5
+              - entity: input_boolean.notify_frontdoor_5
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_5
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_5
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_5
+                  - entity: input_number.accesscount_frontdoor_5
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_5
+                  - entity: input_datetime.start_date_frontdoor_5
+                  - entity: input_datetime.end_date_frontdoor_5
+                  - type: divider
+                  - input_boolean.sun_frontdoor_5
+                  - input_datetime.sun_start_date_frontdoor_5
+                  - input_datetime.sun_end_date_frontdoor_5
+                  - type: divider
+                  - input_boolean.mon_frontdoor_5
+                  - input_datetime.mon_start_date_frontdoor_5
+                  - input_datetime.mon_end_date_frontdoor_5
+                  - type: divider
+                  - input_boolean.tue_frontdoor_5
+                  - input_datetime.tue_start_date_frontdoor_5
+                  - input_datetime.tue_end_date_frontdoor_5
+                  - type: divider
+                  - input_boolean.wed_frontdoor_5
+                  - input_datetime.wed_start_date_frontdoor_5
+                  - input_datetime.wed_end_date_frontdoor_5
+                  - type: divider
+                  - input_boolean.thu_frontdoor_5
+                  - input_datetime.thu_start_date_frontdoor_5
+                  - input_datetime.thu_end_date_frontdoor_5
+                  - type: divider
+                  - input_boolean.fri_frontdoor_5
+                  - input_datetime.fri_start_date_frontdoor_5
+                  - input_datetime.fri_end_date_frontdoor_5
+                  - type: divider
+                  - input_boolean.sat_frontdoor_5
+                  - input_datetime.sat_start_date_frontdoor_5
+                  - input_datetime.sat_end_date_frontdoor_5
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 6
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_6
+              - entity: input_text.frontdoor_pin_6
+              - entity: input_boolean.enabled_frontdoor_6
+              - entity: input_boolean.notify_frontdoor_6
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_6
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_6
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_6
+                  - entity: input_number.accesscount_frontdoor_6
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_6
+                  - entity: input_datetime.start_date_frontdoor_6
+                  - entity: input_datetime.end_date_frontdoor_6
+                  - type: divider
+                  - input_boolean.sun_frontdoor_6
+                  - input_datetime.sun_start_date_frontdoor_6
+                  - input_datetime.sun_end_date_frontdoor_6
+                  - type: divider
+                  - input_boolean.mon_frontdoor_6
+                  - input_datetime.mon_start_date_frontdoor_6
+                  - input_datetime.mon_end_date_frontdoor_6
+                  - type: divider
+                  - input_boolean.tue_frontdoor_6
+                  - input_datetime.tue_start_date_frontdoor_6
+                  - input_datetime.tue_end_date_frontdoor_6
+                  - type: divider
+                  - input_boolean.wed_frontdoor_6
+                  - input_datetime.wed_start_date_frontdoor_6
+                  - input_datetime.wed_end_date_frontdoor_6
+                  - type: divider
+                  - input_boolean.thu_frontdoor_6
+                  - input_datetime.thu_start_date_frontdoor_6
+                  - input_datetime.thu_end_date_frontdoor_6
+                  - type: divider
+                  - input_boolean.fri_frontdoor_6
+                  - input_datetime.fri_start_date_frontdoor_6
+                  - input_datetime.fri_end_date_frontdoor_6
+                  - type: divider
+                  - input_boolean.sat_frontdoor_6
+                  - input_datetime.sat_start_date_frontdoor_6
+                  - input_datetime.sat_end_date_frontdoor_6
+  # - !include /config/lovelace/remote.yaml
+  # - !include /config/new-lovelace.yaml
+  # - !include /config/lovelace/frontdoor_lovelace.yaml

@@ -1,0 +1,93 @@
+binary_sensor.arduino_gw_0_22:
+  description: Garage Outer Door
+  friendly_name: Garage Outer Door
+  device_class: garage_door
+binary_sensor.arduino_gw_0_23:
+  description: Master Bathroom Window
+  friendly_name: Master Bath
+  device_class: window
+binary_sensor.arduino_gw_0_24:
+  description: Patio Door Outside
+  friendly_name: Patio Door Outside
+  device_class: door
+binary_sensor.arduino_gw_0_25:
+  description: Master Window Three
+  friendly_name: Master Window Three
+  device_class: window
+binary_sensor.arduino_gw_0_26:
+  description: Garage Inner Door
+  friendly_name: Garage Inner Door
+  device_class: door
+binary_sensor.arduino_gw_0_27:
+  description: Master Window Two
+  friendly_name: Master Window Two
+  device_class: window
+binary_sensor.arduino_gw_0_28:
+  description: Patio Door Sunroom
+  device_class: door
+  friendly_name: Patio Door Sunroom
+binary_sensor.arduino_gw_0_29:
+  description: Master Window One
+  friendly_name: Master Window One
+  device_class: window
+binary_sensor.arduino_gw_0_30:
+  description: Front Door
+  friendly_name: Front Door
+  device_class: door
+binary_sensor.arduino_gw_0_31:
+  description: Bedroom Two Side Window
+  friendly_name: Bedroom Two Side Window
+  device_class: window
+binary_sensor.arduino_gw_0_32:
+  description: Bathroom Two
+  friendly_name: Bathroom Two
+  device_class: window
+binary_sensor.arduino_gw_0_33:
+  description: Bedroom Two Front Window
+  friendly_name: Bedroom Two Window One
+  device_class: window
+binary_sensor.arduino_gw_0_34:
+  description: Motion Detect Den
+  friendly_name: Motion Detect
+  device_class: motion
+binary_sensor.arduino_gw_0_38:
+  description: Kitchen Front Window
+  friendly_name: Kitchen Front Window
+  device_class: window
+binary_sensor.arduino_gw_0_35:
+  description: Bedroom Three Side Window
+  friendly_name: Bedroom Three Side Window
+  device_class: window
+binary_sensor.arduino_gw_0_36:
+  description: Kitchen Side Window
+  friendly_name: Kitchen Side Window
+  device_class: window
+binary_sensor.arduino_gw_0_37:
+  description: Bedroom Three Back Window
+  friendly_name: Bedroom Three Back Window
+  device_class: window
+switch.arduino_gw_0_52:
+  description: Alarm Siren
+  friendly_name: Siren_Alert
+switch.hulu:
+  icon: mdi:hulu
+switch.netflix:
+  icon: mdi:netflix
+switch.plex:
+  icon: mdi:plex
+switch.hulu_den:
+  icon: mdi:hulu
+switch.netflix_den:
+  icon: mdi:netflix
+switch.plex_den:
+  icon: mdi:plex
+switch.hulu_bedroom:
+  icon: mdi:hulu
+switch.netflix_bedroom:
+  icon: mdi:netflix
+switch.plex_bedroom:
+  icon: mdi:plex
+switch.tv:
+  icon: mdi:television-classic
+binary_sensor.192_168_2_124:
+  friendly_name: zoneminder

@@ -46,7 +46,6 @@ group:
 
 automation:
   - alias: 'Nest Protect Emergency'
-    hide_entity: true
     trigger:
       platform: state
       entity_id:
@@ -86,7 +85,6 @@ automation:
           message: An emergency has been detected on {{ trigger.to_state.attributes.friendly_name }}. Investigate IMMEDIATELY.
 
   - alias: 'Nest Protect Offline Notify'
-    hide_entity: true
     trigger:
       platform: state
       entity_id:

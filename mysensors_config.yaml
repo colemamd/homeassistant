@@ -1,0 +1,44 @@
+gateways:
+  - device: '/dev/ttyACM0'
+    persistence_file: 'mysensors.json'
+    nodes:
+      22:
+        name: 'Garage_Outer_Door'
+      23:
+        name: 'Master_Bathroom'
+      24:
+        name: 'Patio_Door_One'
+      25:
+        name: 'Master_Window_Three'
+      26:
+        name: 'Garage_Inner_Door'
+      27:
+        name: 'Master_Window_Two'
+      28:
+        name: 'Patio_Door_Two'
+      29:
+        name: 'Master_Window_One'
+      30:
+        name: 'Front_Door'
+      31:
+        name: 'Bedroom_Two_Window_Two'
+      32:
+        name: 'Bathroom_Two'
+      33:
+        name: 'Bedroom_Two_Window_One'
+      34:
+        name: 'Den_Motion_Detect'
+      35:
+        name: 'Bedroom_Three_Window_Two'
+      36:
+        name: 'Kitchen_Two'
+      37:
+        name: 'Bedroom_Three_Window_One'
+      38:
+        name: 'Kitchen_One'
+      52:
+        name: 'Siren'
+  - device: mqtt
+    topic_out_prefix: 'mysensors'
+    persistence_file: 'mysensors-mqtt.json'
+version: '2.0'

@@ -1,1 +1,51 @@
-{}
+'1586561168701':
+  alias: system_cleanup
+  sequence:
+  - data: {}
+    entity_id: input_boolean.system_ready
+    service: input_boolean.turn_on
+  - data: {}
+    entity_id: input_boolean.allow_automation_execution
+    service: input_boolean.turn_on
+'1586561224524':
+  alias: customstartup
+  sequence:
+  - data: {}
+    entity_id: input_boolean.allow_automation_execution
+    service: input_boolean.turn_off
+'1588199971957':
+  alias: Quick Select YouTube Button
+  sequence:
+  - data:
+      activity: Living Room Watch Roku
+    entity_id: remote.living_room
+    service: remote.turn_on
+  - delay: '3'
+  - data:
+      option: YouTube
+    entity_id: input_select.roku_source
+    service: input_select.select_option
+'1588200185329':
+  alias: Quick Select Netflix Button
+  sequence:
+  - data:
+      service: Living Room Watch Roku
+    entity_id: remote.living_room
+    service: remote.turn_on
+  - delay: '3'
+  - data:
+      option: Netflix
+    entity_id: input_select.roku_source
+    service: input_select.select_option
+'1588200666219':
+  alias: Quick Select Hulu Button
+  sequence:
+  - data:
+      activity: Living Room Watch Roku
+    entity_id: remote.living_room
+    service: remote.turn_on
+  - delay: '3'
+  - data:
+      option: Hulu
+    entity_id: input_select.roku_source
+    service: input_select.select_option

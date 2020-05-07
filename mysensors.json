@@ -1,0 +1,157 @@
+{
+    "0": {
+        "sensor_id": 0,
+        "children": {
+            "22": {
+                "id": 22,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "23": {
+                "id": 23,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "24": {
+                "id": 24,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "25": {
+                "id": 25,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "26": {
+                "id": 26,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "27": {
+                "id": 27,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "28": {
+                "id": 28,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "29": {
+                "id": 29,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "30": {
+                "id": 30,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "31": {
+                "id": 31,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "32": {
+                "id": 32,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "33": {
+                "id": 33,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "34": {
+                "id": 34,
+                "type": 1,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "35": {
+                "id": 35,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "36": {
+                "id": 36,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "37": {
+                "id": 37,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "38": {
+                "id": 38,
+                "type": 0,
+                "description": "",
+                "values": {
+                    "16": "0"
+                }
+            },
+            "52": {
+                "id": 52,
+                "type": 3,
+                "description": "",
+                "values": {
+                    "2": "0"
+                }
+            }
+        },
+        "type": 17,
+        "sketch_name": "Arduino GW",
+        "sketch_version": "1.1",
+        "battery_level": 0,
+        "protocol_version": "2.3.1",
+        "heartbeat": 0
+    }
+}

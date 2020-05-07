@@ -1,0 +1,235 @@
+  - title: 'FrontDoor Codes and Configuration'
+    path: keypad-frontdoor
+    icon: 'mdi:lock-smart'
+    panel: false
+    badges:
+      - input_boolean.frontdoor_lock_notifications
+      - input_boolean.frontdoor_dooraccess_notifications
+      - input_boolean.frontdoor_garageacess_notifications
+      - entity: >-
+          lock.schlagebe469_touchscreen_deadbolt_locked_frontdoor
+      - entity: >-
+          binary_sensor._access_control_
+      - entity: >-
+          
+    cards:
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 1
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_1
+              - entity: input_text.frontdoor_pin_1
+              - entity: input_boolean.enabled_frontdoor_1
+              - entity: input_boolean.notify_frontdoor_1
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_1
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_1
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_1
+                  - entity: input_number.accesscount_frontdoor_1
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_1
+                  - entity: input_datetime.start_date_frontdoor_1
+                  - entity: input_datetime.end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.sun_frontdoor_1
+                  - input_datetime.sun_start_date_frontdoor_1
+                  - input_datetime.sun_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.mon_frontdoor_1
+                  - input_datetime.mon_start_date_frontdoor_1
+                  - input_datetime.mon_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.tue_frontdoor_1
+                  - input_datetime.tue_start_date_frontdoor_1
+                  - input_datetime.tue_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.wed_frontdoor_1
+                  - input_datetime.wed_start_date_frontdoor_1
+                  - input_datetime.wed_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.thu_frontdoor_1
+                  - input_datetime.thu_start_date_frontdoor_1
+                  - input_datetime.thu_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.fri_frontdoor_1
+                  - input_datetime.fri_start_date_frontdoor_1
+                  - input_datetime.fri_end_date_frontdoor_1
+                  - type: divider
+                  - input_boolean.sat_frontdoor_1
+                  - input_datetime.sat_start_date_frontdoor_1
+                  - input_datetime.sat_end_date_frontdoor_1
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 2
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_2
+              - entity: input_text.frontdoor_pin_2
+              - entity: input_boolean.enabled_frontdoor_2
+              - entity: input_boolean.notify_frontdoor_2
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_2
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_2
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_2
+                  - entity: input_number.accesscount_frontdoor_2
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_2
+                  - entity: input_datetime.start_date_frontdoor_2
+                  - entity: input_datetime.end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.sun_frontdoor_2
+                  - input_datetime.sun_start_date_frontdoor_2
+                  - input_datetime.sun_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.mon_frontdoor_2
+                  - input_datetime.mon_start_date_frontdoor_2
+                  - input_datetime.mon_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.tue_frontdoor_2
+                  - input_datetime.tue_start_date_frontdoor_2
+                  - input_datetime.tue_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.wed_frontdoor_2
+                  - input_datetime.wed_start_date_frontdoor_2
+                  - input_datetime.wed_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.thu_frontdoor_2
+                  - input_datetime.thu_start_date_frontdoor_2
+                  - input_datetime.thu_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.fri_frontdoor_2
+                  - input_datetime.fri_start_date_frontdoor_2
+                  - input_datetime.fri_end_date_frontdoor_2
+                  - type: divider
+                  - input_boolean.sat_frontdoor_2
+                  - input_datetime.sat_start_date_frontdoor_2
+                  - input_datetime.sat_end_date_frontdoor_2
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 3
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_3
+              - entity: input_text.frontdoor_pin_3
+              - entity: input_boolean.enabled_frontdoor_3
+              - entity: input_boolean.notify_frontdoor_3
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_3
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_3
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_3
+                  - entity: input_number.accesscount_frontdoor_3
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_3
+                  - entity: input_datetime.start_date_frontdoor_3
+                  - entity: input_datetime.end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.sun_frontdoor_3
+                  - input_datetime.sun_start_date_frontdoor_3
+                  - input_datetime.sun_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.mon_frontdoor_3
+                  - input_datetime.mon_start_date_frontdoor_3
+                  - input_datetime.mon_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.tue_frontdoor_3
+                  - input_datetime.tue_start_date_frontdoor_3
+                  - input_datetime.tue_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.wed_frontdoor_3
+                  - input_datetime.wed_start_date_frontdoor_3
+                  - input_datetime.wed_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.thu_frontdoor_3
+                  - input_datetime.thu_start_date_frontdoor_3
+                  - input_datetime.thu_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.fri_frontdoor_3
+                  - input_datetime.fri_start_date_frontdoor_3
+                  - input_datetime.fri_end_date_frontdoor_3
+                  - type: divider
+                  - input_boolean.sat_frontdoor_3
+                  - input_datetime.sat_start_date_frontdoor_3
+                  - input_datetime.sat_end_date_frontdoor_3
+      - type: vertical-stack
+        cards:
+          - content: |
+              ## Code 4
+            type: markdown
+          - type: entities
+            entities:
+              - entity: input_text.frontdoor_name_4
+              - entity: input_text.frontdoor_pin_4
+              - entity: input_boolean.enabled_frontdoor_4
+              - entity: input_boolean.notify_frontdoor_4
+              - type: divider
+              - entity: binary_sensor.active_frontdoor_4
+              - type: divider
+              - type: 'custom:fold-entity-row'
+                head:
+                  type: section
+                  label: Advanced Options
+                entities:
+                  - entity: input_boolean.reset_advanced_frontdoor_4
+                  - type: divider
+                  - entity: input_boolean.accesslimit_frontdoor_4
+                  - entity: input_number.accesscount_frontdoor_4
+                  - type: divider
+                  - entity: input_boolean.daterange_frontdoor_4
+                  - entity: input_datetime.start_date_frontdoor_4
+                  - entity: input_datetime.end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.sun_frontdoor_4
+                  - input_datetime.sun_start_date_frontdoor_4
+                  - input_datetime.sun_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.mon_frontdoor_4
+                  - input_datetime.mon_start_date_frontdoor_4
+                  - input_datetime.mon_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.tue_frontdoor_4
+                  - input_datetime.tue_start_date_frontdoor_4
+                  - input_datetime.tue_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.wed_frontdoor_4
+                  - input_datetime.wed_start_date_frontdoor_4
+                  - input_datetime.wed_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.thu_frontdoor_4
+                  - input_datetime.thu_start_date_frontdoor_4
+                  - input_datetime.thu_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.fri_frontdoor_4
+                  - input_datetime.fri_start_date_frontdoor_4
+                  - input_datetime.fri_end_date_frontdoor_4
+                  - type: divider
+                  - input_boolean.sat_frontdoor_4
+                  - input_datetime.sat_start_date_frontdoor_4
+                  - input_datetime.sat_end_date_frontdoor_4

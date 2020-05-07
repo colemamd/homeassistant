@@ -1,0 +1,12 @@
+
+porch_lights:
+  name: Porch Lights
+  entities:
+  - light.front_porch_1
+  - light.front_porch_2
+  
+front_lights:
+  name: Front Lights
+  entities:
+  - light.front_lawn
+  - group.porch_lights

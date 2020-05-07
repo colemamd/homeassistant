@@ -1,0 +1,363 @@
+
+############  input_number:  #####################  
+input_number:
+  accesscount_frontdoor_5:
+    name: Access Count
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "Openings Left"
+
+#################  input_datetime:  ##############  
+input_datetime:
+  end_date_frontdoor_5:
+    name: 'End'
+    has_time: false
+    has_date: true
+  start_date_frontdoor_5:
+    name: 'Start'
+    has_time: false
+    has_date: true
+
+  sun_start_date_frontdoor_5:
+    name: 'Start'
+    has_time: true
+    has_date: false
+  sun_end_date_frontdoor_5:
+    name: 'End'
+    has_time: true
+    has_date: false
+
+  mon_start_date_frontdoor_5:
+    name: 'Start'
+    has_time: true
+    has_date: false
+  mon_end_date_frontdoor_5:
+    name: 'End'
+    has_time: true
+    has_date: false
+
+  tue_start_date_frontdoor_5:
+    name: 'Start'
+    has_time: true
+    has_date: false
+  tue_end_date_frontdoor_5:
+    name: 'End'
+    has_time: true
+    has_date: false
+
+  wed_start_date_frontdoor_5:
+    name: 'Start'
+    has_time: true
+    has_date: false
+  wed_end_date_frontdoor_5:
+    name: 'End'
+    has_time: true
+    has_date: false
+
+  thu_start_date_frontdoor_5:
+    name: 'Start'
+    has_time: true
+    has_date: false
+  thu_end_date_frontdoor_5:
+    name: 'End'
+    has_time: true
+    has_date: false
+
+  fri_start_date_frontdoor_5:
+    name: 'Start'
+    has_time: true
+    has_date: false
+  fri_end_date_frontdoor_5:
+    name: 'End'
+    has_time: true
+    has_date: false
+
+  sat_start_date_frontdoor_5:
+    name: 'Start'
+    has_time: true
+    has_date: false
+  sat_end_date_frontdoor_5:
+    name: 'End'
+    has_time: true
+    has_date: false
+
+
+####################  input_text:  ###############  
+input_text:
+  frontdoor_name_5:
+    name: 'Name'
+  frontdoor_pin_5:
+    name: 'PIN'
+
+#################  input_boolean: ################  
+input_boolean:
+  notify_frontdoor_5:
+    name: 'Notifications'
+  daterange_frontdoor_5:
+    name: 'Use Date Range'
+  smtwtfs_frontdoor_5:
+    name: 'Use SMTWTFS'
+  enabled_frontdoor_5:
+    name: 'Enabled'
+  accesslimit_frontdoor_5:
+    name: 'Limit Access Count'
+    initial: off
+  reset_advanced_frontdoor_5:
+    name: 'Reset Advanaced Options'
+    initial: off
+
+  sun_frontdoor_5:
+    name: 'Sunday'
+    initial: on
+
+  mon_frontdoor_5:
+    name: 'Monday'
+    initial: on
+
+  tue_frontdoor_5:
+    name: 'Tuesday'
+    initial: on
+
+  wed_frontdoor_5:
+    name: 'Wednesday'
+    initial: on
+
+  thu_frontdoor_5:
+    name: 'Thursday'
+    initial: on
+
+  fri_frontdoor_5:
+    name: 'Friday'
+    initial: on
+
+  sat_frontdoor_5:
+    name: 'Saturday'
+    initial: on
+
+################  automation: #################  
+automation:
+
+- alias: reset_advanced_frontdoor_5
+  trigger:
+    entity_id: input_boolean.reset_advanced_frontdoor_5
+    platform: state
+    to: 'on'
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.accesscount_frontdoor_5
+        value: "0"
+      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.sun_start_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.sun_end_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.mon_start_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.mon_end_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.tue_start_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.tue_end_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.wed_start_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.wed_end_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.thu_start_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.thu_end_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.fri_start_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.fri_end_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.sat_start_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.sat_end_date_frontdoor_5
+      data_template:
+        time: >
+          {{  (("00:00")  | timestamp_custom("%H:%M"))  }}      
+          
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.start_date_frontdoor_5
+      data_template:
+        date: >
+          {{  (("1980-01-01")  | timestamp_custom("%Y %m %d"))  }}      
+          
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.end_date_frontdoor_5
+      data_template:
+        date: >
+          {{  (("1980-01-01")  | timestamp_custom("%Y %m %d"))  }}      
+
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.daterange_frontdoor_5
+
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.accesslimit_frontdoor_5
+      
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.reset_advanced_frontdoor_5
+      
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.sun_frontdoor_5
+      
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.mon_frontdoor_5
+      
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.tue_frontdoor_5
+      
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.wed_frontdoor_5
+      
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.thu_frontdoor_5
+      
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.fri_frontdoor_5
+      
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.sat_frontdoor_5
+      
+################  binary_sensor: #################  
+binary_sensor:
+
+- platform: template
+  sensors:
+
+    enabled_frontdoor_5:
+      value_template: "{{ is_state('input_boolean.enabled_frontdoor_5', 'on') }}"
+
+    daterange_frontdoor_5:
+      value_template: "{{ (is_state('input_boolean.daterange_frontdoor_5', 'off') or ((states.input_datetime.start_date_frontdoor_5.attributes.timestamp| int | timestamp_custom('%Y%m%d', False)|int)|string <= now().strftime('%Y%m%d')) and (states.input_datetime.end_date_frontdoor_5.attributes.timestamp| int | timestamp_custom('%Y%m%d', False)|int)|string >=  now().strftime('%Y%m%d'))}}"
+
+    sun_frontdoor_5:
+      entity_id:
+        - sensor.time
+        - input_datetime.sun_start_date_frontdoor_5
+        - input_datetime.sun_end_date_frontdoor_5
+      value_template: "{{ ((is_state('input_boolean.sun_frontdoor_5', 'on'))) and (strptime(states('sensor.date'), '%Y-%m-%d').strftime('%A') == 'Sunday') and ((states.input_datetime.sun_start_date_frontdoor_5.state  == states.input_datetime.sun_end_date_frontdoor_5.state) or ((states('sensor.time') >= states('input_datetime.sun_start_date_frontdoor_5')[0:5]) and (states('sensor.time') <= states('input_datetime.sun_end_date_frontdoor_5')[0:5]))) }}"
+
+    mon_frontdoor_5:
+      entity_id:
+        - sensor.time
+        - input_datetime.mon_start_date_frontdoor_5
+        - input_datetime.mon_end_date_frontdoor_5
+      value_template: "{{ ((is_state('input_boolean.mon_frontdoor_5', 'on'))) and (strptime(states('sensor.date'), '%Y-%m-%d').strftime('%A') == 'Monday') and ((states.input_datetime.mon_start_date_frontdoor_5.state  == states.input_datetime.mon_end_date_frontdoor_5.state) or ((states('sensor.time') >= states('input_datetime.mon_start_date_frontdoor_5')[0:5]) and (states('sensor.time') <= states('input_datetime.mon_end_date_frontdoor_5')[0:5]))) }}"
+
+    tue_frontdoor_5:
+      entity_id:
+        - sensor.time
+        - input_datetime.tue_start_date_frontdoor_5
+        - input_datetime.tue_end_date_frontdoor_5
+      value_template: "{{ ((is_state('input_boolean.tue_frontdoor_5', 'on'))) and (strptime(states('sensor.date'), '%Y-%m-%d').strftime('%A') == 'Tuesday') and ((states.input_datetime.tue_start_date_frontdoor_5.state  == states.input_datetime.tue_end_date_frontdoor_5.state) or ((states('sensor.time') >= states('input_datetime.tue_start_date_frontdoor_5')[0:5]) and (states('sensor.time') <= states('input_datetime.tue_end_date_frontdoor_5')[0:5]))) }}"
+
+    wed_frontdoor_5:
+      entity_id:
+        - sensor.time
+        - input_datetime.wed_start_date_frontdoor_5
+        - input_datetime.wed_end_date_frontdoor_5
+      value_template: "{{ ((is_state('input_boolean.wed_frontdoor_5', 'on'))) and (strptime(states('sensor.date'), '%Y-%m-%d').strftime('%A') == 'Wednesday') and ((states.input_datetime.wed_start_date_frontdoor_5.state  == states.input_datetime.wed_end_date_frontdoor_5.state) or ((states('sensor.time') >= states('input_datetime.wed_start_date_frontdoor_5')[0:5]) and (states('sensor.time') <= states('input_datetime.wed_end_date_frontdoor_5')[0:5]))) }}"
+
+    thu_frontdoor_5:
+      entity_id:
+        - sensor.time
+        - input_datetime.thu_start_date_frontdoor_5
+        - input_datetime.thu_end_date_frontdoor_5
+      value_template: "{{ ((is_state('input_boolean.thu_frontdoor_5', 'on'))) and (strptime(states('sensor.date'), '%Y-%m-%d').strftime('%A') == 'Thursday') and ((states.input_datetime.thu_start_date_frontdoor_5.state  == states.input_datetime.thu_end_date_frontdoor_5.state) or ((states('sensor.time') >= states('input_datetime.thu_start_date_frontdoor_5')[0:5]) and (states('sensor.time') <= states('input_datetime.thu_end_date_frontdoor_5')[0:5]))) }}"
+
+    fri_frontdoor_5:
+      entity_id:
+        - sensor.time
+        - input_datetime.fri_start_date_frontdoor_5
+        - input_datetime.fri_end_date_frontdoor_5
+      value_template: "{{ ((is_state('input_boolean.fri_frontdoor_5', 'on'))) and (strptime(states('sensor.date'), '%Y-%m-%d').strftime('%A') == 'Friday') and ((states.input_datetime.fri_start_date_frontdoor_5.state  == states.input_datetime.fri_end_date_frontdoor_5.state) or ((states('sensor.time') >= states('input_datetime.fri_start_date_frontdoor_5')[0:5]) and (states('sensor.time') <= states('input_datetime.fri_end_date_frontdoor_5')[0:5]))) }}"
+
+    sat_frontdoor_5:
+      entity_id:
+        - sensor.time
+        - input_datetime.sat_start_date_frontdoor_5
+        - input_datetime.sat_end_date_frontdoor_5
+      value_template: "{{ ((is_state('input_boolean.sat_frontdoor_5', 'on'))) and (strptime(states('sensor.date'), '%Y-%m-%d').strftime('%A') == 'Saturday') and ((states.input_datetime.sat_start_date_frontdoor_5.state  == states.input_datetime.sat_end_date_frontdoor_5.state) or ((states('sensor.time') >= states('input_datetime.sat_start_date_frontdoor_5')[0:5]) and (states('sensor.time') <= states('input_datetime.sat_end_date_frontdoor_5')[0:5]))) }}"
+
+
+    smtwtfs_frontdoor_5:
+      friendly_name: "Status"
+      value_template: >-
+         {{
+            is_state('binary_sensor.sun_frontdoor_5', 'on')  or  
+            is_state('binary_sensor.mon_frontdoor_5', 'on')  or  
+            is_state('binary_sensor.tue_frontdoor_5', 'on')  or  
+            is_state('binary_sensor.wed_frontdoor_5', 'on')  or  
+            is_state('binary_sensor.thu_frontdoor_5', 'on')  or  
+            is_state('binary_sensor.fri_frontdoor_5', 'on')  or  
+            is_state('binary_sensor.sat_frontdoor_5', 'on')   
+         }}
+
+    
+    access_count_frontdoor_5:
+      friendly_name: "Access Count"
+      value_template: >-
+         {{
+            (is_state('input_boolean.accesslimit_frontdoor_5', 'off'))  or  
+            (states.input_number.accesscount_frontdoor_5.state | int > 0)
+         }}
+
+
+    active_frontdoor_5:
+      friendly_name: "Status"
+      value_template: >-
+         {{
+            is_state('binary_sensor.enabled_frontdoor_5', 'on')  and  
+            is_state('binary_sensor.access_count_frontdoor_5', 'on')  and  
+            is_state('binary_sensor.daterange_frontdoor_5', 'on') and
+            is_state('binary_sensor.smtwtfs_frontdoor_5', 'on')  
+         }}
+      device_class: connectivity
+
+
+###################  sensor:  ####################  
+

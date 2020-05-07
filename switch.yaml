@@ -1,0 +1,168 @@
+- platform: command_line
+  switches:
+    fullykiosk_alarm_screen:
+      command_on: !secret fullykiosk_alarm_screen_on
+      command_off: !secret fullykiosk_alarm_screen_off
+      command_state: !secret fullykiosk_alarm_screen_state
+      value_template: '{{ value == "on" }}'
+      friendly_name: Fullykiosk Alarm Screen
+
+    fullykiosk_remote_screen:
+      command_on: !secret fullykiosk_remote_screen_on
+      command_off: !secret fullykiosk_remote_screen_off
+      command_state: !secret fullykiosk_remote_screen_state
+      value_template: '{{ value == "on" }}'
+      friendly_name: Fullykiosk Remote Screen
+
+- platform: deluge
+  host: 192.168.2.190
+  username: !secret deluge_user
+  password: !secret deluge_pass
+
+- platform: mqtt
+  name: "Arm Alarm Home"
+  command_topic: "home/alarm/set"
+  state_topic: "home/alarm"
+  payload_on: "ARM_HOME"
+  payload_off: "DISARM"
+  state_on: "armed_home"
+  state_off: "disarmed"
+
+- platform: mqtt
+  name: "Arm Alarm Away"
+  command_topic: "home/alarm/set"
+  state_topic: "home/alarm"
+  payload_on: "ARM_AWAY"
+  payload_off: "DISARM"
+  state_on: "armed_away"
+  state_off: "disarmed"
+
+- platform: template
+  switches:
+    hulu:
+      value_template: "{{ is_state_attr('media_player.living_room_roku_2', 'source', 'Hulu') }}"
+      turn_on:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'Living Room Hulu'
+      turn_off:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'PowerOff'
+
+    netflix:
+      value_template: "{{ is_state_attr('media_player.living_room_roku_2', 'source', 'Netflix') }}"
+      turn_on:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'Living Room Netflix'
+      turn_off:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'PowerOff'
+
+    plex:
+      value_template: "{{ is_state_attr('media_player.living_room_roku_2', 'source', 'Plex') }}"
+      turn_on:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'Living Room Plex'
+      turn_off:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'PowerOff'
+
+    tv:
+      value_template: "{{ is_state_attr('remote.living_room', 'current_activity', 'Living Room Watch TV') }}"
+      turn_on:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'Living Room Watch TV'
+      turn_off:
+        service: remote.turn_on
+        data:
+          entity_id: remote.living_room
+          activity: 'PowerOff'
+
+    hulu_den:
+      value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Hulu') }}"
+      turn_on:
+        service: media_player.select_source
+        data:
+          entity_id: media_player.den_roku
+          source: 'Hulu'
+      turn_off:
+        service: remote.send_command
+        data:
+          entity_id: remote.den_roku
+          command: power
+
+    netflix_den:
+      value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Netflix') }}"
+      turn_on:
+        service: media_player.select_source
+        data:
+          entity_id: media_player.den_roku
+          activity: 'Netflix'
+      turn_off:
+        service: remote.send_command
+        data:
+          entity_id: remote.den_roku
+          command: power
+
+    plex_den:
+      value_template: "{{ is_state_attr('media_player.den_roku', 'source', 'Plex') }}"
+      turn_on:
+        service: media_player.select_source
+        data:
+          entity_id: media_player.den_roku
+          activity: 'Plex'
+      turn_off:
+        service: remote.send_command
+        data:
+          entity_id: remote.den_roku
+          command: power
+
+    hulu_bedroom:
+      value_template: "{{ is_state_attr('media_player.bedroom', 'source', 'Hulu') }}"
+      turn_on:
+        service: media_player.select_source
+        data:
+          entity_id: media_player.bedroom
+          activity: 'Hulu'
+      turn_off:
+        service: remote.turn_off
+        data:
+          entity_id: media_player.bedroom
+
+    netflix_bedroom:
+      value_template: "{{ is_state_attr('media_player.bedroom', 'source', 'Netflix') }}"
+      turn_on:
+        service: media_player.select_source
+        data:
+          entity_id: media_player.bedroom
+          activity: 'Netflix'
+      turn_off:
+        service: remote.turn_off
+        data:
+          entity_id: media_player.bedroom
+
+    plex_bedroom:
+      value_template: "{{ is_state_attr('media_player.bedroom', 'source', 'Plex') }}"
+      turn_on:
+        service: media_player.select_source
+        data:
+          entity_id: media_player.bedroom
+          activity: 'Plex'
+      turn_off:
+        service: remote.turn_off
+        data:
+          entity_id: media_player.bedroom
+
