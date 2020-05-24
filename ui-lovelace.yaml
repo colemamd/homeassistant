@@ -120,7 +120,6 @@ views:
       type: entities
       entities:
         - entity: sensor.hacs
-        - entity: sensor.potential_breaking_changes
       show_header_toggle: false
     - title: Tablets
       type: entities
@@ -131,48 +130,29 @@ views:
       visible:
         - user: "8985f041376e4e3080841c36e29a9e47"
         - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
-  - title: Den
-    panel: false
-    path: Den
+  - title: Interior
+    path: interior 
     badges:
     - entity: automation.den_light_off_after_no_motion_at_night
     - entity: automation.den_light_on_on_motion
+    type: horizontal-stack
     cards:
-      - entities:
+      - type: entities
+        entities:
+          - switch.living_room
+          - light.television_light
+        title: Living Room
+      - type: entities
+        entities:
+          - switch.dining_room_light
+          - switch.kitchen_light
+        title: Kitchen  
+      - type: entities
+        entities:
           - entity: switch.den_light
           - entity: switch.den_fan
-        title: Overhead
-        type: entities
-      - entities:
           - entity: switch.den_lamp
-        show_header_toggle: false
-        title: Lamp
-        type: entities
-    visible:
-      - user: "8985f041376e4e3080841c36e29a9e47"
-      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
-  - title: Living Room
-    panel: false
-    path: Living Room
-    cards:
-      - entities:
-          - entity: light.television_light
-        title: Lights
-        type: entities
-    visible:
-      - user: "8985f041376e4e3080841c36e29a9e47"
-      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
-  - title: Kitchen
-    panel: false
-    path: Kitchen
-    cards:
-      - entities:
-          - entity: switch.dining_room_light
-        title: Lights
-        type: entities
-    visible:
-      - user: "8985f041376e4e3080841c36e29a9e47"
-      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
+        title: Den
   - title: Outside
     panel: false
     path: Outside
@@ -193,9 +173,6 @@ views:
           - entity: automation.porch_lights_off_night
         title: Automations
         type: entities
-    visible:
-      - user: "8985f041376e4e3080841c36e29a9e47"
-      - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
   - title: Environment
     id: environment
     panel: false
@@ -273,7 +250,7 @@ views:
       - entity: >-
           binary_sensor.arduino_gw_0_30
       - entity: >-
-          binary_sensor.overhead_garage_door_status
+          binary_sensor.overhead_garage_door_status_2
     cards:
       - type: vertical-stack
         cards:

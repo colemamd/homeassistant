@@ -15,18 +15,10 @@ homeassistant:
   whitelist_external_dirs:
     - /config
 
-breaking_changes:
-
 browser_mod:
 
 camera:
-  - platform: ffmpeg
-    name: Front_Porch
-    input: http://192.168.2.100:8081
-
-  - platform: ffmpeg
-    name: Driveway
-    input: http://192.168.2.100:8082
+  - platform: zoneminder
 
 cloud:
 
@@ -120,8 +112,6 @@ logger:
 lovelace:
   mode: yaml
   resources:
-  - type: js
-    url: /hacsfiles/bar-card/bar-card.js
   - type: module
     url: /hacsfiles/button-card/button-card.js
   - type: module
@@ -142,8 +132,6 @@ lovelace:
     url: /hacsfiles/light-entity-card/light-entity-card.js
   - type: module 
     url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
-  - type: module
-    url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
   - type: module
     url: /hacsfiles/swipe-card/swipe-card.js
   - type: js
@@ -190,16 +178,6 @@ recorder:
       - script
       - zwave
 
-remote:
-  - platform: harmony
-    name: Living Room
-    host: 192.168.2.45
-
-roku:
-  - host: 192.168.2.12
-  - host: 192.168.2.11
-  - host: 192.168.2.13
-
 ssdp:
 
 stream:
@@ -209,7 +187,7 @@ sun:
 system_health:
 
 updater:
-  reporting: false
+  reporting: true
 
 weather: 
   - platform: openweathermap

@@ -37,6 +37,11 @@
   state_on: "armed_away"
   state_off: "disarmed"
 
+
+- platform: zoneminder
+  command_on: Mocord
+  command_off: Modect
+
 - platform: template
   switches:
     hulu:
