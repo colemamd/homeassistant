@@ -38,12 +38,6 @@
   state_on: "armed_away"
   state_off: "disarmed"
 
-- platform: rest
-  name: fully_test
-  resource: http://192.168.2.91:2323
-  body_on: 'screenOn&type=json&password=ajSee6699'
-  body_off: 'screenOff&type=json&password=ajSee6699'
-
 - platform: zoneminder
   command_on: Mocord
   command_off: Modect
