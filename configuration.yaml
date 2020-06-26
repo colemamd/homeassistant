@@ -173,7 +173,7 @@ notify:
 person:
 
 recorder:
-  db_url: postgresql://home:ajSee6699@postgresql/ha
+  db_url: postgresql://home:password@postgresql/ha
   purge_keep_days: 60
   exclude:
     domains:
@@ -209,7 +209,7 @@ weather:
 zeroconf:
 
 zoneminder:
-  - host: zm.colemanonline.net
+  - host: itsasecret
 
 alarm_control_panel: !include resources/bwalarm/bwalarm.yaml
 automation: !include automations.yaml
