@@ -109,12 +109,49 @@ views:
         - entity: automation.nest_protect_emergency
         - entity: automation.nest_protect_offline_notify
       show_header_toggle: false
-    - title: HASS
+    - title: fail2ban
       type: entities
       entities:
-        - entity: sensor.hass_uptime
-        - entity: sensor.current_version
-        - entity: sensor.version_available
+        - type: attribute
+          entity: sensor.fail2ban_hass_iptables
+          attribute: current_bans
+          name: "HASS current bans"
+        - type: attribute
+          entity: sensor.fail2ban_hass_iptables
+          attribute: total_bans
+          name: "HASS total bans"
+        - type: attribute
+          entity: sensor.fail2ban_nginx_badbots
+          attribute: current_bans
+          name: "nginx badbots current bans"
+        - type: attribute
+          entity: sensor.fail2ban_nginx_badbots
+          attribute: total_bans
+          name: "nginx badbots total bans"
+        - type: attribute
+          entity: sensor.fail2ban_nginx_botsearch
+          attribute: current_bans
+          name: "nginx botsearch current bans"
+        - type: attribute
+          entity: sensor.fail2ban_nginx_botsearch
+          attribute: total_bans
+          name: "nginx botsearch total bans"
+        - type: attribute
+          entity: sensor.fail2ban_nginx_http_auth
+          attribute: current_bans
+          name: "nginx http auth current bans"
+        - type: attribute
+          entity: sensor.fail2ban_nginx_http_auth
+          attribute: total_bans
+          name: "nginx http auth total bans"
+        - type: attribute
+          entity: sensor.fail2ban_ssh
+          attribute: current_bans
+          name: "ssh current bans"
+        - type: attribute
+          entity: sensor.fail2ban_ssh
+          attribute: total_bans
+          name: "ssh total bans"
       show_header_toggle: false
     - title: HACS
       type: entities
@@ -122,10 +159,41 @@ views:
         - entity: sensor.hacs
       show_header_toggle: false
     - title: Tablets
-      type: entities
-      entities:
-        - entity: switch.fullykiosk_alarm_screen
-        - entity: switch.fullykiosk_remote_screen
+      type: custom:vertical-stack-in-card
+      cards:
+        - type: entities
+          title: Wall
+          entities:
+            - entity: sensor.wall_tablet_battery
+            - entity: sensor.wall_tablet_plugged_in
+        - type: custom:paper-buttons-row
+          buttons:
+            - icon: mdi:television
+              name: "Wall Tablet Screen"
+              tap_action:
+                service: shell_command.wall_screen_on
+        - type: entities
+          title: Remote
+          entities:
+            - entity: sensor.remote_tablet_battery
+            - entity: sensor.remote_tablet_plugged_in
+        - type: custom:paper-buttons-row
+          buttons:
+            - icon: mdi:television
+              name: "Remote Tablet Screen"
+              tap_action:
+                service: shell_command.remote_screen_on
+        - type: entities
+          title: Alarm
+          entities:
+            - entity: sensor.alarm_tablet_battery
+            - entity: sensor.alarm_tablet_plugged_in
+        - type: custom:paper-buttons-row
+          buttons:
+            - icon: mdi:television
+              name: "Alarm Tablet Screen"
+              tap_action:
+                service: shell_command.alarm_screen_on
       show_header_toggle: false
       visible:
         - user: "8985f041376e4e3080841c36e29a9e47"
@@ -199,41 +267,204 @@ views:
     visible:
       - user: "8985f041376e4e3080841c36e29a9e47"
       - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
-  - title: sysmon
-    icon: 'mdi:monitor'
-    panel: false
+  - title: containers
+    icon: 'mdi:docker'
+    panel: true
     path: sysmon
+    theme: slate
     cards:
-      - title: HACC
-        type: entities
-        entities:
-          - entity: sensor.hass_uptime
-          - entity: sensor.current_version
-          - entity: sensor.version_available
-        show_header_toggle: false
-      - title: Main UPS
-        type: entities
-        entities:
-          - sensor.hacc_ups_status
-          - sensor.hacc_ups_battery_runtime
-          - sensor.hacc_ups_battery_charge
-          - sensor.hacc_ups_battery_voltage
-          - sensor.hacc_ups_nominal_battery_voltage
-          - sensor.hacc_ups_low_battery_setpoint
-          - sensor.hacc_ups_low_battery_runtime
-          - sensor.hacc_ups_load
-          - sensor.hacc_ups_load_shutdown_timer
-          - sensor.hacc_ups_input_voltage
-          - sensor.hacc_ups_nominal_input_voltage
-          - sensor.hacc_ups_input_power_sensitivity
-          - sensor.hacc_ups_high_voltage_transfer
-          - sensor.hacc_ups_low_voltage_transfer
-          - sensor.hacc_ups_nominal_real_power
-          - sensor.hacc_ups_self_test_result
-          - sensor.hacc_ups_beeper_status
-          - sensor.hacc_ups_ups_shutdown_delay
-          - sensor.hacc_ups_warning_battery_setpoint
-        show_header_toggle: false
+      - title: Containers
+        type: custom:layout-card
+        layout: vertical
+        cards:
+          - title: Containers
+            type: custom:vertical-stack-in-card
+            cards:
+              - type: history-graph
+                entities:
+                  - sensor.hacc_containers_cpu
+                  - sensor.hacc_containers_memory_percent
+                  - sensor.hacc_containers_home_assistant_cpu
+                  - sensor.hacc_containers_home_assistant_memory_percent
+                  - sensor.hacc_containers_letsencrypt_cpu
+                  - sensor.hacc_containers_letsencrypt_memory_percent
+                  - sensor.hacc_containers_postgresql_cpu
+                  - sensor.hacc_containers_postgresql_memory_percent
+                  - sensor.hacc_containers_mosquitto_cpu
+                  - sensor.hacc_containers_mosquitto_memory_percent
+                  - sensor.hacc_containers_samba_cpu
+                  - sensor.hacc_containers_samba_memory_percent
+                  - sensor.hacc_containers_portainer_cpu
+                  - sensor.hacc_containers_portainer_memory_percent
+                  - sensor.hacc_containers_xteve_cpu
+                  - sensor.hacc_containers_xteve_memory_percent
+              - type: entities
+                entities:
+                  - sensor.hacc_containers_containers_total
+                  - sensor.hacc_containers_containers_running
+                  - sensor.hacc_containers_containers_paused
+                  - sensor.hacc_containers_containers_stopped 
+                  - sensor.hacc_containers_images
+                  - sensor.hacc_containers_memory
+          - break
+          - type: entities
+            entities:
+              - switch.hacc_containers_home_assistant
+              - sensor.hacc_containers_home_assistant_status
+              - sensor.hacc_containers_home_assistant_network_speed_up
+              - sensor.hacc_containers_home_assistant_network_speed_down
+              - sensor.hass_uptime
+              - sensor.current_version
+              - sensor.version_available
+          - type: entities
+            entities:
+              - switch.hacc_containers_letsencrypt
+              - sensor.hacc_containers_letsencrypt_status
+              - sensor.hacc_containers_letsencrypt_network_speed_up
+              - sensor.hacc_containers_letsencrypt_network_speed_down
+          - type: entities
+            entities:
+              - switch.hacc_containers_postgresql
+              - sensor.hacc_containers_postgresql_status
+              - sensor.hacc_containers_postgresql_network_speed_up
+              - sensor.hacc_containers_postgresql_network_speed_down
+          - break
+          - type: entities
+            entities:
+              - switch.hacc_containers_mosquitto
+              - sensor.hacc_containers_mosquitto_status
+              - sensor.hacc_containers_mosquitto_network_speed_up
+              - sensor.hacc_containers_mosquitto_network_speed_down
+          - type: entities
+            entities:
+              - switch.hacc_containers_samba
+              - sensor.hacc_containers_samba_status
+              - sensor.hacc_containers_samba_network_speed_up
+              - sensor.hacc_containers_samba_network_speed_down
+          - type: entities
+            entities:
+              - switch.hacc_containers_portainer
+              - sensor.hacc_containers_portainer_status
+              - sensor.hacc_containers_portainer_network_speed_up
+              - sensor.hacc_containers_portainer_network_speed_down
+          - type: entities
+            entities:
+              - switch.hacc_containers_xteve
+              - sensor.hacc_containers_xteve_status
+              - sensor.hacc_containers_xteve_network_speed_up
+              - sensor.hacc_containers_xteve_network_speed_down                  
+    #   - title: Main UPS
+    #     type: picture-elements
+    #     image: /local/images/apc-ups.jpg.png
+    #     elements:
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_status
+    #         style:
+    #           top: 5%
+    #           left: 10%
+    #         prefix: "Status: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_battery_runtime
+    #         style:
+    #           top: 10%
+    #           left: 14%
+    #         prefix: "Runtime left: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_battery_charge
+    #         style:
+    #           top: 15%
+    #           left: 15%
+    #         prefix: "Battery Charge: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_battery_voltage
+    #         style:
+    #           top: 20%
+    #           left: 16%
+    #         prefix: "Battery Voltage: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_nominal_battery_voltage
+    #         style:
+    #           top: 25%
+    #           left: 22%
+    #         prefix: "Nominal Battery Voltage: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_low_battery_runtime
+    #         style:
+    #           top: 35%
+    #           left: 19%
+    #         prefix: "Low Battery Runtime: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_load
+    #         style:
+    #           top: 40%
+    #           left: 12%
+    #         prefix: "UPS Load: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_load_shutdown_timer
+    #         style:
+    #           top: 45%
+    #           left: 19%
+    #         prefix: "Load Shutdown Timer: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_input_voltage
+    #         style:
+    #           top: 50%
+    #           left: 16%
+    #         prefix: "Input Voltage: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_nominal_input_voltage
+    #         style:
+    #           top: 55%
+    #           left: 20%
+    #         prefix: "Nominal Input Voltage: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_input_power_sensitivity
+    #         style:
+    #           top: 60%
+    #           left: 22%
+    #         prefix: "Input Power Sensitivity: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_high_voltage_transfer
+    #         style:
+    #           top: 65%
+    #           left: 20%
+    #         prefix: "High Voltage Transfer: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_low_voltage_transfer
+    #         style:
+    #           top: 70%
+    #           left: 19%
+    #         prefix: "Low Voltage Transfer: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_nominal_real_power
+    #         style:
+    #           top: 75%
+    #           left: 20%
+    #         prefix: "Nominal Real Power: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_self_test_result
+    #         style:
+    #           top: 80%
+    #           left: 22%
+    #         prefix: "Self Test Result: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_beeper_status
+    #         style:
+    #           top: 85%
+    #           left: 17%
+    #         prefix: "Beeper Status: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_ups_shutdown_delay
+    #         style:
+    #           top: 90%
+    #           left: 16%
+    #         prefix: "Shutdown Delay: "
+    #       - type: state-label
+    #         entity: sensor.hacc_ups_warning_battery_setpoint
+    #         style:
+    #           top: 95%
+    #           left: 20%
+    #         prefix: "Warning Batt Setpoint: "
     visible:
       - user: "8985f041376e4e3080841c36e29a9e47"
       - user: "3bd1d39bfe1547798ac9b5b36bb60ce7"
@@ -582,6 +813,19 @@ views:
                   - input_boolean.sat_frontdoor_6
                   - input_datetime.sat_start_date_frontdoor_6
                   - input_datetime.sat_end_date_frontdoor_6
+  - title: CCTV
+    path: CCTV
+    icon: 'mdi:cctv'
+    panel: true
+    cards:     
+      - type: 'custom:surveillance-card'
+        cameras:
+          - entity: camera.driveway
+          - entity: camera.front_porch
+          - entity: camera.backyard
+          - entity: camera.backyard_side
+        thumb_interval: 15
+        update_interval: 1
   # - !include /config/lovelace/remote.yaml
   # - !include /config/new-lovelace.yaml
   # - !include /config/lovelace/frontdoor_lovelace.yaml

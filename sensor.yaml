@@ -6,6 +6,15 @@
     - 'current_status'
     - 'download_speed'
     - 'upload_speed'
+
+- platform: fail2ban
+  jails:
+    - hass-iptables
+    - nginx-badbots
+    - nginx-botsearch
+    - nginx-http-auth
+    - ssh
+  file_path: /fail2ban/fail2ban.log
   
 - platform: mqtt
   name: "Washing Machine Power"
@@ -19,23 +28,47 @@
   value_template: '{{ value_json["ENERGY"]["Current"] }}'
   unit_of_measurement: "A"
 
-- platform: rest
-  name: fullykiosk alarm
-  json_attributes:
-    ['batteryLevel', 'screenBrightness', 'plugged', 'deviceName', 'deviceModel', 
-    'lastAppStart', 'internalStorageFreeSpace', 'internalStorageTotalSpace',
-    'ramFreeMemory', 'ramTotalMemory', 'currentFragment']
-  resource: !secret fullykiosk_alarm_rest_resource
-  value_template: '{{ value_json.isScreenOn }}'
+- platform: mqtt
+  name: 'Alarm Tablet Battery'
+  state_topic: 'fully/deviceInfo/7ab54201-19afee03'
+  json_attributes_topic: 'fully/deviceInfo/7ab54201-19afee03'
+  value_template: '{{ value_json.batteryLevel }}'
+  device_class: battery
+  unit_of_measurement: '%'
 
-- platform: rest
-  name: fullykiosk remote
-  json_attributes:
-    ['batteryLevel', 'screenBrightness', 'plugged', 'deviceName', 'deviceModel', 
-    'lastAppStart', 'internalStorageFreeSpace', 'internalStorageTotalSpace',
-    'ramFreeMemory', 'ramTotalMemory', 'currentFragment']
-  resource: !secret fullykiosk_remote_rest_resource
-  value_template: '{{ value_json.isScreenOn }}'
+- platform: mqtt
+  name: 'Alarm Tablet Plugged In'
+  state_topic: 'fully/deviceInfo/7ab54201-19afee03'
+  json_attributes_topic: 'fully/deviceInfo/7ab54201-19afee03'
+  value_template: '{{ value_json.isPlugged }}'
+
+- platform: mqtt
+  name: 'Remote Tablet Battery'
+  state_topic: 'fully/deviceInfo/1d505ee2-8fa3d3c7'
+  json_attributes_topic: 'fully/deviceInfo/1d505ee2-8fa3d3c7'
+  value_template: '{{ value_json.batteryLevel }}'
+  device_class: battery
+  unit_of_measurement: '%'
+
+- platform: mqtt
+  name: 'Remote Tablet Plugged In'
+  state_topic: 'fully/deviceInfo/1d505ee2-8fa3d3c7'
+  json_attributes_topic: 'fully/deviceInfo/1d505ee2-8fa3d3c7'
+  value_template: '{{ value_json.isPlugged }}'
+
+- platform: mqtt
+  name: 'Wall Tablet Battery'
+  state_topic: 'fully/deviceInfo/b29c1227-f08da7ba'
+  json_attributes_topic: 'fully/deviceInfo/b29c1227-f08da7ba'
+  value_template: '{{ value_json.batteryLevel }}'
+  device_class: battery
+  unit_of_measurement: '%'
+
+- platform: mqtt
+  name: 'Wall Tablet Plugged In'
+  state_topic: 'fully/deviceInfo/b29c1227-f08da7ba'
+  json_attributes_topic: 'fully/deviceInfo/b29c1227-f08da7ba'
+  value_template: '{{ value_json.isPlugged }}'
 
 - platform: rpi_power
   text_state: true
@@ -46,7 +79,7 @@
       arg: /
     - type: memory_use_percent
     - type: processor_use
-    - type: last_boot      
+    - type: last_boot    
 
 - platform: template
   sensors:
@@ -62,73 +95,6 @@
       value_template: "{{ state_attr('media_player.bedroom_roku', 'source') }}"
       friendly_name: 'Bedroom TV Source'
     
-    fullykiosk_alarm_device_name:
-      friendly_name: Alarm Tablet Model
-      icon_template: 'mdi:tablet'
-      value_template: "{{ state_attr('sensor.fullykiosk_alarm', 'deviceName') }} ({{ state_attr('sensor.fullykiosk_alarm', 'deviceModel') }})"
-
-    fullykiosk_remote_device_name:
-      friendly_name: Remote Tablet Model
-      icon_template: 'mdi:tablet'
-      value_template: "{{ state_attr('sensor.fullykiosk_remote', 'deviceName') }} ({{ state_attr('sensor.fullykiosk_remote', 'deviceModel') }}"
-
-    fullykiosk_alarm_battery_level:
-      friendly_name: Alarm Tablet Battery
-      unit_of_measurement: '%'
-      value_template: "{{ state_attr('sensor.fullykiosk_alarm', 'batteryLevel') }}"
-      icon_template: >-
-        {% set battery_level = state_attr('sensor.fullykiosk_alarm', 'batteryLevel')|int('unknown') %}
-        {% set battery_round = (battery_level|int / 10)|int * 10 %}
-        {% if battery_level == 'unknown' %}
-          mdi:battery-unknown
-        {% else %}
-          {% if battery_round >= 100 %}
-            mdi:battery
-          {% elif battery_round > 0 %}
-            mdi:battery-{{ battery_round }}
-          {% else %}
-            mdi:battery-alert
-          {% endif %}
-        {% endif %}
-
-    fullykiosk_alarm_plugged:
-      friendly_name: Alarm Tablet plugged in
-      value_template: >-
-        {% if state_attr('sensor.fullykiosk_alarm', 'plugged') == true %} Yes {% else %} No {% endif %}
-      icon_template: >-
-        {% if state_attr('sensor.fullykiosk_alarm', 'plugged') == true %} mdi:power-plug {% else %} mdi:power-plug-off {% endif %}
-
-    fullykiosk_remote_plugged:
-      friendly_name: Remote Tablet plugged in
-      value_template: >-
-        {% if state_attr('sensor.fullykiosk_remote', 'plugged') == true %} Yes {% else %} No {% endif %}
-      icon_template: >-
-        {% if state_attr('sensor.fullykiosk_remote', 'plugged') == true %} mdi:power-plug {% else %} mdi:power-plug-off {% endif %}
-
-    fullykiosk_alarm_storage_percentage:
-      friendly_name: Alarm Tablet Storage
-      icon_template: 'mdi:sd'
-      unit_of_measurement: '%'
-      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_alarm', 'internalStorageFreeSpace') / state_attr('sensor.fullykiosk_alarm', 'internalStorageTotalSpace') * 100 ) | int }}"
-
-    fullykiosk_remote_storage_percentage:
-      friendly_name: Remote Tablet Storage
-      icon_template: 'mdi:sd'
-      unit_of_measurement: '%'
-      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_remote', 'internalStorageFreeSpace') / state_attr('sensor.fullykiosk_remote', 'internalStorageTotalSpace') * 100 ) | int }}"
-
-    fullykiosk_alarm_memory_percentage:
-      friendly_name: Alarm Tablet Memory
-      icon_template: 'mdi:sd'
-      unit_of_measurement: '%'
-      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_alarm', 'ramFreeMemory') / state_attr('sensor.fullykiosk_alarm', 'ramTotalMemory') * 100 ) | int }}"
-
-    fullykiosk_remote_memory_percentage:
-      friendly_name: Remote Tablet Memory
-      icon_template: 'mdi:sd'
-      unit_of_measurement: '%'
-      value_template: "{{ 100 - ( state_attr('sensor.fullykiosk_remote', 'ramFreeMemory') / state_attr('sensor.fullykiosk_remote', 'ramTotalMemory') * 100 ) | int }}"
-
 - platform: time_date
   display_options:
     - 'time'
@@ -160,4 +126,4 @@
   source: docker
   image: default
 
-- platform: zoneminder
+- platform: zoneminder  

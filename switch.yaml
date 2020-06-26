@@ -1,18 +1,19 @@
-- platform: command_line
-  switches:
-    fullykiosk_alarm_screen:
-      command_on: !secret fullykiosk_alarm_screen_on
-      command_off: !secret fullykiosk_alarm_screen_off
-      command_state: !secret fullykiosk_alarm_screen_state
-      value_template: '{{ value == "on" }}'
-      friendly_name: Fullykiosk Alarm Screen
+# - platform: command_line
+#   switches:
+#     fullykiosk_alarm_screen:
+#       command_on: !secret fullykiosk_alarm_screen_on
+#       command_off: !secret fullykiosk_alarm_screen_off
+#       friendly_name: Fullykiosk Alarm Screen
 
-    fullykiosk_remote_screen:
-      command_on: !secret fullykiosk_remote_screen_on
-      command_off: !secret fullykiosk_remote_screen_off
-      command_state: !secret fullykiosk_remote_screen_state
-      value_template: '{{ value == "on" }}'
-      friendly_name: Fullykiosk Remote Screen
+#     fullykiosk_remote_screen:
+#       command_on: !secret fullykiosk_remote_screen_on
+#       command_off: !secret fullykiosk_remote_screen_off
+#       friendly_name: Fullykiosk Remote Screen
+
+#     fullykiosk_wall_screen:
+#       command_on: !secret fullykiosk_wall_screen_on
+#       command_off: !secret fullykiosk_wall_screen_off
+#       friendly_name: Fullykiosk Wall Screen
 
 - platform: deluge
   host: 192.168.2.190
@@ -37,6 +38,11 @@
   state_on: "armed_away"
   state_off: "disarmed"
 
+- platform: rest
+  name: fully_test
+  resource: http://192.168.2.91:2323
+  body_on: 'screenOn&type=json&password=ajSee6699'
+  body_off: 'screenOff&type=json&password=ajSee6699'
 
 - platform: zoneminder
   command_on: Mocord
@@ -45,7 +51,7 @@
 - platform: template
   switches:
     hulu:
-      value_template: "{{ is_state_attr('media_player.living_room_roku_2', 'source', 'Hulu') }}"
+      value_template: "{{ is_state_attr('media_player.living_room_roku', 'source', 'Hulu') }}"
       turn_on:
         service: remote.turn_on
         data:
@@ -58,7 +64,7 @@
           activity: 'PowerOff'
 
     netflix:
-      value_template: "{{ is_state_attr('media_player.living_room_roku_2', 'source', 'Netflix') }}"
+      value_template: "{{ is_state_attr('media_player.living_room_roku', 'source', 'Netflix') }}"
       turn_on:
         service: remote.turn_on
         data:
@@ -71,7 +77,7 @@
           activity: 'PowerOff'
 
     plex:
-      value_template: "{{ is_state_attr('media_player.living_room_roku_2', 'source', 'Plex') }}"
+      value_template: "{{ is_state_attr('media_player.living_room_roku', 'source', 'Plex') }}"
       turn_on:
         service: remote.turn_on
         data:
@@ -136,38 +142,38 @@
           command: power
 
     hulu_bedroom:
-      value_template: "{{ is_state_attr('media_player.bedroom', 'source', 'Hulu') }}"
+      value_template: "{{ is_state_attr('media_player.bedroom_roku', 'source', 'Hulu') }}"
       turn_on:
         service: media_player.select_source
         data:
-          entity_id: media_player.bedroom
+          entity_id: media_player.bedroom_roku
           activity: 'Hulu'
       turn_off:
         service: remote.turn_off
         data:
-          entity_id: media_player.bedroom
+          entity_id: media_player.bedroom_roku
 
     netflix_bedroom:
-      value_template: "{{ is_state_attr('media_player.bedroom', 'source', 'Netflix') }}"
+      value_template: "{{ is_state_attr('media_player.bedroom_roku', 'source', 'Netflix') }}"
       turn_on:
         service: media_player.select_source
         data:
-          entity_id: media_player.bedroom
+          entity_id: media_player.bedroom_roku
           activity: 'Netflix'
       turn_off:
         service: remote.turn_off
         data:
-          entity_id: media_player.bedroom
+          entity_id: media_player.bedroom_roku
 
     plex_bedroom:
-      value_template: "{{ is_state_attr('media_player.bedroom', 'source', 'Plex') }}"
+      value_template: "{{ is_state_attr('media_player.bedroom_roku', 'source', 'Plex') }}"
       turn_on:
         service: media_player.select_source
         data:
-          entity_id: media_player.bedroom
+          entity_id: media_player.bedroom_roku
           activity: 'Plex'
       turn_off:
         service: remote.turn_off
         data:
-          entity_id: media_player.bedroom
+          entity_id: media_player.bedroom_roku
 
