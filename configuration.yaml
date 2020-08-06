@@ -12,7 +12,7 @@ homeassistant:
   time_zone: !secret time_zone
   customize: !include customize.yaml
   packages: !include_dir_named packages
-  whitelist_external_dirs:
+  allowlist_external_dirs:
     - /config
 
 camera:
@@ -106,6 +106,7 @@ logger:
   default: info
   logs:
     homeassistant.components.http.ban: warning
+    homeassistant.components.androidtv: debug
 
 lovelace:
   mode: yaml
@@ -138,8 +139,25 @@ lovelace:
     url: /hacsfiles/vertical-stack-in-card/vertical-stack-in-card.js
   - type: module
     url: /hacsfiles/lovelace-paper-buttons-row/paper-buttons-row.js
+  - type: module
+    url: /hacsfiles/lovelace-state-switch/state-switch.js 
+  - type: module
+    url: /hacsfiles/decluttering-card/decluttering-card.js
 
 map:
+
+media_player:
+  - platform: androidtv
+    name: "Bedroom Fire"
+    host: 192.168.2.57
+
+  - platform: androidtv
+    name: "Living Room Fire"
+    host: 192.168.2.46
+
+  - platform: androidtv
+    name: "Den Fire"
+    host: 192.168.2.199
 
 mobile_app:
 
@@ -148,11 +166,29 @@ monitor_docker:
     rename:
       home-assistant: "Home Assistant"
       samba: Samba
-      mosquitto: MQTT
+      mosquitto: Mosquitto
       postgresql: PostgreSQL
       portainer: Portainer
       xteve: Xteve
       letsencrypt: LetsEncrypt
+    monitored_conditions:
+      - version
+      - containers_running
+      - containers_total
+      - containers_stopped
+      - containers_paused
+      - containers_cpu_percentage
+      - containers_memory_percentage
+      - containers_memory
+      - status
+      - images
+      - status
+      - cpu_percentage
+      - network_speed_up
+      - network_speed_down
+      - network_total_up
+      - network_total_down
+
 
 # Nest
 nest:
@@ -173,7 +209,7 @@ notify:
 person:
 
 recorder:
-  db_url: postgresql://home:password@postgresql/ha
+  db_url: postgresql://home:ajSee6699@postgresql/ha
   purge_keep_days: 60
   exclude:
     domains:
@@ -209,7 +245,11 @@ weather:
 zeroconf:
 
 zoneminder:
-  - host: itsasecret
+  - host: zm.colemanonline.net
+    ssl: true
+    verify_ssl: true
+    username: !secret zm_user
+    password: !secret zm_pass
 
 alarm_control_panel: !include resources/bwalarm/bwalarm.yaml
 automation: !include automations.yaml
